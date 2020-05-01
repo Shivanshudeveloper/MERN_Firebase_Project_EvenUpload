@@ -110,7 +110,6 @@ const FileUpload = () => {
 
     return (
         <Fragment>
-            { message ? <Messages msg={message} /> : null }
             <form onSubmit={onSubmit}>
                 <div className="custom-file mt-4 mb-4">
                     <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
@@ -123,6 +122,8 @@ const FileUpload = () => {
                     <input type="submit" value={btnUpload} className="btn btn-primary w-auto mt-4" />
                 </center>
             </form>
+
+            { message ? <Messages msg={message} /> : null }
             
             <h3 className="mt-4">
                 <i className="fas fa-folder text-warning mr-2"></i>
