@@ -1,16 +1,12 @@
 import React, { useEffect, Fragment } from 'react';
 import { googleProvider, auth } from "../Firebase/index";
-import { Redirect } from "react-router-dom";
 
 const AuthenticationPage = () => {
 
     const signIn = () => {
         auth.signInWithPopup(googleProvider).then(function(result) {
-            var token = result.credential.accessToken;
-            var user = result.user;
+            
           }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
             var errorMessage = error.message;
             // The email of the user's account used.
             var email = error.email;
@@ -24,6 +20,7 @@ const AuthenticationPage = () => {
     useEffect(() => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
+                sessionStorage.setItem("userId", user.uid);
                 console.log("User");
                 window.location.href = "/home";
             } else {

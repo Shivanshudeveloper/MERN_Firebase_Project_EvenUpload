@@ -28,6 +28,7 @@ const User = () => {
     const signOut = () => {
         auth.signOut().then(function() {
             setUser({});
+            sessionStorage.setItem("userId", "");
             window.location.href = "/";
         }).catch(function(error) {
             console.log(error);

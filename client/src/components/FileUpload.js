@@ -11,6 +11,8 @@ import File from "./File";
 
 const FileUpload = () => {
     const uniqueKey = uuid4();
+    // Getting the userid from JS session
+    let userId = sessionStorage.getItem("userId"); 
 
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
@@ -21,20 +23,6 @@ const FileUpload = () => {
     const [user, setUser] = useState({});
 
 
-
-    useEffect(() => {
-        database.ref().once('value', function(snapshot) {
-            setAllData(snapshot.val());
-        });
-          
-        // database.ref().on("value", (snapshot) => {
-        //     console.log(snapshot.val());
-        //     setAllData(snapshot.val());
-        // }, (err) => {
-        //     console.log(err);
-        // })
-    });
-
     useEffect(() => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
@@ -44,6 +32,18 @@ const FileUpload = () => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        database.ref(userId).once('value', function(snapshot) {
+            setAllData(snapshot.val());
+        });
+        // database.ref().on("value", (snapshot) => {
+        //     console.log(snapshot.val());
+        //     setAllData(snapshot.val());
+        // }, (err) => {
+        //     console.log(err);
+        // })
+    });
     
 
     const onChange = e => {
@@ -78,7 +78,8 @@ const FileUpload = () => {
                     fileName,
                     filePath
                 }
-                database.ref().push(uploadData, (error) => {
+                
+                database.ref(userId).push(uploadData, (error) => {
                     if (error) {
                         console.log(error);
                     } else {
@@ -117,7 +118,7 @@ const FileUpload = () => {
             <div className="list-group mt-2">
                 { allData ? (
                     (Object.keys(allData)).map((data) => (
-                        <File key={data} data={data} />
+                        <File key={data} data={`${userId}/${data}`} />
                     ))
                 ) : 
                 <center>
