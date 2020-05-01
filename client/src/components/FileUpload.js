@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
 
 // Firebase
-import { database, storage } from '../Firebase/index';
+import { auth, database, storage } from '../Firebase/index';
 
 // Component
 import Progress from "./ProgressBar";
@@ -18,6 +18,8 @@ const FileUpload = () => {
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [btnUpload, setbtnUpload] = useState('Upload');
     const [allData, setAllData] = useState({});
+    const [user, setUser] = useState({});
+
 
 
     useEffect(() => {
@@ -32,6 +34,16 @@ const FileUpload = () => {
         //     console.log(err);
         // })
     });
+
+    useEffect(() => {
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                setUser(user);
+            } else {
+                console.log("No");
+            }
+        });
+    }, []);
     
 
     const onChange = e => {
