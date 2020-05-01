@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { googleProvider, auth } from "../Firebase/index";
 import { Redirect } from "react-router-dom";
 
@@ -8,7 +8,6 @@ const AuthenticationPage = () => {
         auth.signInWithPopup(googleProvider).then(function(result) {
             var token = result.credential.accessToken;
             var user = result.user;
-            window.location.href = "/home";
           }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -21,6 +20,17 @@ const AuthenticationPage = () => {
           });
           
     }
+
+    useEffect(() => {
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                console.log("User");
+                window.location.href = "/home";
+            } else {
+                console.log("No");
+            }
+        });
+    }, []);
 
     return (
         <Fragment>
