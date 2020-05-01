@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 // Firebase
 import { database } from '../Firebase/index';
 
+import { Link } from 'react-router-dom';
+
 const FileTrim = ({ file_name }) => {
     return (
         <div>
@@ -38,14 +40,19 @@ const File = ({ data }) => {
     
     return (
         <Fragment>
-            <a href={file.filePath} className="list-group-item list-group-item-action">
-            { file_name.split('_').pop().length > 20 ? (
-                <FileTrim file_name={file_name} />
-            ) : (
-                <FileNotTrim file_name={file_name} />
-            ) }
-            
-            </a>
+            <li className="list-group-item">
+                <a href={file.filePath} className="float-right text-secondary" download="download">
+                    <i className="fas fa-download"></i>
+                </a>
+
+                <Link to={`/fileinfo?name=${file_name}&fileId=${data}`}>
+                    { file_name.split('_').pop().length > 20 ? (
+                        <FileTrim file_name={file_name} />
+                    ) : (
+                        <FileNotTrim file_name={file_name} />
+                    ) }
+                </Link>
+            </li>
         </Fragment>
     )
 }

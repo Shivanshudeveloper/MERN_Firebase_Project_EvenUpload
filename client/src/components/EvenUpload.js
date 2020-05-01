@@ -8,8 +8,8 @@ const EvenUpload = () => {
         <Fragment>
             <div className="container">
                 <User />
-                <h1 className="text-center mt-4 font-weight-bold">
-                Even<span className="text-primary" >Upload</span> <i className="fas fa-star text-warning"></i>
+                <h1 className="mt-4 font-weight-bold float-left">
+                    Even<span className="text-primary" >Upload</span> <i className="fas text-primary fa-cloud"></i>
                 </h1>
 
                 <FileUpload />

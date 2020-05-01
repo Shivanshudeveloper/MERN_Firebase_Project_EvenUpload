@@ -1,11 +1,17 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useState ,useEffect, Fragment } from 'react';
 import { googleProvider, auth } from "../Firebase/index";
+
+// Utils Images
+// @Cloud Temporary Image for Front Page Authentication
+import cloud_temp_image_frontpage from "../utils/cloud_temp_img_frontpage.gif";
 
 const AuthenticationPage = () => {
 
+    const [signInBtn, setSignInBtn] = useState('Sign In Google');
+
     const signIn = () => {
         auth.signInWithPopup(googleProvider).then(function(result) {
-            
+            setSignInBtn('Signing In....');
           }).catch(function(error) {
             var errorMessage = error.message;
             // The email of the user's account used.
@@ -32,14 +38,21 @@ const AuthenticationPage = () => {
     return (
         <Fragment>
             <div className="container">
-                <h2 className="h2 display-4 text-center mt-4 font-weight-bold">
-                Even<span className="text-primary" >Upload</span> <i className="fas fa-star text-warning"></i>
-                </h2>
+                <h1 className="text-center mt-4 font-weight-bold">
+                Even<span className="text-primary" >Upload</span> <i className="fas fa-cloud text-primary"></i>
+                </h1>
 
-                <button onClick={() => signIn()} type="button" style={{marginTop: '40%'}} className="btn btn-block btn-primary">
-                    <i className="fab mr-2 fa-google"></i>
-                    Sign In Google
-                </button>
+                <center>
+                    <img className="w-50" src={cloud_temp_image_frontpage} />
+                </center>
+
+                <center>
+                    <button onClick={() => signIn()} type="button" style={{marginTop: '4%'}} className="btn w-auto btn-primary">
+                        <i className="fab mr-2 fa-google"></i>
+                        {signInBtn}
+                    </button>
+                </center>
+                
             </div>
         </Fragment>
     )

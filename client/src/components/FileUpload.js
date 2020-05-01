@@ -4,6 +4,7 @@ import { v4 as uuid4 } from 'uuid';
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
 
+
 // Component
 import Progress from "./ProgressBar";
 import Messages from "./Messages";
@@ -52,49 +53,56 @@ const FileUpload = () => {
     }
 
     const onSubmit = async e => {
-        setbtnUpload('Uploading....');
-        e.preventDefault();
-        const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
+        if (filename !== '') {
+            setbtnUpload('Uploading....');
+            e.preventDefault();
+            const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
 
-        
 
-        uploadTask.on('state_changed', (snapshot) => {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            setUploadPercentage(progress);
-        },
-        (error) => {
-            console.log(error);
-            setMessage(error);
-        },
-        () => {
-            // When the Storage gets Completed
-            storage.ref('uploads').child(`${uniqueKey}_${file.name}`).getDownloadURL().then(filePath => {
-                console.log(filePath);
-                const fileName = `${uniqueKey}_${file.name}`;
+            uploadTask.on('state_changed', (snapshot) => {
+                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                setUploadPercentage(progress);
+            },
+            (error) => {
+                console.log(error);
+                setMessage(error);
+            },
+            () => {
+                // When the Storage gets Completed
+                storage.ref('uploads').child(`${uniqueKey}_${file.name}`).getDownloadURL().then(filePath => {
+                    console.log(filePath);
+                    const fileName = `${uniqueKey}_${file.name}`;
 
-                // Saved in Database about the User
-                const uploadData = {
-                    user: 'Shivanshu',
-                    fileName,
-                    filePath
-                }
-                
-                database.ref(userId).push(uploadData, (error) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log("Done");
+                    // Saved in Database about the User
+                    const uploadData = {
+                        user: 'Shivanshu',
+                        fileName,
+                        filePath
                     }
-                })
+                    
+                    database.ref(userId).push(uploadData, (error) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Done");
+                        }
+                    })
 
-                setMessage('File Successfully Uploaded to Server');
+                    setMessage('Successfully Uploaded');
 
-                setbtnUpload('Upload');
-                setTimeout(() => setUploadPercentage(0), 4000);
-                setTimeout(() => setMessage(''), 2000);
-                setTimeout(() => setFilename('Choose File'), 4000);
+                    setbtnUpload('Upload');
+                    setTimeout(() => setUploadPercentage(0), 2000);
+                    setTimeout(() => setMessage(''), 2000);
+                    setTimeout(() => setFilename('Choose File'), 2000);
+                    setTimeout(() => setFile(''), 2000);
+                });
             });
-        });
+        } else {
+            console.log(filename);
+            setMessage('No File Selected Yet');
+            setTimeout(() => setMessage(''), 2000);
+        }
+        
     }
 
     
@@ -111,11 +119,18 @@ const FileUpload = () => {
                     </label>
                 </div>
                 <Progress percentage={uploadPercentage} />
-                <input type="submit" value={btnUpload} className="btn btn-primary btn-block mt-4" />
+                <center>
+                    <input type="submit" value={btnUpload} className="btn btn-primary w-auto mt-4" />
+                </center>
             </form>
             
-            <h3 className="mt-4">Files</h3>
-            <div className="list-group mt-2">
+            <h3 className="mt-4">
+                <i className="fas fa-folder text-warning mr-2"></i>
+                <strong>
+                    Files
+                </strong>
+            </h3>
+            <ul className="list-group mt-2">
                 { allData ? (
                     (Object.keys(allData)).map((data) => (
                         <File key={data} data={`${userId}/${data}`} />
@@ -125,7 +140,9 @@ const FileUpload = () => {
                     <img className="w-75" src="https://cdn.dribbble.com/users/93860/screenshots/6619359/file.png" />
                 </center>
                 }
-            </div>
+            </ul>
+            
+            
         </Fragment>
     )
 }
