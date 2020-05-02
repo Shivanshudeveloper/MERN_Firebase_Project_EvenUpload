@@ -42,16 +42,43 @@ const AuthenticationPage = () => {
                     Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
                 </h1>
 
-                <div className="ui two column centered grid">
-                    <img className="eight wide column" src={cloud_temp_image_frontpage} />
-                </div>
+                <center style={{marginTop: '5%', width: 'auto'}}>
+                    <div  className="ui compact segment">
+                        <form className="ui form">
+                            <div className="field">
+                                <label>Email</label>
+                                <input type="text" name="first-name" placeholder="First Name" />
+                            </div>
+                            <div className="field">
+                                <label>Password</label>
+                                <input type="text" name="last-name" placeholder="Last Name" />
+                            </div>
+                            <div className="field">
+                                <div className="ui checkbox">
+                                <input type="checkbox" />
+                                <label>I agree to the Terms and Conditions</label>
+                                </div>
+                            </div>
+                            <button className="fluid ui button primary" type="submit">Submit</button>
+                        </form>
 
-                <center>
-                    <button onClick={() => signIn()} type="button" style={{marginTop: '4%'}} className="medium ui google plus button">
-                        <i style={{marginRight: '4px'}} className="fab mr-2 fa-google"></i>
-                        {signInBtn}
-                    </button>
+                        <div className="ui horizontal divider">Or</div>
+
+                        <center>
+                            <button onClick={() => signIn()} type="button" style={{marginTop: '1%'}} className="fluid ui google plus button">
+                                <i style={{marginRight: '4px'}} className="fab mr-2 fa-google fluid"></i>
+                                {signInBtn}
+                            </button>
+                        </center>
+                    </div>
                 </center>
+                
+
+                {/* <div className="ui two column centered grid">
+                    <img className="eight wide column" src={cloud_temp_image_frontpage} />
+                </div> */}
+
+                
                 
             </div>
         </Fragment>
