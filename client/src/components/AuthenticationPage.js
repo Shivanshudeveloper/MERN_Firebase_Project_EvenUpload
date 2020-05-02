@@ -46,12 +46,18 @@ const AuthenticationPage = () => {
                     <div  className="ui compact segment">
                         <form className="ui form">
                             <div className="field">
-                                <label className="ui left floated">Email</label>
-                                <input type="text" />
+                                <label style={{float: 'left'}} className="ui">Email</label>
+                                <div className="ui left icon input">
+                                    <input type="text" placeholder="example@examole.com" />
+                                    <i className="user icon"></i>
+                                </div>
                             </div>
                             <div className="field">
-                                <label className="ui left floated">Password</label>
-                                <input type="password" />
+                                <label style={{float: 'left'}} className="ui left floated">Password</label>
+                                <div className="ui left icon input">
+                                    <input type="password" />
+                                    <i className="lock icon"></i>
+                                </div>
                             </div>
                             <div className="field">
                                 <div className="ui checkbox">

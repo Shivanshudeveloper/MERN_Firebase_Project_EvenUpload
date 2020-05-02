@@ -50,11 +50,13 @@ const File = ({ data }) => {
                             <FileNotTrim file_name={file_name} />
                         ) }
                     </Link>
+
                     <div className="ui right aligned">
-                        <a href={file.filePath} className="right floated" download="download">
+                        <a href={file.filePath} className="right floated" target="_blank" download>
                             <i className="fas fa-download"></i>
                         </a>
                     </div>
+
                     <a style={{marginTop: '2px'}} className="description">{`Uploaded on ${file.date}`}</a>
                 </div>
             </div>

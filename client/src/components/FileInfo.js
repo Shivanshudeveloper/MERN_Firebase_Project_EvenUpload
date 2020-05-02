@@ -12,7 +12,7 @@ import User from "./User";
 const FileTrim = ({ filename }) => {
     return (
         <div className="ui large header">
-            {filename.split("_").pop().substring(0, 20)}....
+            {filename.split("_").pop().substring(0, 40)}....
         </div>
     )
 }
@@ -60,7 +60,7 @@ const FileInfo = ({ location }) => {
                 
 
                     <div style={{marginTop: '5%'}}>
-                        { filename.split('_').pop().length > 20 ? (
+                        { filename.split('_').pop().length > 40 ? (
                             <FileTrim filename={filename} />
                         ) : (
                             <FileNotTrim filename={filename} />
@@ -88,7 +88,7 @@ const FileInfo = ({ location }) => {
                     <center>
                         {
                             qrcode ? (
-                                <a href={file.filePath} className="ui primary button" download="download">
+                                <a href={file.filePath} className="ui primary button" target="_blank" download>
                                     <i className="fas fa-download"></i> Download File
                                 </a>
                             ) : null

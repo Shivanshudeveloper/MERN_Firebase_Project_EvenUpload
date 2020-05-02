@@ -9,6 +9,10 @@ import { auth, database, storage } from '../Firebase/index';
 import Progress from "./ProgressBar";
 import Messages from "./Messages";
 import File from "./File";
+import Menu from './Menu';
+
+// Utils
+import no_files from '../utils/no_files.png';
 
 const FileUpload = () => {
     const uniqueKey = uuid4();
@@ -23,7 +27,11 @@ const FileUpload = () => {
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
 
+    // Loading for uploading the file
     const [loading, setLoading] = useState(0);
+    // Loading for loading all the files from server
+    const [loadingdata, setLoadingData] = useState(0);
+    
 
 
     useEffect(() => {
@@ -39,6 +47,7 @@ const FileUpload = () => {
     useEffect(() => {
         database.ref(`files/${userId}`).once('value', function(snapshot) {
             setAllData(snapshot.val());
+            setLoadingData(1);
         });
         // database.ref().on("value", (snapshot) => {
         //     console.log(snapshot.val());
@@ -142,21 +151,46 @@ const FileUpload = () => {
                 </center>
             </form>
 
+            <div className="ui hidden divider"></div>
+            <Menu />
+
             { message ? <Messages msg={message} /> : null }
             
             
             <div style={{marginTop: '4%'}} className="ui left aligned container">
-                <div role="list" className="ui divided relaxed list">
-                    { allData ? (
-                        (Object.keys(allData)).map((data) => (
-                            <File key={data} data={`files/${userId}/${data}`} />
-                        ))
-                    ) : 
-                    <center>
-                        <img className="w-75" src="https://cdn.dribbble.com/users/93860/screenshots/6619359/file.png" />
-                    </center>
-                    }
-                </div>
+            {
+                loadingdata === 0 ? (
+                    <div className="ui fluid placeholder">
+                        <div className="paragraph">
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                        </div>
+                        <div className="paragraph">
+                            <div className="line"></div>
+                            <div className="line"></div>
+                            <div className="line"></div>
+                        </div>
+                    </div>
+                ) : (
+                    <div role="list" className="ui divided relaxed list">
+                        { allData ? (
+                            (Object.keys(allData)).map((data) => (
+                                <File key={data} data={`files/${userId}/${data}`} />
+                            ))
+                        ) : 
+                        <center>
+                            <img className="ui large image" src={no_files} />
+                        </center>
+                        }
+                    </div>
+                )
+            }
+                
             </div>
         </Fragment>
     )
