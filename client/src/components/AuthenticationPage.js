@@ -47,11 +47,11 @@ const AuthenticationPage = () => {
                         <form className="ui form">
                             <div className="field">
                                 <label>Email</label>
-                                <input type="text" name="first-name" placeholder="First Name" />
+                                <input type="text" />
                             </div>
                             <div className="field">
                                 <label>Password</label>
-                                <input type="text" name="last-name" placeholder="Last Name" />
+                                <input type="password" />
                             </div>
                             <div className="field">
                                 <div className="ui checkbox">
