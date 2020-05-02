@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import EvenUpload from "./components/EvenUpload";
 import AuthenticationPage from "./components/AuthenticationPage";
 import FileInfo from "./components/FileInfo";
+import Scan from './components/Scan';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/" exact component={AuthenticationPage} />
       <Route path="/home" exact component={EvenUpload} />
       <Route path="/fileinfo" component={FileInfo} />
+      <Route path="/scan" exact component={Scan} />
     </Router>
   );
 }
