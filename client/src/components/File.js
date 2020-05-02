@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const FileTrim = ({ file_name }) => {
     return (
         <div>
-            <i className="fas fa-file text-primary mr-2"></i> {file_name.split("_").pop().substring(0, 20)}....
+            {file_name.split("_").pop().substring(0, 40)}....
         </div>
     )
 }
@@ -15,7 +15,7 @@ const FileTrim = ({ file_name }) => {
 const FileNotTrim = ({ file_name }) => {
     return (
         <div>
-            <i className="fas fa-file text-primary mr-2"></i> {file_name.split("_").pop()}
+            {file_name.split("_").pop()}
         </div>
     )
 }
@@ -36,25 +36,33 @@ const File = ({ data }) => {
 }, []);
 
     
-
+                    
     
     return (
         <Fragment>
-            <li className="list-group-item">
-                <a href={file.filePath} className="float-right text-secondary" download="download">
-                    <i className="fas fa-download"></i>
-                </a>
-
-                <Link to={`/fileinfo?name=${file_name}&fileId=${data}`}>
-                    { file_name.split('_').pop().length > 20 ? (
-                        <FileTrim file_name={file_name} />
-                    ) : (
-                        <FileNotTrim file_name={file_name} />
-                    ) }
-                </Link>
-            </li>
+            <div role="listitem" className="item">
+                <i aria-hidden="true" className="file large icon middle aligned"></i>
+                <div className="content">
+                    <Link className="header" to={`/fileinfo?name=${file_name}&fileId=${data}`}>
+                        { file_name.split('_').pop().length > 40 ? (
+                            <FileTrim file_name={file_name} />
+                        ) : (
+                            <FileNotTrim file_name={file_name} />
+                        ) }
+                    </Link>
+                    <div className="ui right aligned">
+                        <a href={file.filePath} className="right floated" download="download">
+                            <i className="fas fa-download"></i>
+                        </a>
+                    </div>
+                    <a className="description">Updated 22 mins ago</a>
+                </div>
+            </div>
+            
         </Fragment>
     )
 }
+
+
 
 export default File

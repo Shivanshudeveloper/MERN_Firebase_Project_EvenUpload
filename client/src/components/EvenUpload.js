@@ -6,11 +6,10 @@ import User from "./User";
 const EvenUpload = () => {
     return (
         <Fragment>
-            <div className="container">
+            <div className="ui center aligned container">
                 <User />
-                <h1 className="mt-4 font-weight-bold float-left">
-                    Even<span className="text-primary" >Upload</span> <i className="fas text-primary fa-cloud"></i>
-                </h1>
+                <div className="ui hidden divider"></div>
+                
 
                 <FileUpload />
             </div>

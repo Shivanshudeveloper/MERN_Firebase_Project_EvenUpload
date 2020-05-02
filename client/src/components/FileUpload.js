@@ -23,6 +23,8 @@ const FileUpload = () => {
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
 
+    const [loading, setLoading] = useState(0);
+
 
     useEffect(() => {
         auth.onAuthStateChanged(function(user) {
@@ -53,8 +55,9 @@ const FileUpload = () => {
     }
 
     const onSubmit = async e => {
-        if (filename !== '') {
+        if (file) {
             setbtnUpload('Uploading....');
+            setLoading(1);
             e.preventDefault();
             const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
 
@@ -91,6 +94,7 @@ const FileUpload = () => {
                     setMessage('Successfully Uploaded');
 
                     setbtnUpload('Upload');
+                    setLoading(0);
                     setTimeout(() => setUploadPercentage(0), 2000);
                     setTimeout(() => setMessage(''), 2000);
                     setTimeout(() => setFilename('Choose File'), 2000);
@@ -98,7 +102,8 @@ const FileUpload = () => {
                 });
             });
         } else {
-            console.log(filename);
+            e.preventDefault();
+            console.log('No File');
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
@@ -110,40 +115,41 @@ const FileUpload = () => {
 
     return (
         <Fragment>
+            <div className="ui hidden divider"></div>
             <form onSubmit={onSubmit}>
                 <div className="custom-file mt-4 mb-4">
-                    <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
-                    <label className="custom-file-label" htmlFor="customFile">
-                        {filename}
-                    </label>
+                    <div>
+                        <label htmlFor="file" className="ui icon button">
+                                
+                            {filename}</label>
+                        <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
+                    </div>
                 </div>
                 <Progress percentage={uploadPercentage} />
                 <center>
-                    <input type="submit" value={btnUpload} className="btn btn-primary w-auto mt-4" />
+                    <button type="submit" className={loading === 0 ? 'ui primary medium button' : 'ui loading primary medium button' }>
+                        <i className="cloud upload icon"></i>
+                        {btnUpload}
+                    </button>
                 </center>
             </form>
 
             { message ? <Messages msg={message} /> : null }
             
-            <h3 className="mt-4">
-                <i className="fas fa-folder text-warning mr-2"></i>
-                <strong>
-                    Files
-                </strong>
-            </h3>
-            <ul className="list-group mt-2">
-                { allData ? (
-                    (Object.keys(allData)).map((data) => (
-                        <File key={data} data={`files/${userId}/${data}`} />
-                    ))
-                ) : 
-                <center>
-                    <img className="w-75" src="https://cdn.dribbble.com/users/93860/screenshots/6619359/file.png" />
-                </center>
-                }
-            </ul>
             
-            
+            <div style={{marginTop: '4%'}} className="ui left aligned container">
+                <div role="list" className="ui divided relaxed list">
+                    { allData ? (
+                        (Object.keys(allData)).map((data) => (
+                            <File key={data} data={`files/${userId}/${data}`} />
+                        ))
+                    ) : 
+                    <center>
+                        <img className="w-75" src="https://cdn.dribbble.com/users/93860/screenshots/6619359/file.png" />
+                    </center>
+                    }
+                </div>
+            </div>
         </Fragment>
     )
 }

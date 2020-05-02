@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 
 const Message = ({ msg }) => {
     return (
-        <div className="alert alert-primary mt-2 mb-2" role="alert">
-            {/* Message of file beign Uploaded */}
-            {msg}
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div className="ui success message">
+            <div className="content">
+                <div className="header">{msg}</div>
+            </div>
         </div>
     )
 }

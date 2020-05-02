@@ -38,17 +38,17 @@ const AuthenticationPage = () => {
     return (
         <Fragment>
             <div className="container">
-                <h1 className="text-center mt-4 font-weight-bold">
-                Even<span className="text-primary" >Upload</span> <i className="fas fa-cloud text-primary"></i>
+                <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
+                    Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
                 </h1>
 
-                <center>
-                    <img className="w-50" src={cloud_temp_image_frontpage} />
-                </center>
+                <div className="ui two column centered grid">
+                    <img className="eight wide column" src={cloud_temp_image_frontpage} />
+                </div>
 
                 <center>
-                    <button onClick={() => signIn()} type="button" style={{marginTop: '4%'}} className="btn w-auto btn-primary">
-                        <i className="fab mr-2 fa-google"></i>
+                    <button onClick={() => signIn()} type="button" style={{marginTop: '4%'}} className="medium ui google plus button">
+                        <i style={{marginRight: '4px'}} className="fab mr-2 fa-google"></i>
                         {signInBtn}
                     </button>
                 </center>

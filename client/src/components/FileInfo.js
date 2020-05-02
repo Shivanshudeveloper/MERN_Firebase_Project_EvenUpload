@@ -11,7 +11,7 @@ import User from "./User";
 
 const FileTrim = ({ filename }) => {
     return (
-        <div className="text-center">
+        <div className="ui large header">
             {filename.split("_").pop().substring(0, 20)}....
         </div>
     )
@@ -19,7 +19,7 @@ const FileTrim = ({ filename }) => {
 
 const FileNotTrim = ({ filename }) => {
     return (
-        <div className="text-center">
+        <div className="ui large header">
             {filename.split("_").pop()}
         </div>
     )
@@ -55,30 +55,25 @@ const FileInfo = ({ location }) => {
 
     return (
         <Fragment>
-            <div className="container">
+            <div className="ui center aligned container">
                 <User />
-                <h1 className="text-center mt-4 font-weight-bold">
-                    Even<span className="text-primary" >Upload</span> <i className="fas text-primary fa-cloud"></i>
-                </h1>
-                <div className="mt-4 display-4 text-center">
-                    <a href={file.filePath}>
-                        <i className="fas text-primary fa-file-alt"></i>
-                    </a>
-                </div>
+                
 
-
-                    { filename.split('_').pop().length > 20 ? (
-                        <FileTrim filename={filename} />
-                    ) : (
-                        <FileNotTrim filename={filename} />
-                    ) }
-                    
+                    <div style={{marginTop: '5%'}}>
+                        { filename.split('_').pop().length > 20 ? (
+                            <FileTrim filename={filename} />
+                        ) : (
+                            <FileNotTrim filename={filename} />
+                        ) }
+                    </div>
+                    <div className="ui hidden divider"></div>
                     <center className="mt-2">
                         {
                             qrcode ? (
                                 <div>
                                     <img className="text-center" src={qrcode} /> 
                                     <p>Share</p>
+                                    <div className="ui hidden divider"></div>
                                 </div>
                             ) : (
                                 <div>
@@ -93,7 +88,7 @@ const FileInfo = ({ location }) => {
                     <center>
                         {
                             qrcode ? (
-                                <a href={file.filePath} className="btn text-light btn-primary mt-4" download="download">
+                                <a href={file.filePath} className="ui primary button" download="download">
                                     <i className="fas fa-download"></i> Download File
                                 </a>
                             ) : null

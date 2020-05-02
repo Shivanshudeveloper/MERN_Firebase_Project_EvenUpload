@@ -3,20 +3,16 @@ import { auth } from '../Firebase/index';
 import { Link } from 'react-router-dom';
 
 const User = () => {
-    let avartar = {
-        width: '50px',
-        height: '50px',
-        borderRadius: '50%'
-    }
-
-    
+       
 
     const [user, setUser] = useState({});
+    const [username, setName] = useState('');
 
     useEffect(() => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 setUser(user);
+                setName(user.displayName);
             } else {
                 console.log("No");
                 window.location.href = "/";
@@ -39,19 +35,31 @@ const User = () => {
 
     return (
         <Fragment>
-            <img src={user.photoURL} style={avartar} className="img-fluid float-left mt-2"  />
+        <br />
+        <div className="ui equal width grid">
+            <div className="column">
+                <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+            </div>
 
-            <button onClick={() => signOut()} className="float-right mt-2 btn btn-outline-danger btn-sm">
-                Logout
-            </button> 
-
-            <center>
+            <div className="column">
                 <Link to="/home">
                     <span style={{'fontSize': '36px'}}>
                         <i className="fas text-primary mb-4 fa-home"></i>
                     </span>
                 </Link>
-            </center>
+            </div>
+            <div className="column">
+                <button onClick={() => signOut()} className="ui inverted red button">
+                    Logout
+                </button> 
+            </div>
+        </div>
+
+
+
+
+            
+
 
         </Fragment>
     )
