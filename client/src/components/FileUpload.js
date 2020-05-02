@@ -35,7 +35,7 @@ const FileUpload = () => {
     }, []);
 
     useEffect(() => {
-        database.ref(userId).once('value', function(snapshot) {
+        database.ref(`files/${userId}`).once('value', function(snapshot) {
             setAllData(snapshot.val());
         });
         // database.ref().on("value", (snapshot) => {
@@ -80,7 +80,7 @@ const FileUpload = () => {
                         filePath
                     }
                     
-                    database.ref(userId).push(uploadData, (error) => {
+                    database.ref(`files/${userId}`).push(uploadData, (error) => {
                         if (error) {
                             console.log(error);
                         } else {
@@ -134,7 +134,7 @@ const FileUpload = () => {
             <ul className="list-group mt-2">
                 { allData ? (
                     (Object.keys(allData)).map((data) => (
-                        <File key={data} data={`${userId}/${data}`} />
+                        <File key={data} data={`files/${userId}/${data}`} />
                     ))
                 ) : 
                 <center>

@@ -5,5 +5,5 @@ services:
     restart: always
     build: .
     ports:
-      - '3000:3000'
+      - '3002:3002'
     volumes: ['./:/usr/src/app']
