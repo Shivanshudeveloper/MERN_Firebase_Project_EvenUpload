@@ -41,7 +41,7 @@ const File = ({ data }) => {
     return (
         <Fragment>
             <div role="listitem" className="item">
-                <i aria-hidden="true" className="file large icon middle aligned"></i>
+                <i aria-hidden="true" className="file alternate big icon blue aligned"></i>
                 <div className="content">
                     <Link className="header" to={`/fileinfo?name=${file_name}&fileId=${data}`}>
                         { file_name.split('_').pop().length > 40 ? (
@@ -55,7 +55,7 @@ const File = ({ data }) => {
                             <i className="fas fa-download"></i>
                         </a>
                     </div>
-                    <a className="description">Updated 22 mins ago</a>
+                    <a style={{marginTop: '2px'}} className="description">{`Uploaded on ${file.date}`}</a>
                 </div>
             </div>
             

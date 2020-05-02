@@ -76,12 +76,20 @@ const FileUpload = () => {
                     console.log(filePath);
                     const fileName = `${uniqueKey}_${file.name}`;
 
+                    var date = new Date();
+                    var dd = String(date.getDate()).padStart(2, '0');
+                    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = date.getFullYear();
+                    date = dd + '/' + mm + '/' + yyyy;
+
                     // Saved in Database about the User
                     const uploadData = {
-                        user: 'Shivanshu',
+                        date,
                         fileName,
                         filePath
                     }
+
+                    
                     
                     database.ref(`files/${userId}`).push(uploadData, (error) => {
                         if (error) {

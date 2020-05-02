@@ -46,11 +46,11 @@ const AuthenticationPage = () => {
                     <div  className="ui compact segment">
                         <form className="ui form">
                             <div className="field">
-                                <label>Email</label>
+                                <label className="ui left floated">Email</label>
                                 <input type="text" />
                             </div>
                             <div className="field">
-                                <label>Password</label>
+                                <label className="ui left floated">Password</label>
                                 <input type="password" />
                             </div>
                             <div className="field">
