@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
-import FileUpload from "./FileUpload";
+import FileUpload from './FileUpload';
+
+
+
 // Components
-import User from "./User";
+import User from './User';
 
 const EvenUpload = () => {
     return (
@@ -10,7 +13,7 @@ const EvenUpload = () => {
                 <User />
                 <div className="ui hidden divider"></div>
                 
-
+                
                 <FileUpload />
             </div>
         </Fragment>

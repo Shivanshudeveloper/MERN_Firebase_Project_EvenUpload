@@ -10,6 +10,7 @@
     "qrcode": "^1.4.4",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
+    "react-device-detect": "^1.12.1",
     "react-dom": "^16.13.1",
     "react-download-link": "^2.3.0",
     "react-qr-reader": "^2.2.1",

@@ -134,21 +134,28 @@ const FileUpload = () => {
         <Fragment>
             <div className="ui hidden divider"></div>
             <form onSubmit={onSubmit}>
-                <div className="custom-file mt-4 mb-4">
-                    <div>
-                        <label htmlFor="file" className="ui icon button">
-                                
-                            {filename}</label>
-                        <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
-                    </div>
+                <div className="ui text container">
+                    <label htmlFor="file" className="ui toggle icon button">
+                        {filename}
+                    </label>
+                    <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
                 </div>
-                <Progress percentage={uploadPercentage} />
-                <center>
-                    <button type="submit" className={loading === 0 ? 'ui primary medium button' : 'ui loading primary medium button' }>
-                        <i className="cloud upload icon"></i>
-                        {btnUpload}
-                    </button>
-                </center>
+                {
+                    filename !== 'Choose File' ? (
+                        <>
+                            <Progress percentage={uploadPercentage} />
+                            <center>
+                                <button type="submit" className={loading === 0 ? 'ui primary medium button' : 'ui loading primary medium button' }>
+                                    <i className="cloud upload icon"></i>
+                                    {btnUpload}
+                                </button>
+                            </center>
+                        </>
+                    ) : null
+                }
+
+                
+            
             </form>
 
             <div className="ui hidden divider"></div>

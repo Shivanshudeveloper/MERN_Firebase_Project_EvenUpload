@@ -38,7 +38,15 @@ const User = () => {
         <br />
         <div className="ui equal width grid">
             <div className="column">
-                <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+                {
+                    !user.photoURL ? (
+                        <div className="ui tiny header">
+                            {user.email}
+                        </div>
+                    ) : (
+                        <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+                    )
+                }
             </div>
 
             <div className="column">
