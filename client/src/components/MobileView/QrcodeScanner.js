@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import QrReader from 'react-qr-reader';
 
 // Component
-import Messages from './Messages';
+import Messages from '../Messages';
 import Menu from './Menu';
 
 export default class QrcodeScanner extends Component {
@@ -42,7 +42,7 @@ export default class QrcodeScanner extends Component {
 
   render() {
     return (
-      <div>
+      <>
       <Menu />
       <div className="ui hidden divider"></div>
       <center>
@@ -51,7 +51,7 @@ export default class QrcodeScanner extends Component {
                 this.state.result === '' ? (
                     this.state.msg !== '' ? (
                       <button onClick={this.requestForCamera} className="ui primary button">
-                        Request for Scan 
+                        Request for Scan
                       </button>
                     ) : null
                 ) : (
@@ -66,10 +66,10 @@ export default class QrcodeScanner extends Component {
                 delay={300}
                 onError={this.handleError}
                 onScan={this.handleScan}
-                style={{ width: '50%' }}
+                style={{ width: '100%' }}
             />
         </center>
-      </div>
+      </>
     )
   }
 }

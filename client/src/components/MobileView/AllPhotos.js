@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 // Firebase
-import { database } from '../Firebase/index';
+import { database } from '../../Firebase/index';
 
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ var imageResponsive = {
     height: '150px',
     fontSize: '1rem'
 }
+
 
 
 

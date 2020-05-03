@@ -51,8 +51,8 @@ const User = () => {
 
             <div className="column">
                 <Link to="/home">
-                    <span style={{'fontSize': '36px'}}>
-                        <i className="fas text-primary mb-4 fa-home"></i>
+                    <span>
+                        <i className="big home icon"></i>
                     </span>
                 </Link>
             </div>
