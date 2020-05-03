@@ -31,6 +31,7 @@ function App() {
         <MobileView>
             <Router>
               <Route path="/" exact component={AuthenticationPage} />
+              <Route path="/register" exact component={Register} />
               <Route path="/home" exact component={EvenUpload} />
               <Route path="/fileinfo" component={FileInfo} />
               <Route path="/scan" exact component={Scan} />
