@@ -12,6 +12,7 @@ import AuthenticationPage from './components/AuthenticationPage';
 import FileInfo from './components/FileInfo';
 import Scan from './components/Scan';
 import Register from './components/Register';
+import Photos from './components/Photos';
 
 // Test Component
 import Test from './components/Test';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/home" exact component={EvenUpload} />
             <Route path="/fileinfo" component={FileInfo} />
             <Route path="/scan" exact component={Scan} />
+            <Route path="/photos" exact component={Photos} />
           </Router>
         </BrowserView>
         <MobileView>
@@ -35,6 +37,7 @@ function App() {
               <Route path="/home" exact component={EvenUpload} />
               <Route path="/fileinfo" component={FileInfo} />
               <Route path="/scan" exact component={Scan} />
+              <Route path="/photos" exact component={Photos} />
             </Router>
         </MobileView>
     </Fragment>
