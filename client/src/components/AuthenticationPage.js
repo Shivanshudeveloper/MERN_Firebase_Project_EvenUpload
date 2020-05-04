@@ -86,7 +86,11 @@ const AuthenticationPage = () => {
             <div className="ui container">
                 <center style={{marginTop: '5%', width: 'auto'}}>
                     <div  className="ui compact segment">
-                        <form className="ui form">
+                        <Link className="fluid ui button" to="/qrcodedownload" >
+                            <i class="qrcode icon"></i>
+                            Download with QR Code
+                        </Link>
+                        <form style={{marginTop: '10px'}} className="ui form">
                             <div className="field">
                                 <label style={{float: 'left'}} className="ui">Email</label>
                                 <div className="ui left icon input">

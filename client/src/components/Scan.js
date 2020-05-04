@@ -11,8 +11,6 @@ const Scan = () => {
                 <User />
                 <div className="ui hidden divider"></div>
                 <QrcodeScanner />
-
-                
             </div>
         </Fragment>
     )

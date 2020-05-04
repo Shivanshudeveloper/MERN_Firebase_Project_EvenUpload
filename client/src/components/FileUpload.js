@@ -106,7 +106,7 @@ const FileUpload = () => {
                         } else {
                             console.log("Done");
                         }
-                    })
+                    });
 
                     setMessage('Successfully Uploaded');
 

@@ -25,6 +25,8 @@ const FileNotTrim = ({ file_name }) => {
 const File = ({ data }) => {
     const [file, setFile] = useState({});
     const [file_name, setFileName] = useState('');
+    const [file_path, setFilePath] = useState('');
+
 
     useEffect(() => {
         var starCountRef = database.ref(`${data}`);
@@ -32,6 +34,7 @@ const File = ({ data }) => {
             var fileData = snapshot.val();
             setFile(fileData);
             setFileName(fileData.fileName);
+            setFilePath(fileData.filePath);
         });
 }, []);
 
@@ -52,8 +55,12 @@ const File = ({ data }) => {
                     </Link>
 
                     <div className="ui right aligned">
+                        <Link className="right floated" to={`/scanqrdownload/?path=${data}`}>
+                            <i className="large share icon"></i>
+                        </Link>
+                        
                         <a href={file.filePath} className="right floated" target="_blank" download>
-                            <i className="fas fa-download"></i>
+                            <i className="large fas fa-download"></i>
                         </a>
                     </div>
 

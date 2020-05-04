@@ -71,7 +71,7 @@ const FileInfo = ({ location }) => {
                         {
                             qrcode ? (
                                 <div>
-                                    <img className="text-center" src={qrcode} /> 
+                                    <img className="text-center" src={qrcode} />
                                     <p>Share</p>
                                     <div className="ui hidden divider"></div>
                                 </div>

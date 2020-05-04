@@ -14,11 +14,14 @@ import FileInfo from './components/FileInfo';
 import Scan from './components/Scan';
 import Register from './components/Register';
 import Photos from './components/Photos';
+import QrForDownload from './components/QrForDownload';
+import ScanForDownload from './components/ScanForDownload';
 
 // @For Rendering Mobile
 import MobileScan from './components/MobileView/Scan';
 import MobileEvenUpload from './components/MobileView/EvenUpload';
 import MobilePhotos from './components/MobileView/Photos';
+import MobileScanForDownload from './components/MobileView/MobileScanForDownload';
 
 // Test Component
 import Test from './components/Test';
@@ -34,6 +37,8 @@ function App() {
             <Route path="/fileinfo" component={FileInfo} />
             <Route path="/scan" exact component={Scan} />
             <Route path="/photos" exact component={Photos} />
+            <Route path="/qrcodedownload" exact component={QrForDownload} />
+            <Route path="/scanqrdownload" component={ScanForDownload} />
           </Router>
         </BrowserView>
 
@@ -45,6 +50,8 @@ function App() {
               <Route path="/fileinfo" component={FileInfo} />
               <Route path="/scan" exact component={MobileScan} />
               <Route path="/photos" exact component={MobilePhotos} />
+              <Route path="/qrcodedownload" exact component={QrForDownload} />
+              <Route path="/scanqrdownload" component={MobileScanForDownload} />
             </Router>
         </MobileView>
     </Fragment>
