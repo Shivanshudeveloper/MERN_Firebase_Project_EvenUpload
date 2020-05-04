@@ -14,7 +14,7 @@ const Menu = () => {
         <div className="ui grid">
             <div className="four wide column">
                 <Link to="/home" className="item">
-                    <i className="large cloud blue icon"></i>
+                    <i className="large home blue icon"></i>
                     <br />
                     Files
                 </Link>

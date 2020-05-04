@@ -133,6 +133,9 @@ const FileUpload = () => {
     return (
         <Fragment>
             <div className="ui hidden divider"></div>
+            <Menu />
+            <div className="ui hidden divider"></div>
+
             <form onSubmit={onSubmit}>
                 <div className="ui text container">
                     <label htmlFor="file" className="ui toggle icon button">
@@ -159,7 +162,6 @@ const FileUpload = () => {
             </form>
 
             <div className="ui hidden divider"></div>
-            <Menu />
 
             { message ? <Messages msg={message} /> : null }
             

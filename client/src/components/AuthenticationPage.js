@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 // Components
 import Messages from './Messages';
 
+// Utils
+import tempImage from '../utils/temp_img_frontpage.gif';
+
 const AuthenticationPage = () => {
 
     const [signInBtn, setSignInBtn] = useState('Sign In Google');
@@ -121,6 +124,7 @@ const AuthenticationPage = () => {
                                 {signInBtn}
                             </button>
                         </center>
+                        <img className="ui medium image" src={tempImage} />
                     </div>
                 </center>
                 

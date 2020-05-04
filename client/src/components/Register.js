@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 // Components
 import Messages from './Messages';
 
+// Utils
+import tempImageRegister from '../utils/temp_register.gif';
+
 const Register = () => {
 
     const [email, setEmail] = useState('');
@@ -66,6 +69,7 @@ const Register = () => {
                             <button onClick={(event) => register(event)} className="fluid ui button primary" type="submit">Register</button>
                         </form>
                         <Link to='/'>Already have an account</Link>
+                        <img className="ui medium image" src={tempImageRegister} />
                     </div>
                 </center>
             </div>

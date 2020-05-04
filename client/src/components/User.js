@@ -44,18 +44,17 @@ const User = () => {
                             {user.email}
                         </div>
                     ) : (
-                        <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+                        <>
+                            <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+                            <span style={{marginLeft: '6px'}}>
+                               <strong> {user.email} </strong>
+                            </span>
+                        </>
                     )
                 }
             </div>
 
-            <div className="column">
-                <Link to="/home">
-                    <span>
-                        <i className="big home icon"></i>
-                    </span>
-                </Link>
-            </div>
+            
             <div className="column">
                 <button onClick={() => signOut()} className="ui inverted red button">
                     Logout

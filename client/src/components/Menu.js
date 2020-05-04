@@ -14,7 +14,7 @@ const Menu = () => {
         <div className="ui text container">
             <div className="ui four item stackable tabs menu">
                 <Link to="/home" className="item">
-                    <i className="cloud blue icon"></i>
+                    <i className="home blue icon"></i>
                     All Files
                 </Link>
                 <Link to="#!" className="item">
