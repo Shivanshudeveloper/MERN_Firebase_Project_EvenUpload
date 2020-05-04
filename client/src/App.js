@@ -6,6 +6,9 @@ import {
   MobileView
 } from 'react-device-detect';
 
+// Semantic UI
+import 'semantic-ui-css/semantic.min.css';
+
 // Components
 // @For Rendering in Browser
 import EvenUpload from './components/EvenUpload';
