@@ -2,12 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 // Firebase
 import { database } from '../../Firebase/index';
 
-import { Link } from 'react-router-dom';
-
 var imageResponsive = {
     width: 'auto',
     height: '150px',
-    fontSize: '1rem'
+    fontSize: '1rem',
+    borderRadius: '5px'
 }
 
 

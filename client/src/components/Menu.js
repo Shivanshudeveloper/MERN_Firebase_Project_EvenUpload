@@ -18,7 +18,7 @@ const Menu = () => {
                     All Files
                 </Link>
                 <Link to="#!" className="item">
-                    <i class="users yellow icon"></i>
+                    <i className="users yellow icon"></i>
                     Contacts
                 </Link>
                 <Link to="/photos" className="item">
