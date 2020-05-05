@@ -21,7 +21,7 @@ const Menu = () => {
             </div>
             <div className="four wide column">
                 <Link to="#!" className="item">
-                    <i class="users yellow icon"></i>
+                    <i class="large users yellow icon"></i>
                     <br />
                     Group
                 </Link>

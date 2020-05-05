@@ -47,7 +47,7 @@ const QrCodeDownload = () => {
                     {
                         loading !== 0 ? (
                             <div>
-                                <img className="text-center" src={qrcode} />
+                                <img className="ui medium image" src={qrcode} />
                                 <div className="ui hidden divider"></div>
                             </div>
                         ) : (
