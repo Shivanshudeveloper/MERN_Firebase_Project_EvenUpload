@@ -57,13 +57,16 @@ const File = ({ data }) => {
                     <div className="ui right aligned">
                         <Link className="right floated" to={`/scanqrdownload/?path=${data}`}>
                             <i className="large share icon"></i>
+                            <br />
                         </Link>
                         
                         <a href={file.filePath} className="right floated" target="_blank" download>
-                            <i className="large fas fa-download"></i>
+                            <i class="large grey download icon"></i>
+                            <br />
                         </a>
                     </div>
-
+                    
+                        
                     <a style={{marginTop: '2px'}} className="description">{`Uploaded on ${file.date}`}</a>
                 </div>
             </div>

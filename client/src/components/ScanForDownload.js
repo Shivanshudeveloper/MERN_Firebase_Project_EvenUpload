@@ -83,7 +83,7 @@ export default class ScanForDownload extends Component {
 
   render() {
     return (
-      <div>
+      <div className="ui center aligned container">
         <User />
         <div className="ui hidden divider"></div>
         <Menu />
