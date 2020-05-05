@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import QrReader from 'react-qr-reader';
 import queryString from 'query-string';
 import { database } from "../../Firebase/index";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 // Component
 import Messages from '../Messages';
@@ -13,7 +14,8 @@ export default class ScanForDownload extends Component {
         super(props);
 
         this.state = {
-          filepath: ''
+          filepath: '',
+          copied: false
         };
     }
     
@@ -89,6 +91,27 @@ export default class ScanForDownload extends Component {
             <div className="ui hidden divider"></div>
             <Menu />
             <div className="ui hidden divider"></div>
+
+            <CopyToClipboard text={this.state.filepath}
+              onCopy={() => this.setState({copied: true})}>
+              <div className="ui action input">
+                <input type="text" value={this.state.filepath} />
+                                                
+                <button className="ui button">
+                  <i className="copy icon"></i>
+                  Copy
+                </button>
+              </div>
+            </CopyToClipboard>
+            <br />
+
+            {
+              this.state.copied ? (
+                  <div className="ui pointing label">
+                    Copied
+                  </div>
+                ) : null
+            }
 
             <center>
                 { this.state.msg ? <Messages msg={this.state.msg} /> : null }
