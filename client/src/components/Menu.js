@@ -18,7 +18,7 @@ const Menu = () => {
                     All Files
                 </Link>
                 <Link to="#!" className="item">
-                    <i className="folder yellow icon"></i>
+                    <i class="users yellow icon"></i>
                     Group
                 </Link>
                 <Link to="/photos" className="item">

@@ -1,17 +1,26 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import queryString from 'query-string';
 import QRCode from 'qrcode';
+import {
+    BrowserView,
+    MobileView
+  } from 'react-device-detect';
+
 // Loading
 import loading from '../utils/loading.gif';
 
 // Firebase
 import { database } from '../Firebase/index';
 // Components
-import User from "./User";
+import User from './User';
+import Menu from './Menu';
+// @From Mobile
+import MobileMenu from './MobileView/Menu';
+
 
 const FileTrim = ({ filename }) => {
     return (
-        <div className="ui large header">
+        <div className="ui medium header">
             {filename.split("_").pop().substring(0, 40)}....
         </div>
     )
@@ -19,7 +28,7 @@ const FileTrim = ({ filename }) => {
 
 const FileNotTrim = ({ filename }) => {
     return (
-        <div className="ui large header">
+        <div className="ui medium header">
             {filename.split("_").pop()}
         </div>
     )
@@ -57,7 +66,15 @@ const FileInfo = ({ location }) => {
         <Fragment>
             <div className="ui center aligned container">
                 <User />
-                
+                <div className="ui hidden divider"></div>
+                <div className="ui hidden divider"></div>
+                <BrowserView>
+                    <Menu />
+                </BrowserView>
+
+                <MobileView>
+                    <MobileMenu />
+                </MobileView>
 
                     <div style={{marginTop: '5%'}}>
                         { filename.split('_').pop().length > 40 ? (
@@ -72,7 +89,10 @@ const FileInfo = ({ location }) => {
                             qrcode ? (
                                 <div>
                                     <img className="text-center" src={qrcode} />
-                                    <p>Share</p>
+                                    <br />
+                                    <button className="ui button">
+                                        Share
+                                    </button>
                                     <div className="ui hidden divider"></div>
                                 </div>
                             ) : (
