@@ -19,7 +19,7 @@ const Menu = () => {
                 </Link>
                 <Link to="#!" className="item">
                     <i class="users yellow icon"></i>
-                    Group
+                    Contacts
                 </Link>
                 <Link to="/photos" className="item">
                     <i className="file purple image icon"></i>
@@ -27,7 +27,7 @@ const Menu = () => {
                 </Link>
                 <Link to="/scan" className="item">
                     <i className="folder black qrcode icon"></i>
-                    Scan
+                    Scan to Download
                 </Link>
             </div>
         </div>

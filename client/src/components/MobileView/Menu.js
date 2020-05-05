@@ -23,7 +23,7 @@ const Menu = () => {
                 <Link to="#!" className="item">
                     <i class="large users yellow icon"></i>
                     <br />
-                    Group
+                    Contacts
                 </Link>
             </div>
             <div className="four wide column">

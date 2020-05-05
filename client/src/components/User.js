@@ -18,8 +18,6 @@ const User = () => {
                 window.location.href = "/";
             }
         });
-
-
     }, []);
 
     const signOut = () => {

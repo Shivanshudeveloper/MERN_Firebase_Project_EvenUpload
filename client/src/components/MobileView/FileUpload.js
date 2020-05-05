@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 // Firebase
 import { auth, database, storage } from '../../Firebase/index';
@@ -140,7 +141,17 @@ const FileUpload = () => {
                         {filename}
                     </label>
                     <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
+                
+                    <Link style={{ marginTop: '4px' }} className="ui fluid secondary button" to="/qrcodedownload" >
+                        Accept Files by QR Code
+                    </Link>
                 </div>
+
+                <center>
+                    
+                </center>
+
+                
                 {
                     filename !== 'Choose File' ? (
                         <>

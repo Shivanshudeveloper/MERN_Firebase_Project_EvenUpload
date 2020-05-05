@@ -49,6 +49,7 @@ const Photos = () => {
             <div className="ui center aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
+                <div className="ui hidden divider"></div>
                 <Menu />
 
                 { message ? <Messages msg={message} /> : null }
@@ -79,13 +80,21 @@ const Photos = () => {
                                 (Object.keys(allData)).map((data) => (
                                     <AllPhotos key={data} data={`files/${userId}/${data}`} />
                                 ))
-                            ) : 
-                            <center>
-                                <img className="ui large image" src={no_files} />
-                            </center>
+                            ) : null
                             }
                         </div>
+
+                        
                     )
+                    
+                }
+
+                {
+                    !allData ? (
+                        <center>
+                            <img className="ui  large image" src={no_files} />
+                        </center>
+                    ) : null
                 }
                     
                 </div>

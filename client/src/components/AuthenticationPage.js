@@ -95,9 +95,9 @@ const AuthenticationPage = () => {
                 <div className="ui container">
                     <center style={{marginTop: '5%', width: 'auto'}}>
                         <div  className="ui compact segment">
-                            <Link className="fluid ui button" to="/qrcodedownload" >
+                            <Link className="fluid ui secondary button" to="/qrcodedownload" >
                                 <i class="qrcode icon"></i>
-                                Download with QR Code
+                                Accept Files by QR Code
                             </Link>
                             <form style={{marginTop: '10px'}} className="ui form">
                                 <div className="field">

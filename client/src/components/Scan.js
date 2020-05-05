@@ -10,6 +10,7 @@ const Scan = () => {
             <div className="ui center aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
+                <div className="ui hidden divider"></div>
                 <QrcodeScanner />
             </div>
         </Fragment>

@@ -56,7 +56,7 @@ const File = ({ data }) => {
 
                     <div className="ui right aligned">
                         <Link className="right floated" to={`/scanqrdownload/?path=${data}`}>
-                            <i className="large share icon"></i>
+                            <i class="large qrcode icon"></i>
                             <br />
                         </Link>
                         

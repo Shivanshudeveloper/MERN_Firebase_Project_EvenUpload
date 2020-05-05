@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
-
+import { Link } from 'react-router-dom';
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
 
@@ -156,10 +156,10 @@ const FileUpload = () => {
                         </>
                     ) : null
                 }
-
-                
-            
             </form>
+            <Link style={{float: 'right'}} className="ui secondary button" to="/qrcodedownload" >
+                Accept Files by QR Code
+            </Link>
 
             <div className="ui hidden divider"></div>
 
