@@ -7,6 +7,16 @@ import Messages from './Messages';
 
 // Utils
 import tempImage from '../utils/temp_img_frontpage.gif';
+import BackgroundImage from '../utils/background-website-01.jpg';
+
+var sectionStyle = {
+    backgroundImage: `url(${BackgroundImage})`,
+    backgroundSize:'contain',
+    backgroundPosition:'top',
+    background: 'cover',
+    width: '100%'
+};
+  
 
 const AuthenticationPage = () => {
 
@@ -75,71 +85,63 @@ const AuthenticationPage = () => {
 
     return (
         <Fragment>
-                
-
-            <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
-                Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
-            </h1>
-            <div style={{marginTop: '40px'}} className="ui text center aligned container">
-                { message ? <Messages msg={message} /> : null }
-            </div>
-            <div className="ui container">
-                <center style={{marginTop: '5%', width: 'auto'}}>
-                    <div  className="ui compact segment">
-                        <Link className="fluid ui button" to="/qrcodedownload" >
-                            <i class="qrcode icon"></i>
-                            Download with QR Code
-                        </Link>
-                        <form style={{marginTop: '10px'}} className="ui form">
-                            <div className="field">
-                                <label style={{float: 'left'}} className="ui">Email</label>
-                                <div className="ui left icon input">
-                                    <input 
-                                    type="email" 
-                                    placeholder="example@examole.com" 
-                                    value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
-                                    />
-                                    <i className="user icon"></i>
+            <section style={ sectionStyle }>
+                <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
+                    Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
+                </h1>
+                <div style={{marginTop: '40px'}} className="ui text center aligned container">
+                    { message ? <Messages msg={message} /> : null }
+                </div>
+                <div className="ui container">
+                    <center style={{marginTop: '5%', width: 'auto'}}>
+                        <div  className="ui compact segment">
+                            <Link className="fluid ui button" to="/qrcodedownload" >
+                                <i class="qrcode icon"></i>
+                                Download with QR Code
+                            </Link>
+                            <form style={{marginTop: '10px'}} className="ui form">
+                                <div className="field">
+                                    <label style={{float: 'left'}} className="ui">Email</label>
+                                    <div className="ui left icon input">
+                                        <input 
+                                        type="email" 
+                                        placeholder="example@examole.com" 
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        />
+                                        <i className="user icon"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <label style={{float: 'left'}} className="ui left floated">Password</label>
-                                <div className="ui left icon input">
-                                    <input 
-                                    type="password" 
-                                    value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
-                                    />
-                                    <i className="lock icon"></i>
+                                <div className="field">
+                                    <label style={{float: 'left'}} className="ui left floated">Password</label>
+                                    <div className="ui left icon input">
+                                        <input 
+                                        type="password" 
+                                        value={password}
+                                        onChange={(event) => setPassword(event.target.value)}
+                                        />
+                                        <i className="lock icon"></i>
+                                    </div>
                                 </div>
-                            </div>
+                                
+                                <button onClick={(event) => login(event)} className="fluid ui button primary" type="submit">Login</button>
+                            </form>
                             
-                            <button onClick={(event) => login(event)} className="fluid ui button primary" type="submit">Login</button>
-                        </form>
-                        
-                        <Link to='/register'>Don't have an Account</Link>
+                            <Link to='/register'>Don't have an Account</Link>
 
-                        <div className="ui horizontal divider">Or</div>
+                            <div className="ui horizontal divider">Or</div>
 
-                        <center>
-                            <button onClick={() => signIn()} type="button" style={{marginTop: '1%'}} className="fluid ui google plus button">
-                                <i style={{marginRight: '4px'}} className="fab mr-2 fa-google fluid"></i>
-                                {signInBtn}
-                            </button>
-                        </center>
-                        <img className="ui medium image" src={tempImage} />
-                    </div>
-                </center>
-                
-
-                {/* <div className="ui two column centered grid">
-                    <img className="eight wide column" src={cloud_temp_image_frontpage} />
-                </div> */}
-
-                
-                
-            </div>
+                            <center>
+                                <button onClick={() => signIn()} type="button" style={{marginTop: '1%'}} className="fluid ui google plus button">
+                                    <i style={{marginRight: '4px'}} className="fab mr-2 fa-google fluid"></i>
+                                    {signInBtn}
+                                </button>
+                            </center>
+                            <img className="ui medium image" src={tempImage} />
+                        </div>
+                    </center>
+                </div>
+            </section>
         </Fragment>
     )
 }
