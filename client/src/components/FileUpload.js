@@ -49,6 +49,12 @@ const FileUpload = () => {
             setAllData(snapshot.val());
             setLoadingData(1);
         });
+
+        // database.ref(`files/${userId}`).orderByValue().limitToLast(2).once('value', function(snapshot) {
+        //     setAllData(snapshot.val());
+        //     setLoadingData(1);
+        // });
+
         // database.ref().on("value", (snapshot) => {
         //     console.log(snapshot.val());
         //     setAllData(snapshot.val());
