@@ -93,7 +93,7 @@ const Share = ({ location }) => {
                     loading ? (
                         <Fragment>
                             <div className="ui text center aligned container">
-                                <div class="ui green message">
+                                <div className="ui green message">
                                     File Successfully Shared
                                 </div>
                             </div>
