@@ -6,6 +6,7 @@ import {
     MobileView
   } from 'react-device-detect';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom';
 
 // Loading
 import loading from '../utils/loading.gif';
@@ -93,6 +94,12 @@ const FileInfo = ({ location }) => {
                         ) }
                     </div>
                     <div className="ui hidden divider"></div>
+                    <Link className="ui button" to={`/share?name=${filename}&fileId=${fileId}`}>
+                        <i className="share alternate icon"></i>
+                        Share to Contacts
+                    </Link>
+                    <div className="ui hidden divider"></div>
+                    
                     {
                         qrcode ? (
                                 <div>
@@ -101,12 +108,11 @@ const FileInfo = ({ location }) => {
                                         <div className="ui action input">
                                             <input type="text" value={filePath} />
                                             
-                                            <button className="ui button">
+                                            <button className="ui teal right labeled icon button">
                                                 <i className="copy icon"></i>
                                                 Copy
                                             </button>
                                         </div>
-                                        
                                 </CopyToClipboard>
                                 
                                 </div>

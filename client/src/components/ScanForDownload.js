@@ -96,7 +96,7 @@ export default class ScanForDownload extends Component {
           <div className="ui action input">
             <input type="text" value={this.state.filepath} />
                                             
-            <button className="ui button">
+            <button className="ui teal right labeled icon button">
               <i className="copy icon"></i>
               Copy
             </button>

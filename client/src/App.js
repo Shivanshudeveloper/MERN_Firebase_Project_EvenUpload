@@ -19,6 +19,7 @@ import Register from './components/Register';
 import Photos from './components/Photos';
 import QrForDownload from './components/QrForDownload';
 import ScanForDownload from './components/ScanForDownload';
+import Share from './components/Share';
 
 // @For Rendering Mobile
 import MobileScan from './components/MobileView/Scan';
@@ -42,6 +43,7 @@ function App() {
             <Route path="/photos" exact component={Photos} />
             <Route path="/qrcodedownload" exact component={QrForDownload} />
             <Route path="/scanqrdownload" component={ScanForDownload} />
+            <Route path="/share" component={Share} />
           </Router>
         </BrowserView>
 
