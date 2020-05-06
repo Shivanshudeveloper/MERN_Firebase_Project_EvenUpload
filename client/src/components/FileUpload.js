@@ -1,6 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { Link } from 'react-router-dom';
+import {
+    BrowserView,
+    MobileView
+  } from 'react-device-detect';
+
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
 
@@ -10,6 +15,7 @@ import Progress from "./ProgressBar";
 import Messages from "./Messages";
 import File from "./File";
 import Menu from './Menu';
+import RecentsFiles from './RecentsFIles';
 
 // Utils
 import no_files from '../utils/no_files.png';
@@ -49,12 +55,6 @@ const FileUpload = () => {
             setAllData(snapshot.val());
             setLoadingData(1);
         });
-
-        // database.ref(`files/${userId}`).orderByValue().limitToLast(2).once('value', function(snapshot) {
-        //     setAllData(snapshot.val());
-        //     setLoadingData(1);
-        // });
-
         // database.ref().on("value", (snapshot) => {
         //     console.log(snapshot.val());
         //     setAllData(snapshot.val());
@@ -163,16 +163,20 @@ const FileUpload = () => {
                     ) : null
                 }
             </form>
+            
+            
             <Link style={{float: 'right'}} className="ui secondary button" to="/qrcodedownload" >
                 Accept Files by QR Code
             </Link>
-
             <div className="ui hidden divider"></div>
-
+            <div className="ui hidden divider"></div>
+            <div className="ui hidden divider"></div>
+            <BrowserView>
+                <RecentsFiles userId={userId}  />
+            </BrowserView>
+            <div class="ui divider"></div>
             { message ? <Messages msg={message} /> : null }
-            
-            
-            <div style={{marginTop: '4%', marginBottom: '5%'}} className="ui left aligned container">
+            <div style={{marginTop: '1%', marginBottom: '5%'}} className="ui left aligned container">
             {
                 loadingdata === 0 ? (
                     <div className="ui fluid placeholder">
