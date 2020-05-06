@@ -12,28 +12,35 @@ const Menu = () => {
 
     return (
         <div className="ui grid">
-            <div className="four wide column">
+            <div className="five wide column">
                 <Link to="/home" className="item">
                     <i className="large home blue icon"></i>
                     <br />
                     Files
                 </Link>
             </div>
-            <div className="four wide column">
+            <div className="five wide column">
                 <Link to="#!" className="item">
                     <i class="large users yellow icon"></i>
                     <br />
                     Contacts
                 </Link>
             </div>
-            <div className="four wide column">
+            <div className="five wide column">
                 <Link to="/photos" className="item">
                     <i className="large file purple image icon"></i>
                     <br />
                     Photos
                 </Link>
             </div>
-            <div className="four wide column">
+            <div className="five wide column">
+                <Link to="#!" className="item">
+                    <i className="large inbox red icon"></i>
+                    <br />
+                    Inbox
+                </Link>
+            </div>
+            <div className="five wide column">
                 <Link to="/scan" className="item">
                     <i className="large folder black qrcode icon"></i>
                     <br />
