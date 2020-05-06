@@ -42,6 +42,13 @@ const Share = ({ location }) => {
             setFilePath(path);
             setUploaded(uploaded);
         });
+
+        // Sharing Database Code
+        // var starCountRef = database.ref('sharewith/Hr27iz1W1shBHAv5mqyOtGN56SI2').orderByChild("shareTo").equalTo('shivanshu@geu.ac.in');
+        // starCountRef.on('value', function(snapshot) {
+        //     console.log(snapshot.val());
+        // });
+
     }, []);
 
     const share = (event) => {
@@ -58,6 +65,7 @@ const Share = ({ location }) => {
                 setLoading(true);
                 setEmail('');
                 setTimeout(() => setLoading(false), 2000);
+                
             }
         });
     }
