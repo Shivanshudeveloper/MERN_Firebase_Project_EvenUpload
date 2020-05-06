@@ -35,6 +35,10 @@ const FileTrim = ({ file_name }) => {
                         <div>
                             <i aria-hidden="true" className="file olive video big icon aligned"></i>{file_name.split("_").pop().substring(0, 40)}....
                         </div>
+                    ) : fileExtension === 'zip' || fileExtension === 'rar' || fileExtension === '7z' || fileExtension === 'tar' || fileExtension === 'tar.gz' || fileExtension === 'iso' || fileExtension === 'gz' || fileExtension === 'jar' || fileExtension === 'bz' || fileExtension === 'tgz'  ? ( 
+                        <div>
+                            <i aria-hidden="true" className="file archive brown big icon aligned"></i>{file_name.split("_").pop().substring(0, 40)}....
+                        </div>
                     ) : (
                         <div>
                             <i aria-hidden="true" className="file grey alternate big icon aligned"></i>{file_name.split("_").pop().substring(0, 40)}....
@@ -75,6 +79,10 @@ const FileNotTrim = ({ file_name }) => {
                     ) : fileExtension === 'mp4' || fileExtension === 'm4a' || fileExtension === 'm4v' || fileExtension === 'f4v' || fileExtension === 'm4b' || fileExtension === 'mov' || fileExtension === 'webm' || fileExtension === 'wmv' || fileExtension === 'mkv' || fileExtension === 'wav' || fileExtension === 'aac' || fileExtension === 'avi' ? ( 
                         <div>
                             <i aria-hidden="true" className="file olive video big icon aligned"></i>{file_name.split("_").pop()}
+                        </div>
+                    ) : fileExtension === 'zip' || fileExtension === 'rar' || fileExtension === '7z' || fileExtension === 'tar' || fileExtension === 'tar.gz' || fileExtension === 'iso' || fileExtension === 'gz' || fileExtension === 'jar' || fileExtension === 'bz' || fileExtension === 'tgz'  ? ( 
+                        <div>
+                            <i aria-hidden="true" className="file archive brown big icon aligned"></i>{file_name.split("_").pop()}
                         </div>
                     ) : (
                         <div>

@@ -133,7 +133,7 @@ const AuthenticationPage = () => {
 
                             <center>
                                 <button onClick={() => signIn()} type="button" style={{marginTop: '1%'}} className="fluid ui google plus button">
-                                    <i style={{marginRight: '4px'}} className="fab mr-2 fa-google fluid"></i>
+                                    <i style={{marginRight: '4px'}} className="google icon"></i>
                                     {signInBtn}
                                 </button>
                             </center>
@@ -145,5 +145,4 @@ const AuthenticationPage = () => {
         </Fragment>
     )
 }
-
 export default AuthenticationPage
