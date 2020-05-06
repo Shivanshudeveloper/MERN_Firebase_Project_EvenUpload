@@ -55,7 +55,8 @@ const Share = ({ location }) => {
         // Saved in Database about the User
         const uploadData = {
             shareTo: email,
-            filePath 
+            filePath,
+            fileName: filename
         }
 
         database.ref(`sharewith/${userId}`).push(uploadData, (error) => {
