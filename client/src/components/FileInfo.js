@@ -94,10 +94,23 @@ const FileInfo = ({ location }) => {
                         ) }
                     </div>
                     <div className="ui hidden divider"></div>
-                    <Link className="ui button" to={`/share?name=${filename}&fileId=${fileId}`}>
-                        <i className="share alternate icon"></i>
-                        Share to Contacts
-                    </Link>
+                    
+                    
+                    <div className="ui buttons">
+                        <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}`}>
+                            <i class="qrcode icon"></i>
+                            Scan QR Code
+                        </Link>
+                        <Link className="ui button" to={`/share?name=${filename}&fileId=${fileId}`}>
+                            <i className="share alternate icon"></i>
+                            Share to Contacts
+                        </Link>
+                    </div>
+                    
+                    
+
+
+
                     <div className="ui hidden divider"></div>
                     
                     {
