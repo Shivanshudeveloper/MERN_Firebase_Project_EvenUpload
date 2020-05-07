@@ -3,6 +3,7 @@ import QrReader from 'react-qr-reader';
 import queryString from 'query-string';
 import { database } from "../Firebase/index";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import axios from 'axios';
 
 // Component
 import Messages from './Messages';
@@ -36,8 +37,17 @@ export default class ScanForDownload extends Component {
         
         getData(ref)
           .then((value) => {
-            this.setState({
-              filepath: value.filePath
+            var name = value.fileName;
+            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${name}`;
+            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+
+            // Make a Request to Firebase Dynamic Links for the URL
+            axios.post(dynamicLinkApi, {
+                longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+            }).then((res) => {
+                this.setState({
+                  filepath: res.data.shortLink
+                })
             })
           })
           .catch((error) => {
@@ -58,7 +68,6 @@ export default class ScanForDownload extends Component {
         var updates = {
             filePath: this.state.filepath
         };
-        console.log(this.state.filepath);
 
         database.ref(`qr/${data}/`).update(updates).then(() => {
             console.log("S");

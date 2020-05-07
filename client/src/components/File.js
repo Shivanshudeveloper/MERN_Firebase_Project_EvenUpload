@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import axios from 'axios';
 // Firebase
 import { database } from '../Firebase/index';
 
@@ -107,8 +108,17 @@ const File = ({ data }) => {
         starCountRef.on('value', function(snapshot) {
             var fileData = snapshot.val();
             setFile(fileData);
+            var name = fileData.fileName;
+            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${name}`;
+            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+
+            // Make a Request to Firebase Dynamic Links for the URL
+            axios.post(dynamicLinkApi, {
+                longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+            }).then((res) => {
+                setFilePath(res.data.shortLink);
+            })
             setFileName(fileData.fileName);
-            setFilePath(fileData.filePath);
         });
 }, []);
 
@@ -133,7 +143,7 @@ const File = ({ data }) => {
                             <br />
                         </Link>
                         
-                        <a href={file.filePath} className="right floated" target="_blank" download>
+                        <a href={file_path} className="right floated" target="_blank" download>
                             <i className="large grey download icon"></i>
                             <br />
                         </a>

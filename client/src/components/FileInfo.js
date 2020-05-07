@@ -7,12 +7,13 @@ import {
   } from 'react-device-detect';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // Loading
 import loading from '../utils/loading.gif';
 
 // Firebase
-import { database } from '../Firebase/index';
+import { storage, database } from '../Firebase/index';
 // Components
 import User from './User';
 import Menu from './Menu';
@@ -45,10 +46,24 @@ const FileInfo = ({ location }) => {
     const [filePath, setFilePath] = useState('');
     const [copied, setCopied] = useState(false);
 
+    // By Google Cloud Storage Public URL
+    const [publicURL, setPublicURL] = useState('');
+
     useEffect(() => {
         const { name, fileId } = queryString.parse(location.search);
         setFileName(name);
         setFileId(fileId);
+
+        var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${name}`;
+        var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+
+        // Make a Request to Firebase Dynamic Links for the URL
+        axios.post(dynamicLinkApi, {
+            longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+        }).then((res) => {
+            setPublicURL(res.data.shortLink);
+        })
+
 
         var starCountRef = database.ref(fileId);
         starCountRef.on('value', function(snapshot) {
@@ -57,6 +72,12 @@ const FileInfo = ({ location }) => {
 
             var path = fileData.filePath;
             setFilePath(path);
+
+
+            var gsReference = storage.refFromURL('gs://aicte-admin-survey.appspot.com/uploads/uploads/109e2440-98f6-4836-8270-739b836415a5_46564.jpg')
+            
+            console.log(gsReference);
+
             QRCode.toDataURL(`${path}`, function (err, url) {
                 setQrcode(url);
             });
@@ -116,10 +137,10 @@ const FileInfo = ({ location }) => {
                     {
                         qrcode ? (
                                 <div>
-                                <CopyToClipboard text={filePath}
+                                <CopyToClipboard text={publicURL}
                                         onCopy={() => copy()}>
                                         <div className="ui action input">
-                                            <input type="text" value={filePath} />
+                                            <input type="text" value={publicURL} />
                                             
                                             <button className="ui teal right labeled icon button">
                                                 <i className="copy icon"></i>
@@ -164,7 +185,7 @@ const FileInfo = ({ location }) => {
                     <center>
                         {
                             qrcode ? (
-                                <a href={file.filePath} className="ui primary button" target="_blank" download>
+                                <a href={publicURL} className="ui green button" target="_blank" download>
                                     <i className="download icon"></i>
                                     Download File
                                 </a>

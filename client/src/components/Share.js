@@ -4,7 +4,6 @@ import {
     BrowserView,
     MobileView
   } from 'react-device-detect';
-import { Link } from 'react-router-dom';
 
 // Firebase
 import { database } from '../Firebase/index';
