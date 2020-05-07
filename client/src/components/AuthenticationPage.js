@@ -89,11 +89,9 @@ const AuthenticationPage = () => {
                 <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
                     Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
                 </h1>
-                <div style={{marginTop: '40px'}} className="ui text center aligned container">
-                    { message ? <Messages msg={message} /> : null }
-                </div>
                 <div className="ui container">
                     <center style={{marginTop: '5%', width: 'auto'}}>
+                        { message ? <Messages msg={message} /> : null }
                         <div  className="ui compact segment">
                             <Link className="fluid ui secondary button" to="/qrcodedownload" >
                                 <i class="qrcode icon"></i>

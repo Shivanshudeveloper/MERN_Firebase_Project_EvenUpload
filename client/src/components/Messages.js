@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Message = ({ msg }) => {
     return (
-        <div className="ui success message">
+        <div className="ui text success message">
             <div className="content">
                 <div className="header">{msg}</div>
             </div>
