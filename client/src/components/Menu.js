@@ -12,22 +12,22 @@ const Menu = () => {
 
     return (
         <div className="ui text container">
-            <div className="ui five item stackable tabs menu">
+            <div className="ui four item stackable tabs menu">
                 <Link to="/home" className="item">
                     <i className="home blue icon"></i>
                     All Files
                 </Link>
-                <Link to="/contacts" className="item">
-                    <i className="users yellow icon"></i>
-                    Share
+                <Link to="/inbox" className="item">
+                    <i className="inbox red icon"></i>
+                    Inbox
                 </Link>
+                {/* <Link to="/contacts" className="item">
+                    <i className="users yellow icon"></i>
+                    Contacts
+                </Link> */}
                 <Link to="/photos" className="item">
                     <i className="file purple image icon"></i>
                     Photos
-                </Link>
-                <Link to="#!" className="item">
-                    <i className="inbox red icon"></i>
-                    Inbox
                 </Link>
                 <Link to="/scan" className="item">
                     <i className="folder black qrcode icon"></i>

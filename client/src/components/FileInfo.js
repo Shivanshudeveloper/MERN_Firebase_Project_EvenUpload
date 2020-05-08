@@ -124,7 +124,7 @@ const FileInfo = ({ location }) => {
                         </Link>
                         <Link className="ui button" to={`/share?name=${filename}&fileId=${fileId}`}>
                             <i className="share alternate icon"></i>
-                            Share to Contacts
+                            Share
                         </Link>
                     </div>
                     

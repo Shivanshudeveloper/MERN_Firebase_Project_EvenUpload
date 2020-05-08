@@ -73,9 +73,11 @@ const Share = ({ location }) => {
         } else {
             fileName = filename.split("_").pop()
         }
+        
         // Saved in Database about the User
         const uploadData = {
             fileName,
+            filename,
             to: email,
             from: userId,
             url: filePath,
@@ -100,7 +102,7 @@ const Share = ({ location }) => {
 
     return (
         <Fragment>
-            <div className="ui center text aligned container">
+            <div className="ui center aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
@@ -111,6 +113,9 @@ const Share = ({ location }) => {
                 <MobileView>
                     <MobileMenu />
                 </MobileView>
+            </div>
+            <div className="ui text aligned container">
+
                 <div className="ui hidden divider"></div>
 
 
@@ -139,7 +144,7 @@ const Share = ({ location }) => {
                 <div style={{marginTop: '4px'}} className="ui form">
                     <div className="field">
                         <label>Message</label>
-                        <textarea onChange={(event) => setMessage(event.target.value)} rows="2"></textarea>
+                        <textarea onChange={(event) => setMessage(event.target.value)} rows="2">{message}</textarea>
                     </div>
                 </div>
                 <button style={{marginTop: '4px'}} onClick={() => share()} className="ui green icon button">

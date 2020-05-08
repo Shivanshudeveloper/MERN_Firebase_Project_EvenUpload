@@ -46,7 +46,7 @@ function App() {
             <Route path="/qrcodedownload" exact component={QrForDownload} />
             <Route path="/scanqrdownload" component={ScanForDownload} />
             <Route path="/share" component={Share} />
-            <Route path="/contacts" component={Contacts} />
+            <Route path="/inbox" component={Contacts} />
           </Router>
         </BrowserView>
 
@@ -60,7 +60,7 @@ function App() {
               <Route path="/photos" exact component={MobilePhotos} />
               <Route path="/qrcodedownload" exact component={QrForDownload} />
               <Route path="/scanqrdownload" component={MobileScanForDownload} />
-              <Route path="/contacts" component={Contacts} />
+              <Route path="/inbox" component={Contacts} />
             </Router>
         </MobileView>
     </Fragment>

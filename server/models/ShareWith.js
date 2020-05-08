@@ -19,7 +19,7 @@ const shareSchema = new mongoose.Schema({
     },
     message: {
         type: String,
-        required: true
+        required: false
     },
     senders_photoURL: {
         type: String,
