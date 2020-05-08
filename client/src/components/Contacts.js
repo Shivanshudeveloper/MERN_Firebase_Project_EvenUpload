@@ -69,8 +69,7 @@ const Contacts = () => {
                 <Menu />    
                 <div className="ui hidden divider"></div>
                 
-                {showContactList()}
-                
+                {JSON.stringify(contacts)}                
                 
             </div>
         </Fragment>
