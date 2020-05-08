@@ -94,7 +94,7 @@ const AuthenticationPage = () => {
                         { message ? <Messages msg={message} /> : null }
                         <div  className="ui compact segment">
                             <Link className="fluid ui secondary button" to="/qrcodedownload" >
-                                <i class="qrcode icon"></i>
+                                <i className="qrcode icon"></i>
                                 Accept Files by QR Code
                             </Link>
                             <form style={{marginTop: '10px'}} className="ui form">

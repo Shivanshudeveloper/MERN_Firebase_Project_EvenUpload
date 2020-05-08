@@ -16,7 +16,8 @@ import Messages from "./Messages";
 // @From Mobile
 import MobileMenu from './MobileView/Menu';
 
-
+// API Service
+import { API_SERVICE } from '../config/URI';
 
 
 const Share = ({ location }) => {
@@ -29,6 +30,7 @@ const Share = ({ location }) => {
     const [filePath, setFilePath] = useState('');
     const [uploaded, setUploaded] = useState('');
     const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
     const [userphotoURL, setUserPhotoURL] = useState('');
 
     const [loading, setLoading] = useState(false);
@@ -71,7 +73,6 @@ const Share = ({ location }) => {
         } else {
             fileName = filename.split("_").pop()
         }
-        
         // Saved in Database about the User
         const uploadData = {
             fileName,
@@ -79,10 +80,11 @@ const Share = ({ location }) => {
             from: userId,
             url: filePath,
             senders_photoURL: userphotoURL,
-            senders_email: sendersEmail
+            senders_email: sendersEmail,
+            message
         }
 
-        axios.post(`https://evencloud.herokuapp.com/api/v1/readwrite`, uploadData)
+        axios.post(`${API_SERVICE}/api/v1/readwrite`, uploadData)
             .then((res) => {
                 console.log(res.status)
                 if (res.status === 200) {
@@ -98,7 +100,7 @@ const Share = ({ location }) => {
 
     return (
         <Fragment>
-            <div className="ui center aligned container">
+            <div className="ui center text aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
@@ -119,27 +121,31 @@ const Share = ({ location }) => {
                 }
                 <div className="ui hidden divider"></div>
 
-                <center>
-                    <div className="ui card">
-                        <div className="content">
-                            <div>{filename}</div>
-
+                
+                <div className="ui fluid card">
+                    <div className="content">
+                        <div>{filename.split('_').pop()}</div>
                             <div className="meta">Uploaded On: {uploaded}</div>
-                            <div className="description">
-                            </div>
                         </div>
-                    </div>
-                </center>
+                </div>
 
                 <div className="ui hidden divider"></div>
-
-                <div className="ui action input">
-                    <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email Address" />
-                    <button onClick={() => share()} className="ui green icon button">
-                        <i className="share icon"></i>
-                        Share
-                    </button>
+                <div className="ui form">
+                    <div className="field">
+                        <label>Email Address</label>
+                        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email Address" />
+                    </div>
                 </div>
+                <div style={{marginTop: '4px'}} className="ui form">
+                    <div className="field">
+                        <label>Message</label>
+                        <textarea onChange={(event) => setMessage(event.target.value)} rows="2"></textarea>
+                    </div>
+                </div>
+                <button style={{marginTop: '4px'}} onClick={() => share()} className="ui green icon button">
+                    <i className="share icon"></i>
+                    Share
+                </button>
             </div>
         </Fragment>
     )

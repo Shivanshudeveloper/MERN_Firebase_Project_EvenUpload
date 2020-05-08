@@ -15,12 +15,13 @@ router.get('/', (req, res) => {
 // @POST Request for Share Contact
 // INSERT 
 router.post('/', (req, res) => {
-    const { fileName, to, from, url, senders_photoURL, senders_email } = req.body;
+    const { fileName, to, from, url, senders_photoURL, senders_email, message } = req.body;
     const newShare = new ShareWith_Model({
         fileName,
         to,
         from,
         url,
+        message,
         senders_photoURL,
         senders_email
     });
