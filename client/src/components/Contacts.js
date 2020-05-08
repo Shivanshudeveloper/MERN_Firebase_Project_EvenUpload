@@ -16,19 +16,7 @@ const Contacts = () => {
     
     const [contacts, setContacts] = useState([]);
 
-    useEffect(() => {
-        axios.get(`/api/v1/readwrite/contacts/${sendersEmail}`)
-        .then(response => {
-            setContacts(response.data);
-        })
-    }, [])
-    
-    
-    const showContactList = () => {
-        return contacts.map(currentContact => {
-            return <ContactListUser contact={currentContact} key={currentContact._id} />
-        })
-    }
+   
         
     
     return (
@@ -40,7 +28,7 @@ const Contacts = () => {
                 <Menu />    
                 <div className="ui hidden divider"></div>
                 
-                {showContactList()}
+                dfsfs
                 
                 
             </div>
