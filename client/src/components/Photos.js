@@ -58,22 +58,66 @@ const Photos = () => {
                 <div style={{marginTop: '4%'}} className="ui left aligned container">
                 {
                     loadingdata === 0 ? (
-                        <div className="ui fluid placeholder">
-                            <div className="paragraph">
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
+                        <>
+                            <div class="ui four cards">
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="ui card">
+                                    <div class="content">
+                                    <div class="ui placeholder">
+                                        <div class="rectangular image"></div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="paragraph">
-                                <div className="line"></div>
-                                <div className="line"></div>
-                                <div className="line"></div>
-                            </div>
-                        </div>
+                        </>
                     ) : (
                         <div className="ui four column grid">
                             { allData ? (

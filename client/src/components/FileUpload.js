@@ -179,22 +179,40 @@ const FileUpload = () => {
             <div style={{marginTop: '1%', marginBottom: '5%'}} className="ui left aligned container">
             {
                 loadingdata === 0 ? (
-                    <div className="ui fluid placeholder">
-                        <div className="paragraph">
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
+                    <>
+                        <div className="ui fluid placeholder">
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
                         </div>
-                        <div className="paragraph">
-                            <div className="line"></div>
-                            <div className="line"></div>
-                            <div className="line"></div>
+                        <div className="ui fluid placeholder">
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
                         </div>
-                    </div>
+                    </>
                 ) : (
                     <div role="list" className="ui divided relaxed list">
                         { allData ? (

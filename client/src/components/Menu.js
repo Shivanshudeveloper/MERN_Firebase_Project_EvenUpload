@@ -19,7 +19,7 @@ const Menu = () => {
                 </Link>
                 <Link to="/contacts" className="item">
                     <i className="users yellow icon"></i>
-                    Contacts
+                    Share
                 </Link>
                 <Link to="/photos" className="item">
                     <i className="file purple image icon"></i>

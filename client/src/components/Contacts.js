@@ -54,6 +54,7 @@ const Contacts = () => {
 
     let userId = sessionStorage.getItem("userId");
     let sendersEmail = sessionStorage.getItem("userEmail"); 
+    const [loading, setLoading] = useState(true);
     
     const [contacts, setContacts] = useState([]);
 
@@ -61,6 +62,7 @@ const Contacts = () => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/contacts/${sendersEmail}`)
         .then(response => {
             setContacts(response.data);
+            setLoading(false);
         })
     }, [])
     
@@ -88,7 +90,78 @@ const Contacts = () => {
                 
                 <div className="ui hidden divider"></div>
                 
-                {showContactList()}
+                {
+                    loading ? (
+                    <>
+                        <div className="ui fluid placeholder">
+                            <div className="image header">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                        </div>
+                        <div className="ui fluid placeholder">
+                            <div className="image header">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                        </div>
+                        <div className="ui fluid placeholder">
+                            <div className="image header">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                        </div>
+                        <div className="ui fluid placeholder">
+                            <div className="image header">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                            <div className="paragraph">
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                                <div className="line"></div>
+                            </div>
+                        </div>
+                    </>
+                    ) : (
+                        showContactList()
+                    )
+                }
                 
                 
             </div>
