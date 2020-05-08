@@ -46,7 +46,7 @@ const Contacts = () => {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/v1/readwrite/contacts/shivanshu981@gmail.com`)
+        axios.get(`/api/v1/readwrite/contacts/${sendersEmail}`)
         .then(response => {
             setContacts(response.data);
         })
@@ -69,7 +69,8 @@ const Contacts = () => {
                 <Menu />    
                 <div className="ui hidden divider"></div>
                 
-                {JSON.stringify(contacts)}                
+                {showContactList()}
+                
                 
             </div>
         </Fragment>
