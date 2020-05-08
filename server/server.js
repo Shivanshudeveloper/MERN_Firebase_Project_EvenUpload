@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const colors = require('colors');
+const cors = require('cors');
+
 
 // Route Files
 const readwrite = require('./routes/readwrite');
@@ -17,6 +19,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Routing for API Service

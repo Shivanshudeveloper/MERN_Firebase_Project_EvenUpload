@@ -47,7 +47,7 @@ const AuthenticationPage = () => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
                     sessionStorage.setItem("userId", user.uid);
-                    console.log(user.emailVerified);
+                    
                     if (user.emailVerified) {
                         window.location.href = "/home";
                     }
@@ -67,7 +67,7 @@ const AuthenticationPage = () => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 sessionStorage.setItem("userId", user.uid);
-                console.log(user.emailVerified);
+                sessionStorage.setItem("userEmail", user.email);
                 if (!user.emailVerified) {
                     user.sendEmailVerification().then(function() {
                         setMessage('We have send a Verification Link on your Email Address');

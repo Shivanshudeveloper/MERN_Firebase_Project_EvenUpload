@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 const FileTrim = ({ file_name }) => {
     var fileExtension = file_name.split('.').pop();
-    console.log(fileExtension);
     return (
         <div>
             {

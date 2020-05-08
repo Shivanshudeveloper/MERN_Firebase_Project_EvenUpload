@@ -20,7 +20,7 @@ const Menu = () => {
                 </Link>
             </div>
             <div className="five wide column">
-                <Link to="#!" className="item">
+                <Link to="/contacts" className="item">
                     <i class="large users yellow icon"></i>
                     <br />
                     Contacts

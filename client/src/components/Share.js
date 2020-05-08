@@ -4,12 +4,15 @@ import {
     BrowserView,
     MobileView
   } from 'react-device-detect';
+import axios from 'axios';
 
 // Firebase
-import { database } from '../Firebase/index';
+import { auth, database } from '../Firebase/index';
 // Components
 import User from './User';
 import Menu from './Menu';
+import Messages from "./Messages";
+
 // @From Mobile
 import MobileMenu from './MobileView/Menu';
 
@@ -19,12 +22,14 @@ import MobileMenu from './MobileView/Menu';
 const Share = ({ location }) => {
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
+    let sendersEmail = sessionStorage.getItem("userEmail"); 
 
     const [filename, setFileName] = useState('');
     const [fileId, setFileId] = useState('');
     const [filePath, setFilePath] = useState('');
     const [uploaded, setUploaded] = useState('');
     const [email, setEmail] = useState('');
+    const [userphotoURL, setUserPhotoURL] = useState('');
 
     const [loading, setLoading] = useState(false);
 
@@ -42,6 +47,15 @@ const Share = ({ location }) => {
             setUploaded(uploaded);
         });
 
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                setUserPhotoURL(user.photoURL);
+            } else {
+                console.log("No");
+                window.location.href = "/";
+            }
+        });
+
         // Sharing Database Code
         // var starCountRef = database.ref('sharewith/Hr27iz1W1shBHAv5mqyOtGN56SI2').orderByChild("shareTo").equalTo('shivanshu@geu.ac.in');
         // starCountRef.on('value', function(snapshot) {
@@ -51,23 +65,33 @@ const Share = ({ location }) => {
     }, []);
 
     const share = (event) => {
+        var fileName = '';
+        if (filename.split('_').pop().length > 40 ) {
+            fileName = filename.split("_").pop().substring(0, 40) + '....'
+        } else {
+            fileName = filename.split("_").pop()
+        }
+        
         // Saved in Database about the User
         const uploadData = {
-            shareTo: email,
-            filePath,
-            fileName: filename
+            fileName,
+            to: email,
+            from: userId,
+            url: filePath,
+            senders_photoURL: userphotoURL,
+            senders_email: sendersEmail
         }
 
-        database.ref(`sharewith/${userId}`).push(uploadData, (error) => {
-            if (error) {
-                console.log(error);
-            } else {
-                setLoading(true);
-                setEmail('');
-                setTimeout(() => setLoading(false), 2000);
-                
-            }
-        });
+        axios.post(`/api/v1/readwrite`, uploadData)
+            .then((res) => {
+                console.log(res.status)
+                if (res.status === 200) {
+                    setLoading(true);
+                    setTimeout(() => setLoading(false), 2000);
+                }
+            })
+            .catch(err => console.log(err))
+        
     }
 
     
@@ -90,13 +114,7 @@ const Share = ({ location }) => {
 
                 {
                     loading ? (
-                        <Fragment>
-                            <div className="ui text center aligned container">
-                                <div className="ui green message">
-                                    File Successfully Shared
-                                </div>
-                            </div>
-                        </Fragment>
+                        <Messages msg={'Successfully Shared'} />
                     ) : null
                 }
                 <div className="ui hidden divider"></div>
