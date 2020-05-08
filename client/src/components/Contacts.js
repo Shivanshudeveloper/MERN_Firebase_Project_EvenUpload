@@ -3,40 +3,11 @@ import axios from 'axios';
 // Firebase
 import { auth, database } from '../Firebase/index';
 
-// Utils
-import no_files from '../utils/no_files.png';
-
 // Components
 import Menu from './Menu';
-import Messages from "./Messages";
-import AllPhotos from "./AllPhotos";
 import User from './User';
+import ContactListUser from './ContactList';
 
-const ContactList = ({ contact }) => {
-
-
-    return (
-        <>
-            <div className="ui raised fluid link card">
-                <div className="content">
-                    <div className="header">{contact.fileName}</div>
-                    <div className="meta">
-                    <span className="category">
-                        <a target="_blank" href={contact.url}>
-                            Download File
-                        </a>
-                    </span>
-                    </div>
-                </div>
-                <div className="extra content">
-                    <div className="right floated author">
-                    <img className="ui avatar image" src={contact.senders_photoURL} /> {contact.senders_email}
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
 
 const Contacts = () => {
 
@@ -55,7 +26,7 @@ const Contacts = () => {
     
     const showContactList = () => {
         return contacts.map(currentContact => {
-            return <ContactList contact={currentContact} key={currentContact._id} />
+            return <ContactListUser contact={currentContact} key={currentContact._id} />
         })
     }
         
