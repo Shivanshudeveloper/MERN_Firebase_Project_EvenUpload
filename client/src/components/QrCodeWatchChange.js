@@ -24,7 +24,7 @@ const QrCodeWatchChange = ({ id }) => {
         <div>
             {
                 filerender !== '' ? (
-                    <a className="ui primary button" href={filerender} target="_blank">
+                    <a className="ui green button" href={filerender} target="_blank">
                         <i className="cloud download icon"></i>
                         Download
                     </a>

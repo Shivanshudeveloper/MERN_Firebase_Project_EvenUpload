@@ -44,6 +44,7 @@ const QrCodeDownload = () => {
         <div>
             <Fragment>
                 <center>
+                    <QrCodeWatchChange id={`qr/${id}/`} />
                     {
                         loading !== 0 ? (
                             <div>
@@ -57,7 +58,6 @@ const QrCodeDownload = () => {
                             </div>
                         )
                     }
-                    <QrCodeWatchChange id={`qr/${id}/`} />
                 </center>
             </Fragment>
         </div>
