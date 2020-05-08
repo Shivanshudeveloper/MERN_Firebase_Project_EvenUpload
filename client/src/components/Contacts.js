@@ -46,7 +46,7 @@ const Contacts = () => {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/v1/readwrite/contacts/${sendersEmail}`)
+        axios.get(`/api/v1/readwrite/contacts/shivanshu981@gmail.com`)
         .then(response => {
             setContacts(response.data);
         })
