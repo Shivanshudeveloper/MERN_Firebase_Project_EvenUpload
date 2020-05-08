@@ -82,7 +82,7 @@ const Share = ({ location }) => {
             senders_email: sendersEmail
         }
 
-        axios.post(`/api/v1/readwrite`, uploadData)
+        axios.post(`https://evencloud.herokuapp.com/api/v1/readwrite`, uploadData)
             .then((res) => {
                 console.log(res.status)
                 if (res.status === 200) {

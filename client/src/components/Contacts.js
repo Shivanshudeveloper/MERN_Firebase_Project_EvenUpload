@@ -17,7 +17,7 @@ const Contacts = () => {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/v1/readwrite/contacts/${sendersEmail}`)
+        axios.get(`https://evencloud.herokuapp.com/api/v1/readwrite/contacts/${sendersEmail}`)
         .then(response => {
             setContacts(response.data);
         })

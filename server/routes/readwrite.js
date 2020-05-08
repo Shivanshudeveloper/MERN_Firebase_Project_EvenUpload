@@ -39,6 +39,7 @@ router.post('/', (req, res) => {
 // GET 
 router.get('/contacts/:reciversEmail', (req, res) => {
     const { reciversEmail } = req.params;
+    res.setHeader('Content-Type', 'application/json');
     ShareWith_Model.find({ to: reciversEmail }).sort({date: -1})
         .then(contacts => {
             res.status(200).json(contacts)
