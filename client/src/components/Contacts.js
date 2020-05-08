@@ -76,8 +76,11 @@ const Contacts = () => {
     
     return (
         <Fragment>
-            <div className="ui left text aligned container">
+            <div className="ui center aligned container">
                 <User />
+            </div>
+            
+            <div className="ui left text aligned container">
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
 
