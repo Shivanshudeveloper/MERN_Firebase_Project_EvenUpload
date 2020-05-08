@@ -60,6 +60,7 @@ function App() {
               <Route path="/photos" exact component={MobilePhotos} />
               <Route path="/qrcodedownload" exact component={QrForDownload} />
               <Route path="/scanqrdownload" component={MobileScanForDownload} />
+              <Route path="/share" component={Share} />
               <Route path="/inbox" component={Contacts} />
             </Router>
         </MobileView>
