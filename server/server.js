@@ -10,7 +10,7 @@ const readwrite = require('./routes/readwrite');
 const db = require('./config/keys').MongoURI;
 // Connect MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then( () => console.log('MongoDB Connected') )
+    .then( () => console.log('MongoDB Connected'.green.bold) )
     .catch(err => console.log(err));
 
 
