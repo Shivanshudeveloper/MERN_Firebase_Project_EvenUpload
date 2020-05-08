@@ -129,8 +129,8 @@ const Share = ({ location }) => {
                 
                 <div className="ui fluid card">
                     <div className="content">
-                        <div>{filename.split('_').pop()}</div>
-                            <div className="meta">Uploaded On: {uploaded}</div>
+                        <div className="header">{filename.split('_').pop()}</div>
+                            <div style={{marginTop: '10px'}} className="meta">Uploaded On: {uploaded}</div>
                         </div>
                 </div>
 

@@ -120,14 +120,13 @@ const FileInfo = ({ location }) => {
                     <div className="ui buttons">
                         <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}`}>
                             <i class="qrcode icon"></i>
-                            Scan QR Code
+                            Scan QR
                         </Link>
-                        <Link className="ui button" to={`/share?name=${filename}&fileId=${fileId}`}>
+                        <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}`}>
                             <i className="share alternate icon"></i>
-                            Share
+                            Share File
                         </Link>
                     </div>
-                    
                     
 
 

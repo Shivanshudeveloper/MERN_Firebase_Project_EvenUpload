@@ -100,6 +100,8 @@ export default class ScanForDownload extends Component {
         <Menu />
         <div className="ui hidden divider"></div>
 
+        
+
         <CopyToClipboard text={this.state.filepath}
           onCopy={() => this.setState({copied: true})}>
           <div className="ui action input">
