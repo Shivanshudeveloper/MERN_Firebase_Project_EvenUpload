@@ -1,6 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { auth } from '../Firebase/index';
 import { Link } from 'react-router-dom';
+// For Desktop and Mobile Views
+import {
+    BrowserView
+} from 'react-device-detect';
 
 const User = () => {
        
@@ -44,9 +48,11 @@ const User = () => {
                     ) : (
                         <>
                             <img src={user.photoURL} className="ui avatar image"  />
-                            <span style={{marginLeft: '6px'}}>
-                               <strong> {user.email} </strong>
-                            </span>
+                            <BrowserView>
+                                <span style={{marginLeft: '6px'}}>
+                                    <strong> {user.email} </strong>
+                                </span>
+                            </BrowserView>
                         </>
                     )
                 }
