@@ -51,7 +51,7 @@ const AuthenticationPage = () => {
                         window.location.href = "/home";
                     }
                 } else {
-                    console.log("No");
+                    setMessage('We have send a Verification Link on your Email Address');
                 }
             });
         })
