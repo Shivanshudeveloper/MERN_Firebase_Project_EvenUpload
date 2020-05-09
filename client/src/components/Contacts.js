@@ -14,6 +14,9 @@ import User from './User';
 // API Service
 import { API_SERVICE } from '../config/URI';
 
+// Utils
+import Empty_Inbox_Temp_Image from  '../utils/empty_inbox.png';
+
 
 const ContactList = ({ contact }) => {
     var date = new Date(contact.date);
@@ -162,7 +165,18 @@ const Contacts = () => {
                         </div>
                     </>
                     ) : (
-                        showContactList()
+                        contacts && contacts.length ? (
+                            <>
+                                {showContactList()}
+                            </>
+                        ) : (
+                            <>
+                                <center>
+                                    <img className="ui large image" src={Empty_Inbox_Temp_Image} />
+                                </center>
+                            </>
+                        )
+
                     )
                 }
                 

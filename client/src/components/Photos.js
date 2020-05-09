@@ -136,7 +136,7 @@ const Photos = () => {
                 {
                     !allData ? (
                         <center>
-                            <img className="ui  large image" src={no_files} />
+                            <img className="ui large image" src={no_files} />
                         </center>
                     ) : null
                 }
