@@ -68,6 +68,13 @@ const Contacts = () => {
             setLoading(false);
         })
     })
+
+    useEffect(() => {
+        axios.put(`${API_SERVICE}/api/v1/readwrite/resetinbox/${sendersEmail}`)
+        .then(response => {
+            console.log(response.status);
+        })
+    }, [])
     
     
     const showContactList = () => {

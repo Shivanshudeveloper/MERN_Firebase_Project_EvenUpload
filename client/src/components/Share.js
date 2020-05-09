@@ -81,16 +81,12 @@ const Share = ({ location }) => {
             setContactList(response.data);
             setRecentLoading(false);
         })
-
-        // Sharing Database Code
-        // var starCountRef = database.ref('sharewith/Hr27iz1W1shBHAv5mqyOtGN56SI2').orderByChild("shareTo").equalTo('shivanshu@geu.ac.in');
-        // starCountRef.on('value', function(snapshot) {
-        //     console.log(snapshot.val());
-        // });
     }, []);
 
     const share = (event) => {
         setSharing(true);
+        var count = 0;
+        var key;
         var fileName = '';
         if (filename.split('_').pop().length > 40 ) {
             fileName = filename.split("_").pop().substring(0, 40) + '....'
@@ -120,7 +116,10 @@ const Share = ({ location }) => {
                 }
             })
             .catch(err => console.log(err))
-        
+
+        axios.put(`${API_SERVICE}/api/v1/readwrite/inbox/${userId}/${email}`)
+            .then(res => console.log(res.status))
+            .catch(err => console.log(err))
     }
 
     const showRecentContacts = () => {

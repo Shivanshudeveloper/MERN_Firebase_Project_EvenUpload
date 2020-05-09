@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer');
 // Getting the People Confession Module
 const ShareWith_Model = require('../models/ShareWith');
 const ContactList_Model = require('../models/ContactList');
-
+const Inbox_Model = require('../models/Inbox');
 
 // Login Page
 router.get('/', (req, res) => {
@@ -110,7 +110,7 @@ router.get('/contacts/:reciversEmail', (req, res) => {
 
 
 // Database CRUD Operations
-// @POST Request to GET the Contacts
+// @GET Request to GET the Contacts
 // GET 
 router.get('/contactslist/:sendersEmail', (req, res) => {
     const { sendersEmail } = req.params;
@@ -122,6 +122,69 @@ router.get('/contactslist/:sendersEmail', (req, res) => {
         .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
+
+// Database CRUD Operations
+// @PUT Request to Update the Inbox
+// UPDATE 
+router.put('/inbox/:userId/:receiversEmail', (req, res) => {
+    const { userId, receiversEmail } = req.params;
+    var updateInbox;
+    Inbox_Model.countDocuments({'receiversEmail': receiversEmail})
+        .then((count) => {
+            if (count > 0) {
+                Inbox_Model.find({'receiversEmail': receiversEmail})
+                    .then(data => {
+                        updateInbox = parseInt(data[0].inbox);
+                        updateInbox = updateInbox + 1;
+                        Inbox_Model.findOneAndUpdate({'receiversEmail': receiversEmail}, { inbox: updateInbox }, {useFindAndModify: false})
+                            .then(() => {
+                                res.status(200).json('Updated Inbox')
+                            })
+                            .catch(err => console.log(err))
+                    })
+            } else {
+                const newInbox = new Inbox_Model({
+                    userId,
+                    receiversEmail,
+                    inbox: 1
+                });
+                newInbox.save()
+                    .then(() => {
+                        res.status(200).json('Added Inbox')
+                    })
+                    .catch(err => console.log(err))
+            }
+        })
+});
+
+
+// Database CRUD Operations
+// @GET Request to GET the Inbox Count
+// GET 
+router.get('/inbox/:email', (req, res) => {
+    const { email } = req.params;
+    Inbox_Model.find({'receiversEmail': email})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => res.status(400).json(`Error: ${err}`))
+});
+
+
+// Database CRUD Operations
+// @POST Request to RESET the Inbox Count
+// POST 
+router.put('/resetinbox/:email', (req, res) => {
+    const { email } = req.params;
+    Inbox_Model.find({'receiversEmail': email})
+        .then(data => {
+            Inbox_Model.findOneAndUpdate({'receiversEmail': email}, { inbox: 0 }, {useFindAndModify: false})
+                .then(() => {
+                    res.status(200).json('Reset Inbox')
+                })
+                .catch(err => console.log(err))
+        })
+});
 
 
 module.exports = router;
