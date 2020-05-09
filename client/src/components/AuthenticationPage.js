@@ -47,7 +47,6 @@ const AuthenticationPage = () => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
                     sessionStorage.setItem("userId", user.uid);
-                    
                     if (user.emailVerified) {
                         window.location.href = "/home";
                     }

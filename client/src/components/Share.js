@@ -34,6 +34,7 @@ const Share = ({ location }) => {
     const [userphotoURL, setUserPhotoURL] = useState('');
 
     const [loading, setLoading] = useState(false);
+    const [sharing, setSharing] = useState(false);
 
     useEffect(() => {
         const { name, fileId } = queryString.parse(location.search);
@@ -67,6 +68,7 @@ const Share = ({ location }) => {
     }, []);
 
     const share = (event) => {
+        setSharing(true);
         var fileName = '';
         if (filename.split('_').pop().length > 40 ) {
             fileName = filename.split("_").pop().substring(0, 40) + '....'
@@ -91,6 +93,7 @@ const Share = ({ location }) => {
                 console.log(res.status)
                 if (res.status === 200) {
                     setLoading(true);
+                    setSharing(false);
                     setTimeout(() => setLoading(false), 2000);
                 }
             })
@@ -147,7 +150,7 @@ const Share = ({ location }) => {
                         <textarea onChange={(event) => setMessage(event.target.value)} rows="2">{message}</textarea>
                     </div>
                 </div>
-                <button style={{marginTop: '4px'}} onClick={() => share()} className="ui green icon button">
+                <button style={{marginTop: '4px'}} onClick={() => share()} className={!sharing ? "ui green icon button" : "ui loading green icon button"}>
                     <i className="share icon"></i>
                     Share
                 </button>

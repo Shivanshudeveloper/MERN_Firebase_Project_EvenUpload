@@ -43,7 +43,7 @@ const User = () => {
                         </div>
                     ) : (
                         <>
-                            <img src={user.photoURL} className="ui middle aligned mini image circular"  />
+                            <img src={user.photoURL} className="ui avatar image"  />
                             <span style={{marginLeft: '6px'}}>
                                <strong> {user.email} </strong>
                             </span>

@@ -67,7 +67,7 @@ const Contacts = () => {
             setContacts(response.data);
             setLoading(false);
         })
-    }, [])
+    })
     
     
     const showContactList = () => {

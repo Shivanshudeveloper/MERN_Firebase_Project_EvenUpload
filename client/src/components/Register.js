@@ -25,8 +25,17 @@ const Register = () => {
 
     const register = (event) => {
         event.preventDefault();
-        auth.createUserWithEmailAndPassword(email, password).then(() => {
-            window.location.href = '/';
+        auth.createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+            var user = result.user;
+            user.updateProfile({
+                photoURL: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg"
+            })
+            .then(() => {
+                console.log('Profile Photo URL Added');
+                window.location.href = '/';
+            })
+            .catch(err => console.log(err))
         })
         .catch(function(error) {
             var errorMessage = error.message;
