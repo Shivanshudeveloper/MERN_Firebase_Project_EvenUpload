@@ -126,9 +126,15 @@ const File = ({ data }) => {
     
     return (
         <Fragment>
-            <div role="listitem" className="item">
-                <div className="content">
-                    <Link className="header" to={`/fileinfo?name=${file_name}&fileId=${data}`}>
+            <div class="ui segment">
+                <p>
+                    <Link style={{float: 'right'}} to={`/scanqrdownload/?path=${data}`}>
+                        <i style={{color: 'black'}} className="large qrcode icon"></i>
+                    </Link>
+                    <Link style={{float: 'right', marginRight: '8px'}} to={`/share?name=${file_name}&fileId=${data}`}>
+                            <i className="large blue share alternate icon"></i>
+                    </Link>
+                    <Link className="header text-font" to={`/fileinfo?name=${file_name}&fileId=${data}`}>
                         { file_name.split('_').pop().length > 40 ? (
                             <FileTrim file_name={file_name} />
                         ) : (
@@ -136,20 +142,11 @@ const File = ({ data }) => {
                         ) }
                     </Link>
 
-                    <div style={{marginBottom: '5px'}} className="ui right aligned">
-                        <Link className="right floated" to={`/scanqrdownload/?path=${data}`}>
-                            <i className="large qrcode icon"></i>
-                            <br />
-                        </Link>
-                        
-                        <a href={file_path} className="right floated" target="_blank" download>
-                            <i className="large grey download icon"></i>
-                            <br />
-                        </a>
-                    </div>
-                </div>
-
+                    
+                </p>
             </div>
+
+            
             
         </Fragment>
     )

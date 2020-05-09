@@ -24,9 +24,9 @@ const RecentContactList = ({ recentcontact, setEmail }) => {
     var emailAddr = recentcontact.contact;
     return (
         <>
-            <div className="ui raised link card">
+            <div onClick={() => setEmail(emailAddr)} className="ui raised link card">
                 <div className="content">
-                    <div onClick={() => setEmail(emailAddr)} className="ui tiny header">{recentcontact.contact}</div>
+                    <div className="ui tiny header">{recentcontact.contact}</div>
                 </div>
             </div>
         </>
@@ -50,6 +50,8 @@ const Share = ({ location }) => {
 
     const [loading, setLoading] = useState(false);
     const [sharing, setSharing] = useState(false);
+    const [recentLoading, setRecentLoading] = useState(true);
+    
 
     useEffect(() => {
         const { name, fileId } = queryString.parse(location.search);
@@ -77,6 +79,7 @@ const Share = ({ location }) => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/contactslist/${sendersEmail}`)
         .then(response => {
             setContactList(response.data);
+            setRecentLoading(false);
         })
 
         // Sharing Database Code
@@ -163,15 +166,55 @@ const Share = ({ location }) => {
                 <div className="ui hidden divider"></div>
 
                 {
-                    contactlist && contactlist.length ? (
+                    recentLoading ? (
                         <>
-                            <div class="ui large header">Recents</div>
-                            <div className="ui three stackable cards">
-                                {showRecentContacts()}
+                            <div className="ui large header">Fetching Recents</div>
+                            <div className="ui three column stackable grid">
+                                <div className="column">
+                                    <div className="ui raised segment">
+                                    <div className="ui placeholder">
+                                        <div className="paragraph">
+                                        <div className="medium line"></div>
+                                        <div className="short line"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div className="column">
+                                    <div className="ui raised segment">
+                                    <div className="ui placeholder">
+                                        <div className="paragraph">
+                                        <div className="medium line"></div>
+                                        <div className="short line"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div className="column">
+                                    <div className="ui raised segment">
+                                    <div className="ui placeholder">
+                                        <div className="paragraph">
+                                        <div className="medium line"></div>
+                                        <div className="short line"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </>
-                    ) : null
+                    ) : (
+                        contactlist && contactlist.length ? (
+                            <>
+                                <div className="ui large header">Recents</div>
+                                <div className="ui three stackable cards">
+                                    {showRecentContacts()}
+                                </div>
+                            </>
+                        ) : null
+                    )
                 }
+
+                
 
 
                 

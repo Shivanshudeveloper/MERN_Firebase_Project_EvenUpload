@@ -214,7 +214,7 @@ const FileUpload = () => {
                         </div>
                     </>
                 ) : (
-                    <div role="list" className="ui divided relaxed list">
+                    <div role="list" className="ui raised segments">
                         { allData ? (
                             (Object.keys(allData)).map((data) => (
                                 <File key={data} data={`files/${userId}/${data}`} />
