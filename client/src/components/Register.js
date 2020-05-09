@@ -28,6 +28,7 @@ const Register = () => {
         auth.createUserWithEmailAndPassword(email, password)
         .then((result) => {
             var user = result.user;
+            // Profile Picture being set by default
             user.updateProfile({
                 photoURL: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg"
             })

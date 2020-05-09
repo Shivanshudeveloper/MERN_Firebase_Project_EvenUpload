@@ -20,6 +20,20 @@ import MobileMenu from './MobileView/Menu';
 import { API_SERVICE } from '../config/URI';
 
 
+const RecentContactList = ({ recentcontact, setEmail }) => {
+    var emailAddr = recentcontact.contact;
+    return (
+        <>
+            <div className="ui raised link card">
+                <div className="content">
+                    <div onClick={() => setEmail(emailAddr)} className="ui tiny header">{recentcontact.contact}</div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+
 const Share = ({ location }) => {
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
@@ -32,6 +46,7 @@ const Share = ({ location }) => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [userphotoURL, setUserPhotoURL] = useState('');
+    const [contactlist, setContactList] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [sharing, setSharing] = useState(false);
@@ -59,12 +74,16 @@ const Share = ({ location }) => {
             }
         });
 
+        axios.get(`${API_SERVICE}/api/v1/readwrite/contactslist/${sendersEmail}`)
+        .then(response => {
+            setContactList(response.data);
+        })
+
         // Sharing Database Code
         // var starCountRef = database.ref('sharewith/Hr27iz1W1shBHAv5mqyOtGN56SI2').orderByChild("shareTo").equalTo('shivanshu@geu.ac.in');
         // starCountRef.on('value', function(snapshot) {
         //     console.log(snapshot.val());
         // });
-
     }, []);
 
     const share = (event) => {
@@ -101,6 +120,11 @@ const Share = ({ location }) => {
         
     }
 
+    const showRecentContacts = () => {
+        return contactlist.map(recentcontact => {
+            return <RecentContactList recentcontact={recentcontact} setEmail={setEmail} key={recentcontact._id} />
+        })
+    }
     
 
     return (
@@ -136,6 +160,21 @@ const Share = ({ location }) => {
                             <div style={{marginTop: '10px'}} className="meta">Uploaded On: {uploaded}</div>
                         </div>
                 </div>
+                <div className="ui hidden divider"></div>
+
+                {
+                    contactlist && contactlist.length ? (
+                        <>
+                            <div class="ui large header">Recents</div>
+                            <div className="ui three stackable cards">
+                                {showRecentContacts()}
+                            </div>
+                        </>
+                    ) : null
+                }
+
+
+                
 
                 <div className="ui hidden divider"></div>
                 <div className="ui form">

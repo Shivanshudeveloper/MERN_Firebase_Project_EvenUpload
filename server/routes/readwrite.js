@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 
 // Getting the People Confession Module
 const ShareWith_Model = require('../models/ShareWith');
+const ContactList_Model = require('../models/ContactList');
 
 
 // Login Page
@@ -55,6 +56,20 @@ router.post('/', (req, res) => {
         newShare.save()
             .then(
                 res.status(200).json('Added'),
+                ContactList_Model.countDocuments({'contact_of': senders_email, 'contact': to})
+                    .then((count) => {
+                        if (count > 0) {
+                            console.log("Find");
+                        } else {
+                            const newContact = new ContactList_Model({
+                                contact: to,
+                                contact_of: senders_email,
+                                contact_photoURL: senders_photoURL
+                            })
+                            newContact.save()
+                        }
+                    }),
+                
                 // Successfully shared data triggering a mail to the data senders email address
                 transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -77,12 +92,10 @@ router.post('/', (req, res) => {
                 res.status(400).json(`Error: ${err}`)
             })
     })
-
-    
 });
 
 
-// Database CRUP Operations
+// Database CRUD Operations
 // @POST Request to GET the Contacts
 // GET 
 router.get('/contacts/:reciversEmail', (req, res) => {
@@ -91,6 +104,20 @@ router.get('/contacts/:reciversEmail', (req, res) => {
     ShareWith_Model.find({ to: reciversEmail }).sort({date: -1})
         .then(contacts => {
             res.status(200).json(contacts)
+        })
+        .catch(err => res.status(400).json(`Error: ${err}`))
+});
+
+
+// Database CRUD Operations
+// @POST Request to GET the Contacts
+// GET 
+router.get('/contactslist/:sendersEmail', (req, res) => {
+    const { sendersEmail } = req.params;
+    res.setHeader('Content-Type', 'application/json');
+    ContactList_Model.find({ 'contact_of': sendersEmail }).sort({date: -1}).limit(5)
+        .then(contactlist => {
+            res.status(200).json(contactlist)
         })
         .catch(err => res.status(400).json(`Error: ${err}`))
 });
