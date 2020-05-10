@@ -20,8 +20,6 @@ const Photos = () => {
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
 
-    // Loading for uploading the file
-    const [loading, setLoading] = useState(0);
     // Loading for loading all the files from server
     const [loadingdata, setLoadingData] = useState(0);
     

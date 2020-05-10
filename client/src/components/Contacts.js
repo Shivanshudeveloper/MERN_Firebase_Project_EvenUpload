@@ -23,7 +23,7 @@ const ContactList = ({ contact }) => {
     date = date.toDateString();
     return (
         <div>
-            <div style={{marginTop: '10px'}} className="ui raised fluid link card">
+            <div style={{marginTop: '10px'}} className="ui raised link fluid card">
                 <div className="content">
                     <div style={{float: 'right'}}>
                         {date}
@@ -86,12 +86,9 @@ const Contacts = () => {
     
     return (
         <Fragment>
+
             <div className="ui center aligned container">
                 <User />
-            </div>
-            
-            <div className="ui left text aligned container">
-                <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
 
                 <BrowserView>
@@ -99,7 +96,13 @@ const Contacts = () => {
                 </BrowserView>
                 <MobileView>
                     <MobileMenu />
-                </MobileView>    
+                </MobileView> 
+            </div>
+            
+            <div className="ui left text aligned container">
+                <div className="ui hidden divider"></div>
+
+                   
                 
                 <div className="ui hidden divider"></div>
                 

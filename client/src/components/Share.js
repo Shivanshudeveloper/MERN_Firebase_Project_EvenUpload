@@ -205,7 +205,7 @@ const Share = ({ location }) => {
                         contactlist && contactlist.length ? (
                             <>
                                 <div className="ui large header">Recents</div>
-                                <div className="ui three stackable cards">
+                                <div className="ui two stackable cards">
                                     {showRecentContacts()}
                                 </div>
                             </>
@@ -236,6 +236,9 @@ const Share = ({ location }) => {
                     Share
                 </button>
             </div>
+            <div className="ui hidden divider"></div>
+            <div className="ui hidden divider"></div>
+
         </Fragment>
     )
 }

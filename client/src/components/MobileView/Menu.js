@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 
 const Menu = () => {
 
-    const handleScan = data => {
-        if (data) {
-          console.log(data)
-        }
-    }
-
 
     return (
         <div className="ui grid">

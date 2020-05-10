@@ -210,6 +210,9 @@ const FileUpload = () => {
             }
                 
             </div>
+            <div className="ui hidden divider"></div>
+            <div className="ui hidden divider"></div>
+
         </Fragment>
     )
 }
