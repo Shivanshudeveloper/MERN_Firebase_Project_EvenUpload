@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+// API Service
+import { API_SERVICE } from '../../config/URI';
 
 const Menu = () => {
+
+    // Getting the userid from JS session
+    let sendersEmail = sessionStorage.getItem("userEmail"); 
+
+    const [inboxCount, setInboxCount] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${API_SERVICE}/api/v1/readwrite/inbox/${sendersEmail}`)
+        .then(response => {
+            setInboxCount(response.data)
+        })
+    }, [])
 
 
     return (
@@ -15,6 +31,17 @@ const Menu = () => {
             </div>
             <div className="four wide column">
                 <Link to="/inbox" className="item">
+                    {
+                        inboxCount && inboxCount.length ? (
+                                <>
+                                    <div className="floating ui red label">{inboxCount[0].inbox}</div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="floating ui red label">0</div>
+                                </>
+                            )
+                    }
                     <i className="large inbox red icon"></i>
                     <br />
                     Inbox

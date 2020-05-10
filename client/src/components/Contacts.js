@@ -67,7 +67,7 @@ const Contacts = () => {
             setContacts(response.data);
             setLoading(false);
         })
-    })
+    }, [])
 
     useEffect(() => {
         axios.put(`${API_SERVICE}/api/v1/readwrite/resetinbox/${sendersEmail}`)
@@ -92,6 +92,7 @@ const Contacts = () => {
                 <div className="ui hidden divider"></div>
 
                 <BrowserView>
+                    <div className="ui hidden divider"></div>
                     <Menu />
                 </BrowserView>
                 <MobileView>
