@@ -82,7 +82,7 @@ const FileUpload = () => {
             },
             () => {
                 // When the Storage gets Completed
-                storage.ref('uploads').child(`${uniqueKey}_${file.name}`).getDownloadURL().then(filePath => {
+                storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
                     const fileName = `${file.name}`;
 
                     const fileKey = `${uniqueKey}/${file.name}`;
