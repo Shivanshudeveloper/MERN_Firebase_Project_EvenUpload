@@ -19,11 +19,11 @@ router.get('/', (req, res) => {
 // @POST Request for Share Contact
 // INSERT 
 router.post('/', (req, res) => {
-    var { fileName, filename, to, from, url, senders_photoURL, senders_email, message } = req.body;
+    var { fileName, filename, to, from, url, senders_photoURL, senders_email, message, fileKey } = req.body;
     
     let transporter, mailOption, mailText;
 
-    var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${filename}`;
+    var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${fileKey}`;
     var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
     
     // Make a Request to Firebase Dynamic Links for the URL

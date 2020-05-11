@@ -22,7 +22,6 @@ export default class ScanForDownload extends Component {
 
     componentDidMount() {
         const { path } = queryString.parse(this.props.location.search);
-        console.log(path);
         
         const ref = database.ref(path);
 

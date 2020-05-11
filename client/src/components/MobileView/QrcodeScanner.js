@@ -55,7 +55,7 @@ export default class QrcodeScanner extends Component {
                       </button>
                     ) : null
                 ) : (
-                    <a className="ui primary button" href={this.state.result}>
+                    <a className="ui primary button" target="_blank" href={this.state.result}>
                         <i className="cloud download icon"></i>
                         Download
                     </a>

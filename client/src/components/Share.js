@@ -47,6 +47,7 @@ const Share = ({ location }) => {
     const [message, setMessage] = useState('');
     const [userphotoURL, setUserPhotoURL] = useState('');
     const [contactlist, setContactList] = useState([]);
+    const [fileKey, setFileKey] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [sharing, setSharing] = useState(false);
@@ -54,9 +55,10 @@ const Share = ({ location }) => {
     
 
     useEffect(() => {
-        const { name, fileId } = queryString.parse(location.search);
+        const { name, fileId, key } = queryString.parse(location.search);
         setFileName(name);
         setFileId(fileId);
+        setFileKey(key);
 
         var starCountRef = database.ref(fileId);
         starCountRef.on('value', function(snapshot) {
@@ -103,7 +105,8 @@ const Share = ({ location }) => {
             url: filePath,
             senders_photoURL: userphotoURL,
             senders_email: sendersEmail,
-            message
+            message,
+            fileKey
         }
 
         axios.post(`${API_SERVICE}/api/v1/readwrite`, uploadData)

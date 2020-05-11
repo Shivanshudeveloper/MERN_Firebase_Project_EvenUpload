@@ -45,16 +45,18 @@ const FileInfo = ({ location }) => {
     const [qrcode, setQrcode] = useState('');
     const [filePath, setFilePath] = useState('');
     const [copied, setCopied] = useState(false);
+    const [file_key, setFileKey] = useState('');
 
     // By Google Cloud Storage Public URL
     const [publicURL, setPublicURL] = useState('');
 
     useEffect(() => {
-        const { name, fileId } = queryString.parse(location.search);
+        const { name, fileId, key } = queryString.parse(location.search);
         setFileName(name);
         setFileId(fileId);
+        setFileKey(key);
 
-        var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${name}`;
+        var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${key}`;
         var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
 
         // Make a Request to Firebase Dynamic Links for the URL
@@ -73,10 +75,6 @@ const FileInfo = ({ location }) => {
             var path = fileData.filePath;
             setFilePath(path);
 
-
-            var gsReference = storage.refFromURL('gs://aicte-admin-survey.appspot.com/uploads/uploads/109e2440-98f6-4836-8270-739b836415a5_46564.jpg')
-            
-            console.log(gsReference);
 
             QRCode.toDataURL(`${path}`, function (err, url) {
                 setQrcode(url);
@@ -118,11 +116,11 @@ const FileInfo = ({ location }) => {
                     
                     
                     <div className="ui buttons">
-                        <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}`}>
+                        <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
                             <i class="qrcode icon"></i>
                             Scan QR
                         </Link>
-                        <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}`}>
+                        <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
                             <i className="share alternate icon"></i>
                             Share File
                         </Link>

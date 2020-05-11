@@ -22,8 +22,7 @@ export default class ScanForDownload extends Component {
     
 
     componentDidMount() {
-        const { path } = queryString.parse(this.props.location.search);
-        console.log(path);
+        const { path, key } = queryString.parse(this.props.location.search);
         
         const ref = database.ref(path);
 
@@ -38,7 +37,7 @@ export default class ScanForDownload extends Component {
         getData(ref)
           .then((value) => {
             var name = value.fileName;
-            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${name}`;
+            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${key}`;
             var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
 
             // Make a Request to Firebase Dynamic Links for the URL

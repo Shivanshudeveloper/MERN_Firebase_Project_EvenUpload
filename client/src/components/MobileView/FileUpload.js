@@ -69,8 +69,8 @@ const FileUpload = () => {
             setbtnUpload('Uploading....');
             setLoading(1);
             e.preventDefault();
-            const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
-
+            // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
+            const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
 
             uploadTask.on('state_changed', (snapshot) => {
                 const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -83,8 +83,9 @@ const FileUpload = () => {
             () => {
                 // When the Storage gets Completed
                 storage.ref('uploads').child(`${uniqueKey}_${file.name}`).getDownloadURL().then(filePath => {
-                    console.log(filePath);
-                    const fileName = `${uniqueKey}_${file.name}`;
+                    const fileName = `${file.name}`;
+
+                    const fileKey = `${uniqueKey}/${file.name}`;
 
                     var date = new Date();
                     var dd = String(date.getDate()).padStart(2, '0');
@@ -96,7 +97,8 @@ const FileUpload = () => {
                     const uploadData = {
                         date,
                         fileName,
-                        filePath
+                        filePath,
+                        fileKey
                     }
 
                     
