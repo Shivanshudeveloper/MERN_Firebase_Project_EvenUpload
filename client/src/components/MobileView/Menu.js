@@ -17,7 +17,7 @@ const Menu = () => {
         .then(response => {
             setInboxCount(response.data)
         })
-    }, [])
+    })
 
 
     return (
