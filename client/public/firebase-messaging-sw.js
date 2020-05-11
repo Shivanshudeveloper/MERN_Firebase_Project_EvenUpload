@@ -1,8 +1,5 @@
-import firebase from "firebase/app";
-import "firebase/storage";
-import "firebase/database";
-import "firebase/auth";
-import "firebase/messaging";
+importScripts('https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/7.14.3/firebase-messaging.js');
 
 var firebaseConfig = {
     apiKey: "AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms",
@@ -17,18 +14,4 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
-
-const storage = firebase.storage();
-const database = firebase.database();
-const auth = firebase.auth();
 const messaging = firebase.messaging();
-
-
-// Authentication for Google
-var googleProvider = new firebase.auth.GoogleAuthProvider();
-
-
-export {
-    auth, googleProvider, database, storage, messaging, firebase as default
-}

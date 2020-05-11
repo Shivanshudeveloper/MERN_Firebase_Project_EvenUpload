@@ -28,10 +28,6 @@ import MobileEvenUpload from './components/MobileView/EvenUpload';
 import MobilePhotos from './components/MobileView/Photos';
 import MobileScanForDownload from './components/MobileView/MobileScanForDownload';
 
-
-// Test Component
-import Test from './components/Test';
-
 function App() {
   return (
     <Fragment>
@@ -67,6 +63,17 @@ function App() {
     </Fragment>
     
   );
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("./firebase-messaging-sw.js")
+    .then(function(registration) {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch(function(err) {
+      console.log("Service worker registration failed, error:", err);
+    });
 }
 
 export default App;
