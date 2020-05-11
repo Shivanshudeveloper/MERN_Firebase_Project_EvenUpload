@@ -1,7 +1,6 @@
 {
   "short_name": "React App",
   "name": "Create React App Sample",
-  "gcm_sender_id": "738971823337",
   "icons": [
     {
       "src": "favicon.ico",

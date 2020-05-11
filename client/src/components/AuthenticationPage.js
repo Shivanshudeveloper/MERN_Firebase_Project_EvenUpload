@@ -1,5 +1,5 @@
 import React, { useState ,useEffect, Fragment } from 'react';
-import { googleProvider, auth, messaging } from "../Firebase/index";
+import { googleProvider, auth } from "../Firebase/index";
 import { Link } from 'react-router-dom';
 
 // Components
@@ -65,20 +65,7 @@ const AuthenticationPage = () => {
     }
 
     useEffect(() => {
-        // Messanging Requests
-        messaging.requestPermission()
-            .then(() => {
-                console.log("Got");
-                return messaging.getToken();
-            })
-            .then((token) => {
-                console.log(token);
-            })
-            .catch(err => console.log(err))
-
-        messaging.onMessage(function(payload) {
-            console.log(payload);
-        })
+    
      
         auth.onAuthStateChanged(function(user) {
             if (user) {
