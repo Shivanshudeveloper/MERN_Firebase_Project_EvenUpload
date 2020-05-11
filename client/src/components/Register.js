@@ -10,9 +10,11 @@ import tempImageRegister from '../utils/temp_register.gif';
 import BackgroundImage from '../utils/background-website-01.jpg';
 
 var sectionStyle = {
-    backgroundImage: `url(${BackgroundImage})`,
-    backgroundSize:'contain',
-    backgroundPosition:'top',
+    backgroundImage: `url('${BackgroundImage}')`,
+    backgroundSize:'cover',
+    backgroundPosition:'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
     background: 'cover',
     width: '100%'
 };
