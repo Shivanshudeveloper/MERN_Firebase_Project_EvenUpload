@@ -16,7 +16,7 @@ const Menu = () => {
         .then(response => {
             setInboxCount(response.data)
         })
-    })
+    }, [])
 
     return (
         <div className="ui text container">
