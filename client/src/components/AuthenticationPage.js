@@ -19,6 +19,10 @@ var sectionStyle = {
     width: '100%'
 };
   
+var headeingFont = {
+    marginTop: '12px', 
+    fontFamily: 'Roboto',
+}
 
 const AuthenticationPage = () => {
 
@@ -89,11 +93,14 @@ const AuthenticationPage = () => {
     return (
         <Fragment>
             <section style={ sectionStyle }>
-                <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
-                    Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
-                </h1>
+            <div className="ui hidden divider"></div>
+                <center>
+                    <h1 className={headeingFont}>
+                        <span class="ui small header"> Even <i className="cloud blue icon"></i> Upload</span>
+                    </h1>
+                </center>
                 <div className="ui container">
-                    <center style={{marginTop: '5%', width: 'auto'}}>
+                    <center style={{marginTop: '1%', width: 'auto'}}>
                         { message ? <Messages msg={message} /> : null }
                         <div  className="ui compact segment">
                             <Link className="fluid ui secondary button" to="/qrcodedownload" >
