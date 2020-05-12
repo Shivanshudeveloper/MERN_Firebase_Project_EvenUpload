@@ -96,8 +96,8 @@ const FileInfo = ({ location }) => {
             <div className="ui center aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
-                <div className="ui hidden divider"></div>
                 <BrowserView>
+                    <div className="ui hidden divider"></div>
                     <Menu />
                 </BrowserView>
 

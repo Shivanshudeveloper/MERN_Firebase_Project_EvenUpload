@@ -96,6 +96,7 @@ export default class ScanForDownload extends Component {
       <div className="ui center aligned container">
         <User />
         <div className="ui hidden divider"></div>
+        <div className="ui hidden divider"></div>
         <Menu />
         <div className="ui hidden divider"></div>
 

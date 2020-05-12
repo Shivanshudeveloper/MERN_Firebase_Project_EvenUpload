@@ -24,7 +24,7 @@ const RecentContactList = ({ recentcontact, setEmail }) => {
     var emailAddr = recentcontact.contact;
     return (
         <>
-            <div onClick={() => setEmail(emailAddr)} className="ui raised link card">
+            <div onClick={() => setEmail(emailAddr)} className="ui raised link card green">
                 <div className="content">
                     <div className="ui tiny header">{recentcontact.contact}</div>
                 </div>
@@ -52,6 +52,8 @@ const Share = ({ location }) => {
     const [loading, setLoading] = useState(false);
     const [sharing, setSharing] = useState(false);
     const [recentLoading, setRecentLoading] = useState(true);
+
+    
     
 
     useEffect(() => {
@@ -137,8 +139,8 @@ const Share = ({ location }) => {
             <div className="ui center aligned container">
                 <User />
                 <div className="ui hidden divider"></div>
-                <div className="ui hidden divider"></div>
                 <BrowserView>
+                    <div className="ui hidden divider"></div>
                     <Menu />
                 </BrowserView>
 
@@ -230,14 +232,23 @@ const Share = ({ location }) => {
                 </div>
                 <div style={{marginTop: '4px'}} className="ui form">
                     <div className="field">
-                        <label>Message</label>
+                        <label>Message <small>(Optional)</small></label> 
                         <textarea onChange={(event) => setMessage(event.target.value)} rows="2">{message}</textarea>
                     </div>
                 </div>
-                <button style={{marginTop: '4px'}} onClick={() => share()} className={!sharing ? "ui green icon button" : "ui loading green icon button"}>
-                    <i className="share icon"></i>
-                    Share
-                </button>
+                <BrowserView>
+                    <button style={{marginTop: '6px'}} onClick={() => share()} className={!sharing ? "ui green icon button" : "ui loading green icon button"}>
+                        <i className="share icon"></i>
+                        Share
+                    </button>
+                </BrowserView>
+                <MobileView>
+                    <button style={{marginTop: '6px'}} onClick={() => share()} className={!sharing ? "ui green fluid icon button" : "ui loading fluid green icon button"}>
+                        <i className="share icon"></i>
+                        Share
+                    </button>
+                </MobileView>
+                
             </div>
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>
