@@ -67,7 +67,7 @@ const Contacts = () => {
             setContacts(response.data);
             setLoading(false);
         })
-    }, [])
+    })
 
     useEffect(() => {
         axios.put(`${API_SERVICE}/api/v1/readwrite/resetinbox/${sendersEmail}`)

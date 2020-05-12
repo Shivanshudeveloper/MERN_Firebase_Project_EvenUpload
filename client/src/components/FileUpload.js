@@ -2,9 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { Link } from 'react-router-dom';
 import {
-    BrowserView,
-    MobileView
+    BrowserView
   } from 'react-device-detect';
+import firebase from "firebase/app";
 
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
@@ -83,7 +83,6 @@ const FileUpload = () => {
                 setUploadPercentage(progress);
             },
             (error) => {
-                console.log(error);
                 setMessage(error);
             },
             () => {
@@ -99,12 +98,13 @@ const FileUpload = () => {
                     var yyyy = date.getFullYear();
                     date = dd + '/' + mm + '/' + yyyy;
 
+
                     // Saved in Database about the User
                     const uploadData = {
                         date,
                         fileName,
                         filePath,
-                        fileKey
+                        fileKey,
                     }
 
                     
@@ -219,7 +219,7 @@ const FileUpload = () => {
                 ) : (
                     <div role="list" className="ui raised segments">
                         { allData ? (
-                            (Object.keys(allData)).map((data) => (
+                            (Object.keys(allData).reverse()).map((data) => (
                                 <File key={data} data={`files/${userId}/${data}`} />
                             ))
                         ) : 
