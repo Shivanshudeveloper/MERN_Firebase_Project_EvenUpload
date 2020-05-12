@@ -27,6 +27,7 @@ import MobileScan from './components/MobileView/Scan';
 import MobileEvenUpload from './components/MobileView/EvenUpload';
 import MobilePhotos from './components/MobileView/Photos';
 import MobileScanForDownload from './components/MobileView/MobileScanForDownload';
+import MobileContacts from './components/MobileView/MobileContacts';
 
 function App() {
   return (
@@ -57,7 +58,7 @@ function App() {
               <Route path="/qrcodedownload" exact component={QrForDownload} />
               <Route path="/scanqrdownload" component={MobileScanForDownload} />
               <Route path="/share" component={Share} />
-              <Route path="/inbox" component={Contacts} />
+              <Route path="/inbox" component={MobileContacts} />
             </Router>
         </MobileView>
     </Fragment>
