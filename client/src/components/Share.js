@@ -20,11 +20,16 @@ import MobileMenu from './MobileView/Menu';
 import { API_SERVICE } from '../config/URI';
 
 
-const RecentContactList = ({ recentcontact, setEmail }) => {
+const RecentContactList = ({ recentcontact, setEmail, email }) => {
     var emailAddr = recentcontact.contact;
+    var finalEmailAddress = recentcontact.contact;
+    console.log("Email: ", email);
+    if (email !== '') {
+        finalEmailAddress = email + ',' + emailAddr;
+    }
     return (
         <>
-            <div onClick={() => setEmail(emailAddr)} className="ui raised link card green">
+            <div onClick={() => setEmail(finalEmailAddress)} className="ui raised link card green">
                 <div className="content">
                     <div className="ui tiny header">{recentcontact.contact}</div>
                 </div>
@@ -129,7 +134,7 @@ const Share = ({ location }) => {
 
     const showRecentContacts = () => {
         return contactlist.map(recentcontact => {
-            return <RecentContactList recentcontact={recentcontact} setEmail={setEmail} key={recentcontact._id} />
+            return <RecentContactList recentcontact={recentcontact} setEmail={setEmail} email={email} key={recentcontact._id} />
         })
     }
     

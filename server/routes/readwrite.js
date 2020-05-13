@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var { fileName, filename, to, from, url, senders_photoURL, senders_email, message, fileKey } = req.body;
     
-    let transporter, mailOption, mailText;
+    let transporter, mailOption, mailText, emailArr;
 
     var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${fileKey}`;
     var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
@@ -56,19 +56,22 @@ router.post('/', (req, res) => {
         newShare.save()
             .then(
                 res.status(200).json('Added'),
-                ContactList_Model.countDocuments({'contact_of': senders_email, 'contact': to})
+                emailArr = to.split(','),
+                emailArr.forEach(e => {
+                    ContactList_Model.countDocuments({'contact_of': senders_email, 'contact': e})
                     .then((count) => {
                         if (count > 0) {
                             console.log("Find");
                         } else {
                             const newContact = new ContactList_Model({
-                                contact: to,
+                                contact: e,
                                 contact_of: senders_email,
                                 contact_photoURL: senders_photoURL
                             })
                             newContact.save()
                         }
-                    }),
+                    })
+                }),
                 
                 // Successfully shared data triggering a mail to the data senders email address
                 transporter = nodemailer.createTransport({
@@ -101,7 +104,8 @@ router.post('/', (req, res) => {
 router.get('/contacts/:reciversEmail', (req, res) => {
     const { reciversEmail } = req.params;
     res.setHeader('Content-Type', 'application/json');
-    ShareWith_Model.find({ to: reciversEmail }).sort({date: -1})
+    var regexEmail = new RegExp(reciversEmail);
+    ShareWith_Model.find({ to: regexEmail }).sort({date: -1})
         .then(contacts => {
             res.status(200).json(contacts)
         })
@@ -129,32 +133,38 @@ router.get('/contactslist/:sendersEmail', (req, res) => {
 router.put('/inbox/:userId/:receiversEmail', (req, res) => {
     const { userId, receiversEmail } = req.params;
     var updateInbox;
-    Inbox_Model.countDocuments({'receiversEmail': receiversEmail})
+    let emailArr;
+    emailArr = receiversEmail.split(',');
+    emailArr.forEach(e => {
+        Inbox_Model.countDocuments({'receiversEmail': e})
         .then((count) => {
             if (count > 0) {
-                Inbox_Model.find({'receiversEmail': receiversEmail})
+                Inbox_Model.find({'receiversEmail': e})
                     .then(data => {
                         updateInbox = parseInt(data[0].inbox);
                         updateInbox = updateInbox + 1;
-                        Inbox_Model.findOneAndUpdate({'receiversEmail': receiversEmail}, { inbox: updateInbox }, {useFindAndModify: false})
+                        Inbox_Model.findOneAndUpdate({'receiversEmail': e}, { inbox: updateInbox }, {useFindAndModify: false})
                             .then(() => {
-                                res.status(200).json('Updated Inbox')
+                                console.log("Done")
                             })
                             .catch(err => console.log(err))
                     })
             } else {
                 const newInbox = new Inbox_Model({
                     userId,
-                    receiversEmail,
+                    receiversEmail: e,
                     inbox: 1
                 });
                 newInbox.save()
                     .then(() => {
-                        res.status(200).json('Added Inbox')
+                        console.log("Done")
                     })
                     .catch(err => console.log(err))
             }
         })
+    })
+
+    
 });
 
 
