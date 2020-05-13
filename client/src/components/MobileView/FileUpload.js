@@ -69,58 +69,68 @@ const FileUpload = () => {
             setbtnUpload('Uploading....');
             setLoading(1);
             e.preventDefault();
-            // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
-            const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
+            // Checking for the File Size Greater than 1GB
+            if (file.size >= 500288000) {
+                setMessage('File is too large to Share');
+                setTimeout(() => setMessage(''), 2000);
+            } 
+            // File Size Must be smaller than 1GB
+            else {
+                // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
+                const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
 
-            uploadTask.on('state_changed', (snapshot) => {
-                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                setUploadPercentage(progress);
-            },
-            (error) => {
-                console.log(error);
-                setMessage(error);
-            },
-            () => {
-                // When the Storage gets Completed
-                storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
-                    const fileName = `${file.name}`;
 
-                    const fileKey = `${uniqueKey}/${file.name}`;
+                uploadTask.on('state_changed', (snapshot) => {
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setUploadPercentage(progress);
+                },
+                (error) => {
+                    setMessage(error);
+                },
+                () => {
+                    // When the Storage gets Completed
+                    storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
+                        const fileName = `${file.name}`;
 
-                    var date = new Date();
-                    var dd = String(date.getDate()).padStart(2, '0');
-                    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-                    var yyyy = date.getFullYear();
-                    date = dd + '/' + mm + '/' + yyyy;
+                        const fileKey = `${uniqueKey}/${file.name}`;
 
-                    // Saved in Database about the User
-                    const uploadData = {
-                        date,
-                        fileName,
-                        filePath,
-                        fileKey
-                    }
+                        var date = new Date();
+                        var dd = String(date.getDate()).padStart(2, '0');
+                        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = date.getFullYear();
+                        date = dd + '/' + mm + '/' + yyyy;
 
-                    
-                    
-                    database.ref(`files/${userId}`).push(uploadData, (error) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log("Done");
+
+                        // Saved in Database about the User
+                        const uploadData = {
+                            date,
+                            fileName,
+                            filePath,
+                            fileKey,
                         }
-                    })
 
-                    setMessage('Successfully Uploaded');
+                        
+                        
+                        database.ref(`files/${userId}`).push(uploadData, (error) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log("Done");
+                            }
+                        });
 
-                    setbtnUpload('Upload');
-                    setLoading(0);
-                    setTimeout(() => setUploadPercentage(0), 2000);
-                    setTimeout(() => setMessage(''), 2000);
-                    setTimeout(() => setFilename('Choose File'), 2000);
-                    setTimeout(() => setFile(''), 2000);
+                        setMessage('Successfully Uploaded');
+
+                        setbtnUpload('Upload');
+                        setLoading(0);
+                        setTimeout(() => setUploadPercentage(0), 2000);
+                        setTimeout(() => setMessage(''), 2000);
+                        setTimeout(() => setFilename('Choose File'), 2000);
+                        setTimeout(() => setFile(''), 2000);
+                    });
                 });
-            });
+            }
+            
         } else {
             e.preventDefault();
             console.log('No File');

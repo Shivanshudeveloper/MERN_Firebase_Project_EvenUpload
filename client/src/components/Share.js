@@ -23,7 +23,6 @@ import { API_SERVICE } from '../config/URI';
 const RecentContactList = ({ recentcontact, setEmail, email }) => {
     var emailAddr = recentcontact.contact;
     var finalEmailAddress = recentcontact.contact;
-    console.log("Email: ", email);
     if (email !== '') {
         finalEmailAddress = email + ',' + emailAddr;
     }
@@ -48,7 +47,7 @@ const Share = ({ location }) => {
     const [fileId, setFileId] = useState('');
     const [filePath, setFilePath] = useState('');
     const [uploaded, setUploaded] = useState('');
-    const [email, setEmail] = useState('');
+    let [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [userphotoURL, setUserPhotoURL] = useState('');
     const [contactlist, setContactList] = useState([]);
@@ -97,11 +96,13 @@ const Share = ({ location }) => {
         var count = 0;
         var key;
         var fileName = '';
-        if (filename.split('_').pop().length > 40 ) {
-            fileName = filename.split("_").pop().substring(0, 40) + '....'
+        if (filename.length > 40 ) {
+            fileName = filename.substring(0, 40) + '....'
         } else {
-            fileName = filename.split("_").pop()
+            fileName = filename
         }
+
+        email = email.split(' ').join('');
         
         // Saved in Database about the User
         const uploadData = {
