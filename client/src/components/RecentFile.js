@@ -120,7 +120,7 @@ const RecentFile = ({ data }) => {
                 <div className="content">
                     <a href={file_path} target="_blank" download>
                     { 
-                        file_name.split('_').pop().length > 10 ? (
+                        file_name.length > 10 ? (
                             <FileTrim file_name={file_name} />
                         ) : (
                             <FileNotTrim file_name={file_name} />
