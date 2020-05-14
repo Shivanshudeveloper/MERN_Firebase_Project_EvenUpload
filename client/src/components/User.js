@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { auth } from '../Firebase/index';
+import { auth, firebase } from '../Firebase/index';
 
 // For Desktop and Mobile Views
 import {

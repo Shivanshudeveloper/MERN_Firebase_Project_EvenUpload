@@ -125,7 +125,7 @@ const FileUpload = () => {
                         });
 
                         setMessage('Successfully Uploaded');
-
+                        
                         setbtnUpload('Upload');
                         setLoading(0);
                         setTimeout(() => setUploadPercentage(0), 2000);
