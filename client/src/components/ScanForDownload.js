@@ -10,6 +10,9 @@ import Messages from './Messages';
 import Menu from './Menu';
 import User from "./User";
 
+// URI
+import { DYNAMIC_LINK_KEY } from '../config/URI';
+
 export default class ScanForDownload extends Component {
     constructor (props) {
         super(props);
@@ -37,12 +40,12 @@ export default class ScanForDownload extends Component {
         getData(ref)
           .then((value) => {
             var name = value.fileName;
-            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${key}`;
-            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+            var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${key}`;
+            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${DYNAMIC_LINK_KEY}`;
 
             // Make a Request to Firebase Dynamic Links for the URL
             axios.post(dynamicLinkApi, {
-                longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+                longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
             }).then((res) => {
                 this.setState({
                   filepath: res.data.shortLink

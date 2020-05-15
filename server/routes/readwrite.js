@@ -23,12 +23,12 @@ router.post('/', (req, res) => {
     
     let transporter, mailOption, mailText, emailArr;
 
-    var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${fileKey}`;
-    var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+    var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${fileKey}`;
+    var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBSEx2-ykPTb70keLZh3LAuDtQT2VyCsco`;
     
     // Make a Request to Firebase Dynamic Links for the URL
     axios.post(dynamicLinkApi, {
-        longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+        longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
     }).then((response) => {
         url = response.data.shortLink
         

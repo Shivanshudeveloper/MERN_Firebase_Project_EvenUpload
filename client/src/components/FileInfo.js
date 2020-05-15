@@ -13,18 +13,21 @@ import axios from 'axios';
 import loading from '../utils/loading.gif';
 
 // Firebase
-import { storage, database } from '../Firebase/index';
+import { database } from '../Firebase/index';
 // Components
 import User from './User';
 import Menu from './Menu';
 // @From Mobile
 import MobileMenu from './MobileView/Menu';
 
+// URI
+import { DYNAMIC_LINK_KEY } from '../config/URI';
+
 
 const FileTrim = ({ filename }) => {
     return (
         <div className="ui medium header">
-            {filename.split("_").pop().substring(0, 40)}....
+            {filename.substring(0, 40)}....
         </div>
     )
 }
@@ -32,7 +35,7 @@ const FileTrim = ({ filename }) => {
 const FileNotTrim = ({ filename }) => {
     return (
         <div className="ui medium header">
-            {filename.split("_").pop()}
+            {filename}
         </div>
     )
 }
@@ -56,12 +59,12 @@ const FileInfo = ({ location }) => {
         setFileId(fileId);
         setFileKey(key);
 
-        var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${key}`;
-        var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+        var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${key}`;
+        var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${DYNAMIC_LINK_KEY}`;
 
         // Make a Request to Firebase Dynamic Links for the URL
         axios.post(dynamicLinkApi, {
-            longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+            longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
         }).then((res) => {
             setPublicURL(res.data.shortLink);
         })
@@ -117,7 +120,7 @@ const FileInfo = ({ location }) => {
                     
                     <div className="ui buttons">
                         <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
-                            <i class="qrcode icon"></i>
+                            <i className="qrcode icon"></i>
                             Scan QR
                         </Link>
                         <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>

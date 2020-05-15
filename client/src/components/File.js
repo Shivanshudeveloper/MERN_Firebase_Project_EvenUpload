@@ -5,6 +5,9 @@ import { database } from '../Firebase/index';
 
 import { Link } from 'react-router-dom';
 
+// URI
+import { DYNAMIC_LINK_KEY } from '../config/URI';
+
 const FileTrim = ({ file_name }) => {
     var fileExtension = file_name.split('.').pop();
     return (
@@ -111,12 +114,12 @@ const File = ({ data }) => {
             setFile(fileData);
             var key = fileData.fileKey;
             setFileKey(key);
-            var publicSharingURL = `https://storage.googleapis.com/aicte-admin-survey.appspot.com/uploads/${key}`;
-            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCVVlRXx3gRLIs6LiBlWAQuq9UjSUnb5Ms`;
+            var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${key}`;
+            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${DYNAMIC_LINK_KEY}`;
 
             // Make a Request to Firebase Dynamic Links for the URL
             axios.post(dynamicLinkApi, {
-                longDynamicLink: `https://evencloud.page.link/?link=${publicSharingURL}`
+                longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
             }).then((res) => {
                 setFilePath(res.data.shortLink);
             })
