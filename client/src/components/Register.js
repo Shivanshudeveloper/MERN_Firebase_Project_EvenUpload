@@ -19,6 +19,11 @@ var sectionStyle = {
     width: '100%'
 };
 
+var headeingFont = {
+    marginTop: '12px', 
+    fontFamily: 'Roboto',
+}
+
 const Register = () => {
 
     const [email, setEmail] = useState('');
@@ -49,14 +54,17 @@ const Register = () => {
     return (
         <Fragment>
             <section style={ sectionStyle }>
-                <h1 style={{marginTop: '10px'}} className="ui huge header center aligned grid">
-                    Even<span className="ui blue header">Upload <i className="fas fa-cloud"></i></span>
-                </h1>
-                <div style={{marginTop: '40px'}} className="ui text center aligned container">
+            <div className="ui hidden divider"></div>
+                <center>
+                    <h1 className={headeingFont}>
+                        <span class="ui small header"> Even <i className="cloud blue icon"></i> Upload</span>
+                    </h1>
+                </center>
+                <div style={{marginTop: '2px'}} className="ui text center aligned container">
                     { message ? <Messages msg={message} /> : null }
                 </div>
                 <div className="ui container">
-                    <center style={{marginTop: '5%', width: 'auto'}}>
+                    <center style={{marginTop: '1%', width: 'auto'}}>
                         <div  className="ui compact segment">
                             <form className="ui form">
                                 <div className="field">
