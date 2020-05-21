@@ -156,11 +156,11 @@ const FileUpload = () => {
                 
                     
                     <div style={{ marginTop: '4px' }}  class="ui buttons">
-                        <Link className="ui fluid secondary button" to="/qrcodedownload" >
+                        <Link className="ui secondary button" to="/qrcodedownload" >
                             <i className="folder white qrcode icon"></i>
                             Accept Files
                         </Link>
-                        <Link className="ui violet button fluid" to="/savefiles" >
+                        <Link className="ui violet button" to="/savefiles" >
                             <i className="save icon"></i>
                             Save Files
                         </Link>
