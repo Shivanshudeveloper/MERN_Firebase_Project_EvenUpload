@@ -21,6 +21,9 @@ import QrForDownload from './components/QrForDownload';
 import ScanForDownload from './components/ScanForDownload';
 import Share from './components/Share';
 import Contacts from './components/Contacts';
+import AllSaveFiles from './components/AllSaveFiles';
+import SavedFiles from './components/SavedFiles';
+
 
 // @For Rendering Mobile
 import MobileScan from './components/MobileView/Scan';
@@ -29,9 +32,13 @@ import MobilePhotos from './components/MobileView/Photos';
 import MobileScanForDownload from './components/MobileView/MobileScanForDownload';
 import MobileContacts from './components/MobileView/MobileContacts';
 
+// Noification Package
+import { ToastProvider } from 'react-toast-notifications';
+
 function App() {
   return (
     <Fragment>
+      <ToastProvider>
         <BrowserView>
           <Router>
             <Route path="/" exact component={AuthenticationPage} />
@@ -44,8 +51,11 @@ function App() {
             <Route path="/scanqrdownload" component={ScanForDownload} />
             <Route path="/share" component={Share} />
             <Route path="/inbox" component={Contacts} />
+            <Route path="/savefiles" exact component={AllSaveFiles} />
+            <Route path="/savedfiles" component={SavedFiles} />
           </Router>
         </BrowserView>
+      </ToastProvider>
 
         <MobileView>
             <Router>
@@ -59,6 +69,8 @@ function App() {
               <Route path="/scanqrdownload" component={MobileScanForDownload} />
               <Route path="/share" component={Share} />
               <Route path="/inbox" component={MobileContacts} />
+              <Route path="/savefiles" exact component={AllSaveFiles} />
+              <Route path="/savedfiles" component={SavedFiles} />
             </Router>
         </MobileView>
     </Fragment>

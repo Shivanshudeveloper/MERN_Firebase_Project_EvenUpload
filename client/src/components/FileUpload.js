@@ -178,8 +178,14 @@ const FileUpload = () => {
             
             
             <Link style={{float: 'right'}} className="ui secondary button" to="/qrcodedownload" >
+                <i className="folder white qrcode icon"></i>
                 Accept Files by QR Code
             </Link>
+            <Link className="ui violet button left floated" to="/savefiles" >
+                <i className="save icon"></i>
+                Save Files
+            </Link>
+
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>

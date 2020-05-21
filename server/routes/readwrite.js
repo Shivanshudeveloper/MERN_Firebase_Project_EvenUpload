@@ -9,6 +9,7 @@ const nodemailer = require('nodemailer');
 const ShareWith_Model = require('../models/ShareWith');
 const ContactList_Model = require('../models/ContactList');
 const Inbox_Model = require('../models/Inbox');
+const SavedFiles_Model = require('../models/SavedFiles');
 
 // Login Page
 router.get('/', (req, res) => {
@@ -194,6 +195,60 @@ router.put('/resetinbox/:email', (req, res) => {
                 })
                 .catch(err => console.log(err))
         })
+});
+
+
+// Database CRUD Operations
+// @POST Request to Save the Files
+// POST 
+router.post('/savefiles', (req, res) => {
+    var { fileOf_usereId, senders_email, senders_photo, file, url } = req.body;
+
+    SavedFiles_Model.countDocuments({'url': url, 'fileOf_usereId': fileOf_usereId})
+        .then((count) => {
+            if (count > 0) {
+                res.status(200).json('File Already Added')
+            } else {
+                const newSaveFile = new SavedFiles_Model({
+                    fileOf_usereId,
+                    senders_email,
+                    senders_photo,
+                    file,
+                    url,
+                });
+                newSaveFile.save()
+                    .then(() => {
+                        res.status(200).json('Saved Files')
+                    })
+                    .catch(err => console.log(err))
+            }
+        })
+});
+
+
+// Database CRUD Operations
+// @GET Request to Get all the save files
+// GET 
+router.get('/savefiles/:userId', (req, res) => {
+    const { userId } = req.params;
+    SavedFiles_Model.findOne({'fileOf_usereId': userId})
+    .then(data => {
+        res.status(200).json([data])
+    })
+    .catch(err => res.status(400).json(`Error: ${err}`))
+});
+
+// Database CRUD Operations
+// @GET Request to Get all the save files for a perticular contact
+// GET 
+router.get('/savefiles/:userId/:senderEmail', (req, res) => {
+    const { userId, senderEmail } = req.params;
+    SavedFiles_Model.find({'fileOf_usereId': userId, 'senders_email': senderEmail})
+    .then(data => {
+        res.status(200).json(data)
+    })
+    .catch(err => res.status(400).json(`Error: ${err}`))
+    
 });
 
 

@@ -17,8 +17,11 @@ import { API_SERVICE } from '../config/URI';
 // Utils
 import Empty_Inbox_Temp_Image from  '../utils/empty_inbox.png';
 
+// React Notification Toast
+import { useToasts } from 'react-toast-notifications';
 
-const ContactList = ({ contact }) => {
+
+const ContactList = ({ contact, saveFile, saveFileLoading }) => {
     var date = new Date(contact.date);
     date = date.toDateString();
     return (
@@ -44,8 +47,25 @@ const ContactList = ({ contact }) => {
                     </div>
                 </div>
                 <div className="extra content">
+                    <BrowserView>
+                        <div className="left floated author">
+                            <button onClick={() => saveFile(contact.senders_email, contact.senders_photoURL, contact.fileName, contact.url)} className="ui small violet button" >
+                                <i className="save icon"></i>
+                                Save File
+                            </button>
+                        </div>
+                    </BrowserView>
+
+                    <MobileView>
+                        <div className="left floated author">
+                            <button onClick={() => saveFile(contact.senders_email, contact.senders_photoURL, contact.fileName, contact.url)} className="ui violet circular save icon button" >
+                                <i className="save icon"></i>
+                            </button>
+                        </div>
+                    </MobileView>
+
                     <div className="right floated author">
-                    <img className="ui avatar image" src={contact.senders_photoURL} /> {contact.senders_email}
+                        <img className="ui avatar image" src={contact.senders_photoURL} /> {contact.senders_email}
                     </div>
                 </div>
             </div>    
@@ -54,10 +74,12 @@ const ContactList = ({ contact }) => {
 }
 
 const Contacts = () => {
+    const { addToast } = useToasts();
 
     let userId = sessionStorage.getItem("userId");
     let sendersEmail = sessionStorage.getItem("userEmail"); 
     const [loading, setLoading] = useState(true);
+    const [saveFileLoading, setSaveFileLoading] = useState(false);
     
     const [contacts, setContacts] = useState([]);
 
@@ -75,11 +97,32 @@ const Contacts = () => {
             console.log(response.status);
         })
     }, [])
+
+    const saveFile = (senders_email, senders_photo,  file, url) => {
+        setSaveFileLoading(true);
+        axios.post(`${API_SERVICE}/api/v1/readwrite/savefiles`, {
+            fileOf_usereId: userId,
+            senders_email,
+            senders_photo,
+            file,
+            url
+        })
+        .then(response => {
+            if (response.data === "File Already Added") {
+                addToast(`${file} is already Saved`, { appearance: 'info', autoDismiss: true })
+                setSaveFileLoading(false);
+            } else {
+                addToast(`${file} Saved Successfully`, { appearance: 'success', autoDismiss: true })
+                setSaveFileLoading(false);
+            }
+        })
+        .catch(err => console.log(err))
+    }
     
     
     const showContactList = () => {
         return contacts.map(currentContact => {
-            return <ContactList contact={currentContact} key={currentContact._id} />
+            return <ContactList contact={currentContact} key={currentContact._id} saveFile={saveFile} saveFileLoading={saveFileLoading} />
         })
     }
         
