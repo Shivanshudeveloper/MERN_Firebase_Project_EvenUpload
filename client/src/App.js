@@ -55,7 +55,6 @@ function App() {
             <Route path="/savedfiles" component={SavedFiles} />
           </Router>
         </BrowserView>
-      </ToastProvider>
 
         <MobileView>
             <Router>
@@ -73,6 +72,7 @@ function App() {
               <Route path="/savedfiles" component={SavedFiles} />
             </Router>
         </MobileView>
+      </ToastProvider>
     </Fragment>
     
   );
