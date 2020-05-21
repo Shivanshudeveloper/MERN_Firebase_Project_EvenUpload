@@ -167,9 +167,6 @@ const FileUpload = () => {
                     </div>
                 </div>
 
-                <center>
-                    
-                </center>
 
                 
                 {
@@ -195,7 +192,7 @@ const FileUpload = () => {
             { message ? <Messages msg={message} /> : null }
             
             
-            <div style={{marginTop: '4%'}} className="ui left aligned container">
+            <div style={{marginTop: '1%'}} className="ui left aligned container">
             {
                 loadingdata === 0 ? (
                     <div className="ui fluid placeholder">
