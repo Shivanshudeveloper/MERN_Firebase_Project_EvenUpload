@@ -5,6 +5,7 @@ import {
     BrowserView,
     MobileView
 } from 'react-device-detect';
+import CryptoJS from 'crypto';
 
 // Components
 import Menu from './Menu';
@@ -12,15 +13,23 @@ import MobileMenu from './MobileView/Menu';
 import User from './User';
 
 // API Service
-import { API_SERVICE } from '../config/URI';
+import { API_SERVICE, SECRET_KEY } from '../config/URI';
 
 const AllFileContactList = ({ fileContact }) => {
+
+    var mykey = CryptoJS.createCipher('aes-128-cbc', SECRET_KEY);
+    var eE = mykey.update(fileContact.email, 'utf8', 'hex');
+    eE += mykey.final('hex');
+
+
+    
+
     return (
         <Fragment>
             <div className="ui raised link card green">
                     <div className="content">
-                        <Link to={`/savedfiles?s=${fileContact.email}`}>
-                            <img class="ui avatar image" src={fileContact.photoUrl} /> {fileContact.email}
+                        <Link to={`/savedfiles?s=${eE}`}>
+                            <img className="ui avatar image" src={fileContact.photoUrl} /> {fileContact.email}
                         </Link>
                     </div>
             </div>
@@ -37,7 +46,6 @@ const AllSaveFiles = () => {
     useEffect(() => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/savefiles/${userId}`)
         .then(response => {
-            console.log(response.data);
             setAllSavedFiles(response.data);
             setLoading(false);
         })
@@ -121,7 +129,7 @@ const AllSaveFiles = () => {
                     </>
                     ) : (
                         <>
-                            <h2 class="ui header">Contacts</h2>
+                            <h2 className="ui header">Contacts</h2>
                             <div className="ui two stackable cards">
                                 {showAllFiles()}
                             </div>

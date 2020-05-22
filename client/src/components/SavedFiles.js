@@ -5,6 +5,7 @@ import {
     MobileView
 } from 'react-device-detect';
 import queryString from 'query-string';
+import CryptoJS from 'crypto';
 
 // Components
 import Menu from './Menu';
@@ -12,7 +13,7 @@ import MobileMenu from './MobileView/Menu';
 import User from './User';
 
 // API Service
-import { API_SERVICE } from '../config/URI';
+import { API_SERVICE, SECRET_KEY } from '../config/URI';
 
 const AllFileList = ({ file }) => {
     return (
@@ -21,7 +22,7 @@ const AllFileList = ({ file }) => {
                 <div className="content">
                 <div className="header">{file.file}</div>
                     <div className="description">
-                        <a href={file.url} target="_blank" class="ui primary button">
+                        <a href={file.url} target="_blank" className="ui primary button">
                             <i className="cloud download icon"></i>
                             Download File
                         </a>
@@ -40,8 +41,12 @@ const SavedFiles = ({ location }) => {
 
     useEffect(() => {
         const { s } = queryString.parse(location.search);
+
+        var mykey = CryptoJS.createDecipher('aes-128-cbc', SECRET_KEY);
+        var dE = mykey.update(s, 'hex', 'utf8');
+        dE += mykey.final('utf8');
         
-        axios.get(`${API_SERVICE}/api/v1/readwrite/savefiles/${userId}/${s}`)
+        axios.get(`${API_SERVICE}/api/v1/readwrite/savefiles/${userId}/${dE}`)
         .then(response => {
             setAllSavedFiles(response.data);
             setLoading(false);
