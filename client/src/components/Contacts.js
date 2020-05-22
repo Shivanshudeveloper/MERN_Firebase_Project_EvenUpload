@@ -21,7 +21,7 @@ import Empty_Inbox_Temp_Image from  '../utils/empty_inbox.png';
 import { useToasts } from 'react-toast-notifications';
 
 
-const ContactList = ({ contact, saveFile, saveFileLoading }) => {
+const ContactList = ({ contact, saveFile }) => {
     var date = new Date(contact.date);
     date = date.toDateString();
     return (
@@ -56,13 +56,7 @@ const ContactList = ({ contact, saveFile, saveFileLoading }) => {
                         </div>
                     </BrowserView>
 
-                    <MobileView>
-                        <div className="left floated author">
-                            <button onClick={() => saveFile(contact.senders_email, contact.senders_photoURL, contact.fileName, contact.url)} className="ui violet circular save icon button" >
-                                <i className="save icon"></i>
-                            </button>
-                        </div>
-                    </MobileView>
+                    
 
                     <div className="right floated author">
                         <img className="ui avatar image" src={contact.senders_photoURL} /> {contact.senders_email}
@@ -79,7 +73,6 @@ const Contacts = () => {
     let userId = sessionStorage.getItem("userId");
     let sendersEmail = sessionStorage.getItem("userEmail"); 
     const [loading, setLoading] = useState(true);
-    const [saveFileLoading, setSaveFileLoading] = useState(false);
     
     const [contacts, setContacts] = useState([]);
 
@@ -99,7 +92,6 @@ const Contacts = () => {
     }, [])
 
     const saveFile = (senders_email, senders_photo,  file, url) => {
-        setSaveFileLoading(true);
         axios.post(`${API_SERVICE}/api/v1/readwrite/savefiles`, {
             fileOf_usereId: userId,
             senders_email,
@@ -108,21 +100,16 @@ const Contacts = () => {
             url
         })
         .then(response => {
-            if (response.data === "File Already Added") {
-                addToast(`${file} is already Saved`, { appearance: 'info', autoDismiss: true })
-                setSaveFileLoading(false);
-            } else {
-                addToast(`${file} Saved Successfully`, { appearance: 'success', autoDismiss: true })
-                setSaveFileLoading(false);
-            }
+            console.log(response.status);
         })
         .catch(err => console.log(err))
+        addToast(`${file} Saved Successfully`, { appearance: 'success', autoDismiss: true })
     }
     
     
     const showContactList = () => {
         return contacts.map(currentContact => {
-            return <ContactList contact={currentContact} key={currentContact._id} saveFile={saveFile} saveFileLoading={saveFileLoading} />
+            return <ContactList contact={currentContact} key={currentContact._id} saveFile={saveFile} />
         })
     }
         

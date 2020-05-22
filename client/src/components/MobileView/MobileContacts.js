@@ -16,9 +16,11 @@ import { API_SERVICE } from '../../config/URI';
 
 // Utils
 import Empty_Inbox_Temp_Image from  '../../utils/empty_inbox.png';
+// React Notification Toast
+import { useToasts } from 'react-toast-notifications';
 
 
-const ContactList = ({ contact }) => {
+const ContactList = ({ contact, saveFile }) => {
     var date = new Date(contact.date);
     date = date.toDateString();
     return (
@@ -44,8 +46,13 @@ const ContactList = ({ contact }) => {
                     </div>
                 </div>
                 <div className="extra content">
+                    <div className="left floated author">
+                        <button onClick={() => saveFile(contact.senders_email, contact.senders_photoURL, contact.fileName, contact.url)} className="ui violet circular save icon button" >
+                            <i className="save icon"></i>
+                        </button>
+                    </div>
                     <div className="right floated author">
-                    <img className="ui avatar image" src={contact.senders_photoURL} /> {contact.senders_email}
+                        <img className="ui avatar image" src={contact.senders_photoURL} />
                     </div>
                 </div>
             </div>    
@@ -54,6 +61,8 @@ const ContactList = ({ contact }) => {
 }
 
 const Contacts = () => {
+
+    const { addToast } = useToasts();
 
     let userId = sessionStorage.getItem("userId");
     let sendersEmail = sessionStorage.getItem("userEmail"); 
@@ -75,11 +84,26 @@ const Contacts = () => {
             console.log(response.status);
         })
     }, [])
+
+    const saveFile = (senders_email, senders_photo,  file, url) => {
+        axios.post(`${API_SERVICE}/api/v1/readwrite/savefiles`, {
+            fileOf_usereId: userId,
+            senders_email,
+            senders_photo,
+            file,
+            url
+        })
+        .then(response => {
+            console.log(response.status);
+        })
+        .catch(err => console.log(err))
+        addToast(`${file} Saved Successfully`, { appearance: 'success', autoDismiss: true })
+    }
     
     
     const showContactList = () => {
         return contacts.map(currentContact => {
-            return <ContactList contact={currentContact} key={currentContact._id} />
+            return <ContactList contact={currentContact} key={currentContact._id} saveFile={saveFile} />
         })
     }
         
