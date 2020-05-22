@@ -16,19 +16,22 @@ import User from './User';
 import { API_SERVICE, SECRET_KEY } from '../config/URI';
 
 const AllFileList = ({ file }) => {
+    var fileName = file.file;
     return (
         <Fragment>
-           <div className="ui fluid card">
+        <div className="column">
+            <div className="ui card fluid">
                 <div className="content">
-                <div className="header">{file.file}</div>
-                    <div className="description">
-                        <a href={file.url} target="_blank" className="ui primary button">
-                            <i className="cloud download icon"></i>
-                            Download File
-                        </a>
+                    <div className="header">
+                        {fileName.substring(0, 20)}....
                     </div>
+                    <a href={file.url} target="_blank">
+                    <i className="cloud download icon"></i>
+                        Download File
+                    </a>
                 </div>
             </div>
+        </div>
         </Fragment>
     )
 }
@@ -130,8 +133,17 @@ const SavedFiles = ({ location }) => {
                     </>
                     ) : (
                         <>
-                            {showAllFiles()}
-                        </>
+                            <BrowserView>
+                                <div className="ui two column grid">
+                                    {showAllFiles()}    
+                                </div>
+                            </BrowserView>
+                            <MobileView>
+                                <div className="ui column grid">
+                                    {showAllFiles()}    
+                                </div>
+                            </MobileView>
+                        </>  
                     )
                 }
             </div>
