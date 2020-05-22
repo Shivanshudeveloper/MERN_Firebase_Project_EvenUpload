@@ -14,13 +14,13 @@ import User from './User';
 // API Service
 import { API_SERVICE } from '../config/URI';
 
-const AllFileContactList = ({ file }) => {
+const AllFileContactList = ({ fileContact }) => {
     return (
         <Fragment>
             <div className="ui raised link card green">
                     <div className="content">
-                        <Link to={`/savedfiles?s=${file.senders_email}`}>
-                            <img className="ui avatar image" src={file.senders_photo} /> {file.senders_email}
+                        <Link to={`/savedfiles?s=${fileContact.email}`}>
+                            <img class="ui avatar image" src={fileContact.photoUrl} /> {fileContact.email}
                         </Link>
                     </div>
             </div>
@@ -37,14 +37,15 @@ const AllSaveFiles = () => {
     useEffect(() => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/savefiles/${userId}`)
         .then(response => {
+            console.log(response.data);
             setAllSavedFiles(response.data);
             setLoading(false);
         })
     }, [])
 
     const showAllFiles = () => {
-        return allSavedFiles.map(file => {
-            return <AllFileContactList file={file} key={file._id} />
+        return allSavedFiles.map(fileContact => {
+            return <AllFileContactList fileContact={fileContact} key={fileContact.id} />
         })
     }
 
@@ -119,9 +120,12 @@ const AllSaveFiles = () => {
                         </div>
                     </>
                     ) : (
-                        <div className="ui two stackable cards">
-                            {showAllFiles()}
-                        </div>
+                        <>
+                            <h2 class="ui header">Contacts</h2>
+                            <div className="ui two stackable cards">
+                                {showAllFiles()}
+                            </div>
+                        </>
                     )
                 }
 

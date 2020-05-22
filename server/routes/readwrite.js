@@ -231,9 +231,31 @@ router.post('/savefiles', (req, res) => {
 // GET 
 router.get('/savefiles/:userId', (req, res) => {
     const { userId } = req.params;
-    SavedFiles_Model.findOne({'fileOf_usereId': userId})
+    let emailArr = [];
+    SavedFiles_Model.find({'fileOf_usereId': userId})
     .then(data => {
-        res.status(200).json([data])
+        data.map((email) => {
+            var data = {
+                id: email._id,
+                email: email.senders_email,
+                photoUrl: email.senders_photo
+            }
+            
+            emailArr.push(data);
+        });
+        const filteredArr = emailArr.reduce((acc, current) => {
+            const x = acc.find(item => item.email === current.email);
+            if (!x) {
+              return acc.concat([current]);
+            } else {
+              return acc;
+            }
+        }, []);
+        res.status(200).json(filteredArr)
+
+        // emailArr.splice(0, emailArr.length, ...(new Set(emailArr)));
+        // console.log(emailArr);
+        // res.status(200).json(emailArr)
     })
     .catch(err => res.status(400).json(`Error: ${err}`))
 });
