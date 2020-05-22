@@ -20,7 +20,13 @@ import RecentsFiles from './RecentsFIles';
 // Utils
 import no_files from '../utils/no_files.png';
 
+// React Notification Toast
+import { useToasts } from 'react-toast-notifications';
+
 const FileUpload = () => {
+    // For Nitifying 
+    const { addToast } = useToasts();
+    
     const uniqueKey = uuid4();
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
@@ -76,8 +82,7 @@ const FileUpload = () => {
             e.preventDefault();
             // Checking for the File Size Greater than 1GB
             if (file.size >= 500288000) {
-                setMessage('File is too large to Share');
-                setTimeout(() => setMessage(''), 2000);
+                addToast(`File size is too large to upload`, { appearance: 'error', autoDismiss: true })
             } 
             // File Size Must be smaller than 1GB
             else {
@@ -124,12 +129,10 @@ const FileUpload = () => {
                             }
                         });
 
-                        setMessage('Successfully Uploaded');
-                        
+                        addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
                         setbtnUpload('Upload');
                         setLoading(0);
                         setTimeout(() => setUploadPercentage(0), 2000);
-                        setTimeout(() => setMessage(''), 2000);
                         setTimeout(() => setFilename('Choose File'), 2000);
                         setTimeout(() => setFile(''), 2000);
                     });
