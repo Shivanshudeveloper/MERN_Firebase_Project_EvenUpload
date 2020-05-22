@@ -19,7 +19,6 @@ const AllFileList = ({ file }) => {
     var fileName = file.file;
     return (
         <Fragment>
-        <div className="column">
             <div className="ui card fluid">
                 <div className="content">
                     <div className="header">
@@ -31,7 +30,6 @@ const AllFileList = ({ file }) => {
                     </a>
                 </div>
             </div>
-        </div>
         </Fragment>
     )
 }
@@ -133,16 +131,9 @@ const SavedFiles = ({ location }) => {
                     </>
                     ) : (
                         <>
-                            <BrowserView>
-                                <div className="ui two column grid">
-                                    {showAllFiles()}    
-                                </div>
-                            </BrowserView>
-                            <MobileView>
-                                <div className="ui column grid">
-                                    {showAllFiles()}    
-                                </div>
-                            </MobileView>
+                            <div className="ui column grid">
+                                {showAllFiles()}    
+                            </div>
                         </>  
                     )
                 }
