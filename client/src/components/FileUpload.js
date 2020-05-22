@@ -77,8 +77,6 @@ const FileUpload = () => {
 
     const onSubmit = async e => {
         if (file) {
-            setbtnUpload('Uploading....');
-            setLoading(1);
             e.preventDefault();
             // Checking for the File Size Greater than 1GB
             if (file.size >= 500288000) {
@@ -86,10 +84,10 @@ const FileUpload = () => {
             } 
             // File Size Must be smaller than 1GB
             else {
+                setbtnUpload('Uploading....');
+                setLoading(1);
                 // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
                 const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
-
-
                 uploadTask.on('state_changed', (snapshot) => {
                     const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                     setUploadPercentage(progress);
