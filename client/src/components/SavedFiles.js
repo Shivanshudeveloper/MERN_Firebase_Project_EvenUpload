@@ -22,7 +22,7 @@ const AllFileList = ({ file }) => {
             <div className="ui card fluid">
                 <div className="content">
                     <div className="header">
-                        {fileName.substring(0, 20)}....
+                        {fileName}
                     </div>
                     <a href={file.url} target="_blank">
                     <i className="cloud download icon"></i>
@@ -131,9 +131,7 @@ const SavedFiles = ({ location }) => {
                     </>
                     ) : (
                         <>
-                            <div className="ui column grid">
-                                {showAllFiles()}    
-                            </div>
+                            {showAllFiles()}    
                         </>  
                     )
                 }

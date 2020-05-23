@@ -265,7 +265,7 @@ router.get('/savefiles/:userId', (req, res) => {
 // GET 
 router.get('/savefiles/:userId/:senderEmail', (req, res) => {
     const { userId, senderEmail } = req.params;
-    SavedFiles_Model.find({'fileOf_usereId': userId, 'senders_email': senderEmail})
+    SavedFiles_Model.find({'fileOf_usereId': userId, 'senders_email': senderEmail}).sort({date: -1})
     .then(data => {
         res.status(200).json(data)
     })
