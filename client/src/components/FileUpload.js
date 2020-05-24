@@ -34,8 +34,8 @@ const FileUpload = () => {
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
-    const [uploadPercentage, setUploadPercentage] = useState(0);
-    const [btnUpload, setbtnUpload] = useState('Upload');
+    const [uploadPercentage, setUploadPercentage] = useState('Ready to Go');
+    const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
 
@@ -128,9 +128,9 @@ const FileUpload = () => {
                         });
 
                         addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
-                        setbtnUpload('Upload');
+                        setbtnUpload('Start the Upload');
                         setLoading(0);
-                        setTimeout(() => setUploadPercentage(0), 2000);
+                        setTimeout(() => setUploadPercentage('Ready to Go'), 2000);
                         setTimeout(() => setFilename('Choose File'), 2000);
                         setTimeout(() => setFile(''), 2000);
                     });
@@ -139,11 +139,16 @@ const FileUpload = () => {
             
         } else {
             e.preventDefault();
-            console.log('No File');
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
-        
+   }
+
+    const cancelFileUpload = () => {
+        setFilename('Choose File');
+        setFile('');
+        setbtnUpload('Start the Upload');
+        setLoading(0);
     }
 
     
@@ -157,7 +162,7 @@ const FileUpload = () => {
 
             <form onSubmit={onSubmit}>
                 <div className="ui text container">
-                    <label htmlFor="file" className="ui toggle icon button">
+                    <label htmlFor="file" className="ui toggle blue icon button">
                         {filename}
                     </label>
                     <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
@@ -167,9 +172,12 @@ const FileUpload = () => {
                         <>
                             <Progress percentage={uploadPercentage} />
                             <center>
-                                <button type="submit" className={loading === 0 ? 'ui primary medium button' : 'ui loading primary medium button' }>
+                                <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
                                     <i className="cloud upload icon"></i>
                                     {btnUpload}
+                                </button>
+                                <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
+                                    Cancel
                                 </button>
                             </center>
                         </>
@@ -184,7 +192,7 @@ const FileUpload = () => {
             </Link>
             <Link className="ui violet button left floated" to="/savefiles" >
                 <i className="save icon"></i>
-                Save Files
+                Saved Files
             </Link>
 
             <div className="ui hidden divider"></div>

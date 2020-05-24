@@ -23,8 +23,8 @@ const FileUpload = () => {
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
-    const [uploadPercentage, setUploadPercentage] = useState(0);
-    const [btnUpload, setbtnUpload] = useState('Upload');
+    const [uploadPercentage, setUploadPercentage] = useState('Ready to Go');
+    const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
 
@@ -121,23 +121,29 @@ const FileUpload = () => {
 
                         setMessage('Successfully Uploaded');
 
-                        setbtnUpload('Upload');
+                        setbtnUpload('Start the Upload');
                         setLoading(0);
-                        setTimeout(() => setUploadPercentage(0), 2000);
-                        setTimeout(() => setMessage(''), 2000);
+                        setTimeout(() => setUploadPercentage('Ready to Go'), 2000);
                         setTimeout(() => setFilename('Choose File'), 2000);
                         setTimeout(() => setFile(''), 2000);
+                        setTimeout(() => setMessage(''), 2000);
                     });
                 });
             }
             
         } else {
             e.preventDefault();
-            console.log('No File');
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
         
+    }
+
+    const cancelFileUpload = () => {
+        setFilename('Choose File');
+        setFile('');
+        setbtnUpload('Start the Upload');
+        setLoading(0);
     }
 
     
@@ -174,9 +180,12 @@ const FileUpload = () => {
                         <>
                             <Progress percentage={uploadPercentage} />
                             <center>
-                                <button type="submit" className={loading === 0 ? 'ui primary fluid medium button' : 'ui loading fluid primary medium button' }>
+                                <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
                                     <i className="cloud upload icon"></i>
                                     {btnUpload}
+                                </button>
+                                <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
+                                    X
                                 </button>
                             </center>
                         </>
