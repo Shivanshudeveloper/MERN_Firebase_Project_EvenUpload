@@ -201,7 +201,7 @@ const FileUpload = () => {
             <BrowserView>
                 <RecentsFiles userId={userId}  />
             </BrowserView>
-            <div class="ui divider"></div>
+            <div className="ui divider"></div>
             { message ? <Messages msg={message} /> : null }
             <div style={{marginTop: '1%', marginBottom: '5%'}} className="ui left aligned container">
             {

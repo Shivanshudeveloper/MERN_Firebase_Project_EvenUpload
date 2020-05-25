@@ -168,7 +168,7 @@ const FileUpload = () => {
                         </Link>
                         <Link className="ui violet button" to="/savefiles" >
                             <i className="save icon"></i>
-                            Save Files
+                            Saved Files
                         </Link>
                     </div>
                 </div>
