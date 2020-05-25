@@ -24,6 +24,7 @@ import MobileMenu from './MobileView/Menu';
 import { DYNAMIC_LINK_KEY } from '../config/URI';
 
 
+
 const FileTrim = ({ filename }) => {
     return (
         <div className="ui medium header">
@@ -108,19 +109,24 @@ const FileInfo = ({ location }) => {
                     <MobileMenu />
                 </MobileView>
 
+                    
+
                     <div style={{marginTop: '5%'}}>
                         { filename.split('_').pop().length > 40 ? (
-                            <FileTrim filename={filename} />
+                            <>
+                            <FileTrim filename={filename} /> 
+                            </>
                         ) : (
-                            <FileNotTrim filename={filename} />
+                            <>
+                            <FileNotTrim filename={filename} /> 
+                            </>
                         ) }
                     </div>
-                    <div className="ui hidden divider"></div>
                     
                     
-                    <div className="ui buttons">
+                    <div style={{marginTop: '10px'}} className="ui buttons">
                         <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
-                            <i className="qrcode icon"></i>
+                            <i className="qrcode icon"></i> 
                             Scan QR
                         </Link>
                         <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
@@ -128,15 +134,16 @@ const FileInfo = ({ location }) => {
                             Share File
                         </Link>
                     </div>
+
+                    
+                    
                     
 
 
-
-                    <div className="ui hidden divider"></div>
                     
                     {
                         qrcode ? (
-                                <div>
+                                <div style={{marginTop: '15px'}}>
                                 <CopyToClipboard text={publicURL}
                                         onCopy={() => copy()}>
                                         <div className="ui action input">
@@ -185,16 +192,20 @@ const FileInfo = ({ location }) => {
                     <center>
                         {
                             qrcode ? (
-                                <a href={publicURL} className="ui green button" target="_blank" download>
+                            <>
+                                <a href={publicURL} className="ui primary button" target="_blank" download>
                                     <i className="download icon"></i>
                                     Download File
                                 </a>
+                                <MobileView>
+                                    <a  href={`whatsapp://send?text=${publicURL}`} class="green ui icon button" data-action="share/whatsapp/share">
+                                        <i className="whatsapp icon"></i>
+                                    </a>
+                                </MobileView>
+                            </>
                             ) : null
                         }
-                        
                     </center>
-                    
-                    
 
 
                     

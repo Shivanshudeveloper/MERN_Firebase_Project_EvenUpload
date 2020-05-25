@@ -125,7 +125,11 @@ const File = ({ data }) => {
             })
             setFileName(fileData.fileName);
         });
-}, []);
+    }, []);
+
+    const deleteFile = (fileRef) => {
+        console.log(fileRef);
+    }
 
     
                     
