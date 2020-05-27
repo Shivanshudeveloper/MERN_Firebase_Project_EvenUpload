@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
@@ -35,10 +35,49 @@ import MobileContacts from './components/MobileView/MobileContacts';
 // Noification Package
 import { ToastProvider } from 'react-toast-notifications';
 
+// Theme
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './styles/theme';
+import { GlobalStyles } from './styles/global';
+
 function App() {
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    // if the theme is not light, then set it to dark
+    if (theme === 'light') {
+      setTheme('dark');
+    // otherwise, it should be light
+    } else {
+      setTheme('light');
+    }
+  }
+
+
   return (
     <Fragment>
       <ToastProvider>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      
+      
+      <div className="ui container">
+        <div style={{marginTop: '10px'}} className="ui toggle checkbox">
+          <input onClick={toggleTheme} type="checkbox" />
+          <label>{theme === 'light' ? 
+              <>
+                <i className="moon large icon"></i> 
+                Dark Mode
+              </>
+              : 
+              <>
+                <i className="sun large yellow icon"></i> 
+                <span style={{color: '#ffffff'}}>Light Mode</span>
+              </>
+            }
+          </label>
+        </div>
+      </div>
+      
+      <GlobalStyles />
         <BrowserView>
           <Router>
             <Route path="/" exact component={AuthenticationPage} />
@@ -72,6 +111,7 @@ function App() {
               <Route path="/savedfiles" component={SavedFiles} />
             </Router>
         </MobileView>
+      </ThemeProvider>
       </ToastProvider>
     </Fragment>
     
