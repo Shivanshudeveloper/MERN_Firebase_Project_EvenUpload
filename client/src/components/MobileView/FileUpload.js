@@ -23,7 +23,7 @@ const FileUpload = () => {
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
-    const [uploadPercentage, setUploadPercentage] = useState('Ready to Go');
+    const [uploadPercentage, setUploadPercentage] = useState('Ready to Upload');
     const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
@@ -123,7 +123,7 @@ const FileUpload = () => {
 
                         setbtnUpload('Start the Upload');
                         setLoading(0);
-                        setTimeout(() => setUploadPercentage('Ready to Go'), 2000);
+                        setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
                         setTimeout(() => setFilename('Choose File'), 2000);
                         setTimeout(() => setFile(''), 2000);
                         setTimeout(() => setMessage(''), 2000);
@@ -144,6 +144,7 @@ const FileUpload = () => {
         setFile('');
         setbtnUpload('Start the Upload');
         setLoading(0);
+        setUploadPercentage('Ready to Upload');
     }
 
     
