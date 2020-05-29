@@ -140,11 +140,11 @@ const FileUpload = () => {
     }
 
     const cancelFileUpload = () => {
-        setFilename('Choose File');
         setFile('');
         setbtnUpload('Start the Upload');
         setLoading(0);
         setUploadPercentage('Ready to Upload');
+        setFilename('Choose File');
     }
 
     
