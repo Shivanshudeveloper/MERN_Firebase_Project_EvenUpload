@@ -134,76 +134,89 @@ const FileInfo = ({ location }) => {
                 }
 
                 <div className="ui segment">
-                <div className="ui two column stackable center aligned grid">
-                    <div className="middle aligned row">
-                    <div className="column">
-                        {
-                            qrcode ? (
-                                <div>
-                                    <img className="text-center" src={qrcode} />
-                                </div>
-                            ) : (
-                                <div className="ui active inverted dimmer">
-                                    <div className="ui large text loader">Generating QR Code</div>
-                                </div>
-                            )
-                        }
-                    </div>
-                    <div className="column">
-                        <div className="ui icon header">
-                            { filename.split('_').pop().length > 40 ? (
-                                <>
-                                <FileTrim filename={filename} /> 
-                                </>
-                            ) : (
-                                <>
-                                <FileNotTrim filename={filename} /> 
-                                </>
-                            ) }
-                        </div>
-                        <div>
+                    <MobileView>
+                        <div className="ui hidden divider"></div>
+                    </MobileView>
+                    <div className="ui two column stackable center aligned grid">
+                        <div className="middle aligned row">
+                        <div className="column">
                             {
                                 qrcode ? (
-                                <>
-                                    <a href={publicURL} className="ui primary button" target="_blank" download>
-                                        <i className="download icon"></i>
-                                        Download File
-                                    </a>
+                                    <div>
+                                        <img className="text-center" src={qrcode} />
+                                    </div>
+                                ) : (
+                                    <div className="ui active inverted dimmer">
+                                        <div className="ui medium text loader">Generating QR Code</div>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <div className="column">
+                            <div>
+                                {
+                                    qrcode ? (
+                                    <>
+                                    <div className="ui icon header">
+                                        { filename.split('_').pop().length > 40 ? (
+                                            <>
+                                            <FileTrim filename={filename} /> 
+                                            </>
+                                        ) : (
+                                            <>
+                                            <FileNotTrim filename={filename} /> 
+                                            </>
+                                        ) }
+                                    </div>
+                                        <BrowserView>
+                                            <a href={publicURL} className="ui primary button" target="_blank" download>
+                                                <i className="download icon"></i>
+                                                Download File
+                                            </a>
+                                        </BrowserView>
+                                        <MobileView>
+                                            <a href={publicURL} className="ui primary fluid button" target="_blank" download>
+                                                <i className="download icon"></i>
+                                                Download File
+                                            </a>
+                                        </MobileView>
+                                    </>
+                                    ) : null
+                                }
+                                <div style={{marginTop: '20px'}}>
+                                    <BrowserView>
+                                        <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
+                                            <i className="qrcode black big icon"></i> 
+                                            <span className="medium"> Scan & Share File </span>
+                                        </Link>
+                                        <Link style={{marginLeft: '10px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
+                                            <i className="share green big alternate icon"></i>
+                                            <span className="medium">Share File </span>
+                                        </Link>
+                                    </BrowserView>
+
                                     <MobileView>
-                                        <a  href={`whatsapp://send?text=${publicURL}`} class="green ui icon button" data-action="share/whatsapp/share">
-                                            <i className="whatsapp icon"></i>
+                                        <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
+                                            <i className="qrcode black big icon"></i> 
+                                        </Link>
+                                        <Link style={{marginLeft: '20px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
+                                            <i className="share blue big alternate icon"></i>
+                                        </Link>
+                                        <a style={{marginLeft: '20px'}} href={`whatsapp://send?text=${publicURL}`} data-action="share/whatsapp/share">
+                                            <i className="whatsapp green big icon"></i>
                                         </a>
                                     </MobileView>
-                                </>
-                                ) : null
-                            }
-                            <div class="ui hidden divider"></div>
-                            <BrowserView>
-                                <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
-                                    <i className="qrcode black big icon"></i> 
-                                    <span className="medium"> Scan & Transfer </span>
-                                </Link>
-                                <Link style={{marginLeft: '10px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
-                                    <i className="share green big alternate icon"></i>
-                                    <span class="medium">Share File </span>
-                                </Link>
-                            </BrowserView>
-
-                            <MobileView>
-                                <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
-                                    <i className="qrcode black big icon"></i> 
-                                </Link>
-                                <Link style={{marginLeft: '20px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
-                                    <i className="share green big alternate icon"></i>
-                                </Link>
-                            </MobileView>
-                            
+                                </div>
+                                
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    </div>
+                    <div className="ui hidden divider"></div>
                 </div>
-                </div>
-                <div class="ui hidden divider"></div>
+
+                <div className="ui hidden divider"></div>
+                <div className="ui hidden divider"></div>
             </div>
         </Fragment>
     )
