@@ -9,7 +9,7 @@ import {
 // Semantic UI
 import 'semantic-ui-css/semantic.min.css';
 
-// Components
+// Component
 // @For Rendering in Browser
 import EvenUpload from './components/EvenUpload';
 import AuthenticationPage from './components/AuthenticationPage';
