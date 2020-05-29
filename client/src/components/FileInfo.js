@@ -109,107 +109,101 @@ const FileInfo = ({ location }) => {
                     <MobileMenu />
                 </MobileView>
 
-                    
-
-                    <div style={{marginTop: '5%'}}>
-                        { filename.split('_').pop().length > 40 ? (
-                            <>
-                            <FileTrim filename={filename} /> 
-                            </>
-                        ) : (
-                            <>
-                            <FileNotTrim filename={filename} /> 
-                            </>
-                        ) }
-                    </div>
-                    
-                    
-                    <div style={{marginTop: '10px'}} className="ui buttons">
-                        <Link className="ui button secondary" to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
-                            <i className="qrcode icon"></i> 
-                            Scan QR
-                        </Link>
-                        <Link className="ui primary button" to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
-                            <i className="share alternate icon"></i>
-                            Share File
-                        </Link>
-                    </div>
-
-                    
-                    
-                    
-
-
-                    
-                    {
-                        qrcode ? (
-                                <div style={{marginTop: '15px'}}>
-                                <CopyToClipboard text={publicURL}
-                                        onCopy={() => copy()}>
-                                        <div className="ui action input">
-                                            <input type="text" value={publicURL} />
-                                            
-                                            <button className="ui teal right labeled icon button">
-                                                <i className="copy icon"></i>
-                                                Copy
-                                            </button>
-                                        </div>
-                                </CopyToClipboard>
-                                
-                                </div>
-                                
-                        ) : null
-                    }
-                    
-                    {
-                        copied ? (
-                            <div className="ui pointing label">
-                                Copied
+                {
+                    qrcode ? (
+                            <div style={{marginTop: '15px'}}>
+                            <CopyToClipboard text={publicURL}
+                                    onCopy={() => copy()}>
+                                    <div className="ui action input">
+                                        <input type="text" value={publicURL} />
+                                        <button className="ui teal right labeled icon button">
+                                            <i className="copy icon"></i>
+                                            Copy
+                                        </button>
+                                    </div>
+                            </CopyToClipboard>
                             </div>
-                            
-                        ) : null
-                    }
-                    
-                
-                    
-                    
-                    <center className="mt-2">
+                    ) : null
+                }
+                {
+                    copied ? (
+                        <div className="ui pointing label">
+                            Link Copied
+                        </div>
+                    ) : null
+                }
+
+                <div className="ui segment">
+                <div className="ui two column stackable center aligned grid">
+                    <div className="middle aligned row">
+                    <div className="column">
                         {
                             qrcode ? (
                                 <div>
                                     <img className="text-center" src={qrcode} />
                                 </div>
                             ) : (
-                                <div>
-                                    <img src={loading} className="mt-4" />
-                                    <p>Loading QR Code</p>
+                                <div className="ui active inverted dimmer">
+                                    <div className="ui large text loader">Generating QR Code</div>
                                 </div>
                             )
                         }
-                        
-                    </center>
-
-                    <center>
-                        {
-                            qrcode ? (
-                            <>
-                                <a href={publicURL} className="ui primary button" target="_blank" download>
-                                    <i className="download icon"></i>
-                                    Download File
-                                </a>
-                                <MobileView>
-                                    <a  href={`whatsapp://send?text=${publicURL}`} class="green ui icon button" data-action="share/whatsapp/share">
-                                        <i className="whatsapp icon"></i>
+                    </div>
+                    <div className="column">
+                        <div className="ui icon header">
+                            { filename.split('_').pop().length > 40 ? (
+                                <>
+                                <FileTrim filename={filename} /> 
+                                </>
+                            ) : (
+                                <>
+                                <FileNotTrim filename={filename} /> 
+                                </>
+                            ) }
+                        </div>
+                        <div>
+                            {
+                                qrcode ? (
+                                <>
+                                    <a href={publicURL} className="ui primary button" target="_blank" download>
+                                        <i className="download icon"></i>
+                                        Download File
                                     </a>
-                                </MobileView>
-                            </>
-                            ) : null
-                        }
-                    </center>
+                                    <MobileView>
+                                        <a  href={`whatsapp://send?text=${publicURL}`} class="green ui icon button" data-action="share/whatsapp/share">
+                                            <i className="whatsapp icon"></i>
+                                        </a>
+                                    </MobileView>
+                                </>
+                                ) : null
+                            }
+                            <div class="ui hidden divider"></div>
+                            <BrowserView>
+                                <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
+                                    <i className="qrcode black big icon"></i> 
+                                    <span className="medium"> Scan & Transfer </span>
+                                </Link>
+                                <Link style={{marginLeft: '10px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
+                                    <i className="share green big alternate icon"></i>
+                                    <span class="medium">Share File </span>
+                                </Link>
+                            </BrowserView>
 
-
-                    
-
+                            <MobileView>
+                                <Link to={`/scanqrdownload/?path=${fileId}&key=${file_key}`}>
+                                    <i className="qrcode black big icon"></i> 
+                                </Link>
+                                <Link style={{marginLeft: '20px'}} to={`/share?name=${filename}&fileId=${fileId}&key=${file_key}`}>
+                                    <i className="share green big alternate icon"></i>
+                                </Link>
+                            </MobileView>
+                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="ui hidden divider"></div>
             </div>
         </Fragment>
     )
