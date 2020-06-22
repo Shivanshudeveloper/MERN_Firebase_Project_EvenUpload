@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import QrReader from 'react-qr-reader';
 import queryString from 'query-string';
 import { database } from "../Firebase/index";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import axios from 'axios';
 
 // Component
 import Messages from './Messages';
 import Menu from './Menu';
 import User from "./User";
-
-// URI
-import { DYNAMIC_LINK_KEY } from '../config/URI';
 
 export default class ScanForDownload extends Component {
     constructor (props) {
@@ -19,13 +15,14 @@ export default class ScanForDownload extends Component {
 
         this.state = {
           filepath: '',
+          fileName: '',
           copied: false
         };
     }
     
 
     componentDidMount() {
-        const { path, key } = queryString.parse(this.props.location.search);
+        const { path } = queryString.parse(this.props.location.search);
         
         const ref = database.ref(path);
 
@@ -40,16 +37,9 @@ export default class ScanForDownload extends Component {
         getData(ref)
           .then((value) => {
             var name = value.fileName;
-            var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${key}`;
-            var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${DYNAMIC_LINK_KEY}`;
-
-            // Make a Request to Firebase Dynamic Links for the URL
-            axios.post(dynamicLinkApi, {
-                longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
-            }).then((res) => {
-                this.setState({
-                  filepath: res.data.shortLink
-                })
+            this.setState({
+              filepath: value.filePath,
+              fileName: name
             })
           })
           .catch((error) => {
@@ -66,9 +56,10 @@ export default class ScanForDownload extends Component {
  
   handleScan = data => {
     if (data) {
-
+        
         var updates = {
-            filePath: this.state.filepath
+          filePath: this.state.filepath,
+          fileName: this.state.fileName
         };
 
         database.ref(`qr/${data}/`).update(updates).then(() => {
@@ -96,40 +87,36 @@ export default class ScanForDownload extends Component {
 
   render() {
     return (
-      <div className="ui center aligned container">
-        <User />
-        <div className="ui hidden divider"></div>
-        <div className="ui hidden divider"></div>
-        <Menu />
-        <div className="ui hidden divider"></div>
+      <Fragment>
+        <div className="ui center aligned container">
+            <User />
+            <div className="ui hidden divider"></div>
+            <Menu />
+            <div className="ui hidden divider"></div>
 
-        
-
-        <CopyToClipboard text={this.state.filepath}
-          onCopy={() => this.setState({copied: true})}>
-          <div className="ui action input">
-            <input type="text" value={this.state.filepath} />
-                                            
-            <button className="ui teal right labeled icon button">
-              <i className="copy icon"></i>
-              Copy
-            </button>
-          </div>
-        </CopyToClipboard>
-        <br />
-
-        {
-          this.state.copied ? (
-              <div className="ui pointing label">
-                Copied
+            <CopyToClipboard text={this.state.filepath}
+              onCopy={() => this.setState({copied: true})}>
+              <div className="ui action input">
+                <input type="text" value={this.state.filepath} />
+                                                
+                <button className="ui button">
+                  <i className="copy icon"></i>
+                  Copy
+                </button>
               </div>
-            ) : null
-        }
+            </CopyToClipboard>
+            <br />
 
-        
+            {
+              this.state.copied ? (
+                  <div className="ui pointing label">
+                    Copied
+                  </div>
+                ) : null
+            }
 
-        <center>
-            { this.state.msg ? <Messages msg={this.state.msg} /> : null }
+            <center>
+                { this.state.msg ? <Messages msg={this.state.msg} /> : null }
                 <div className="ui hidden divider"></div>
                 <QrReader
                     delay={300}
@@ -138,7 +125,8 @@ export default class ScanForDownload extends Component {
                     style={{ width: '50%' }}
                 />
             </center>
-        </div>
+            </div>
+        </Fragment>
     )
   }
 }

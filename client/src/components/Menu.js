@@ -21,10 +21,10 @@ const Menu = () => {
     return (
         <div className="ui text container">
             <div className="ui four item stackable tabs menu">
-                <Link to="/home" className="item">
+                <a onClick={() => window.location = "/home"} className="item">
                     <i className="home blue icon"></i>
                     All Files
-                </Link>
+                </a>
                 
                 <Link to="/inbox" className="item">
                     <i className="inbox red icon"></i>

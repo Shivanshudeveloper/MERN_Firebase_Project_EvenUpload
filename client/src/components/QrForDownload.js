@@ -64,7 +64,7 @@ const QrForDownload = () => {
                     
 
                     <div className="ui huge header">
-                        Scan QR Code for Download
+                        Scan QR Code to Transfer the File
                     </div>
 
                     <QrCodeDownload />

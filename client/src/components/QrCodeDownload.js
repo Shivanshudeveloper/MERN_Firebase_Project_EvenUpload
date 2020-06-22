@@ -43,22 +43,34 @@ const QrCodeDownload = () => {
     return (
         <div>
             <Fragment>
-                <center>
-                    <QrCodeWatchChange id={`qr/${id}/`} />
-                    {
-                        loading !== 0 ? (
-                            <div>
-                                <img className="ui medium image" src={qrcode} />
-                                <div className="ui hidden divider"></div>
-                            </div>
-                        ) : (
-                            <div>
-                                <img src={loader} className="mt-4" />
-                                <p>Loading QR Code</p>
-                            </div>
-                        )
-                    }
-                </center>
+                <div className="ui segment">
+                    <div className="ui two column stackable center aligned grid">
+                        <div className="middle aligned row">
+                        <div className="column">
+                            <center>
+                                {
+                                    loading !== 0 ? (
+                                        <div>
+                                            <img className="ui medium image" src={qrcode} />
+                                            <div className="ui hidden divider"></div>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <img src={loader} className="mt-4" />
+                                            <p>Loading QR Code</p>
+                                        </div>
+                                    )
+                                }
+                            </center>
+                        </div>
+                        <div className="column">
+                           <center>
+                               <QrCodeWatchChange id={`qr/${id}/`} />
+                           </center>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </Fragment>
         </div>
     )

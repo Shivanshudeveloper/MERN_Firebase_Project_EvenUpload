@@ -15,6 +15,7 @@ export default class ScanForDownload extends Component {
 
         this.state = {
           filepath: '',
+          fileName: '',
           copied: false
         };
     }
@@ -35,8 +36,10 @@ export default class ScanForDownload extends Component {
         
         getData(ref)
           .then((value) => {
+            var name = value.fileName;
             this.setState({
-              filepath: value.filePath
+              filepath: value.filePath,
+              fileName: name
             })
           })
           .catch((error) => {
@@ -53,11 +56,11 @@ export default class ScanForDownload extends Component {
  
   handleScan = data => {
     if (data) {
-
+        
         var updates = {
-            filePath: this.state.filepath
+          filePath: this.state.filepath,
+          fileName: this.state.fileName
         };
-        console.log(this.state.filepath);
 
         database.ref(`qr/${data}/`).update(updates).then(() => {
             console.log("S");
