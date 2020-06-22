@@ -19,6 +19,7 @@ import Register from './components/Register';
 import Photos from './components/Photos';
 import QrForDownload from './components/QrForDownload';
 import ScanForDownload from './components/ScanForDownload';
+import FileSharedWith from './components/FileSharedWith';
 import Share from './components/Share';
 import Contacts from './components/Contacts';
 import AllSaveFiles from './components/AllSaveFiles';
@@ -92,6 +93,7 @@ function App() {
             <Route path="/inbox" component={Contacts} />
             <Route path="/savefiles" exact component={AllSaveFiles} />
             <Route path="/savedfiles" component={SavedFiles} />
+            <Route path="/filesharedwith" component={FileSharedWith} />
           </Router>
         </BrowserView>
 
@@ -109,6 +111,7 @@ function App() {
               <Route path="/inbox" component={MobileContacts} />
               <Route path="/savefiles" exact component={AllSaveFiles} />
               <Route path="/savedfiles" component={SavedFiles} />
+              <Route path="/filesharedwith" component={FileSharedWith} />
             </Router>
         </MobileView>
       </ThemeProvider>

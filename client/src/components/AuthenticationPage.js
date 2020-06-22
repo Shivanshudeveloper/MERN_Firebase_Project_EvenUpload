@@ -1,5 +1,5 @@
 import React, { useState ,useEffect, Fragment } from 'react';
-import { googleProvider, auth } from "../Firebase/index";
+import { googleProvider, facebookProvider, auth } from "../Firebase/index";
 import { Link } from 'react-router-dom';
 
 // Components
@@ -27,6 +27,7 @@ var headeingFont = {
 const AuthenticationPage = () => {
 
     const [signInBtn, setSignInBtn] = useState('Sign In Google');
+    const [signInBtnFacebook, setSignInBtnFacebook] = useState('Sign In Facebook');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -46,6 +47,23 @@ const AuthenticationPage = () => {
           });
     }
 
+    const signInFacebook = () => {
+        auth.signInWithPopup(facebookProvider).then(function(result) {
+            setSignInBtnFacebook('Signing In....');
+            console.log(result);
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+            setMessage(errorMessage);
+        });
+    }
+
     const login = (event) => {
         event.preventDefault();
         auth.signInWithEmailAndPassword(email, password)
@@ -53,6 +71,7 @@ const AuthenticationPage = () => {
             auth.onAuthStateChanged(function(user) {
                 if (user) {
                     sessionStorage.setItem("userId", user.uid);
+                    sessionStorage.setItem("userEmail", user.email);
                     if (user.emailVerified) {
                         window.location.href = "/home";
                     }
@@ -69,8 +88,6 @@ const AuthenticationPage = () => {
     }
 
     useEffect(() => {
-    
-     
         auth.onAuthStateChanged(function(user) {
             if (user) {
                 sessionStorage.setItem("userId", user.uid);
@@ -143,6 +160,10 @@ const AuthenticationPage = () => {
                                 <button onClick={() => signIn()} type="button" style={{marginTop: '1%'}} className="fluid ui google plus button">
                                     <i style={{marginRight: '4px'}} className="google icon"></i>
                                     {signInBtn}
+                                </button>
+                                <button onClick={() => signInFacebook()} style={{ marginTop: '1%' }} className="ui fluid facebook button">
+                                    <i className="facebook icon"></i>
+                                    {signInBtnFacebook}
                                 </button>
                             </center>
                             <img className="ui medium image" src={tempImage} />

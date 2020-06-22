@@ -9,9 +9,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-// Loading
-import loading from '../utils/loading.gif';
-
 // Firebase
 import { database } from '../Firebase/index';
 // Components
@@ -213,6 +210,15 @@ const FileInfo = ({ location }) => {
                         </div>
                     </div>
                     <div className="ui hidden divider"></div>
+                </div>
+
+                <h1 className="ui header left aligned">Questions You May Have ?</h1>
+                <div className="ui segment left aligned">
+                    <h4>
+                        <Link to={`/filesharedwith?n=${filename}`}>
+                            File shared with people ?
+                        </Link>
+                    </h4>
                 </div>
 
                 <div className="ui hidden divider"></div>

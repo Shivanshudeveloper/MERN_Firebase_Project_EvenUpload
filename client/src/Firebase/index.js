@@ -27,8 +27,10 @@ const auth = firebase.auth();
 
 // Authentication for Google
 var googleProvider = new firebase.auth.GoogleAuthProvider();
+// Authentication for Facebook
+var facebookProvider = new firebase.auth.FacebookAuthProvider();
 
 
 export {
-    auth, googleProvider, database, storage, firebase as default
+    auth, googleProvider, facebookProvider, database, storage, firebase as default
 }

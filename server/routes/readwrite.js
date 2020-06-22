@@ -270,7 +270,19 @@ router.get('/savefiles/:userId/:senderEmail', (req, res) => {
         res.status(200).json(data)
     })
     .catch(err => res.status(400).json(`Error: ${err}`))
-    
+});
+
+
+// Database CRUD Operations
+// @GET Request to Get all people with whome file is shared
+// GET 
+router.get('/sharedwith/:userId/:fileName', (req, res) => {
+    const { userId, fileName } = req.params;
+    ShareWith_Model.find({'from': userId, 'fileName': fileName}).sort({date: -1})
+    .then(data => {
+        res.status(200).json(data)
+    })
+    .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
 
