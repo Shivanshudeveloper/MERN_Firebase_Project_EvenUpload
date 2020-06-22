@@ -31,7 +31,6 @@ const QrCodeWatchChange = ({ id }) => {
                             <i className="cloud download icon"></i>
                             File Ready to Download
                         </a>
-                        {filerender}
                         <div className="ui hidden divider"></div>
                     </>
                 ) : null
