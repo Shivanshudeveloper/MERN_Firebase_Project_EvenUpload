@@ -62,7 +62,7 @@ const User = () => {
                         ) : (
                             !user.displayName ? (
                                 <>
-                                        <img src={user.photoURL} class="ui avatar image" />
+                                        <img src={user.photoURL} className="ui avatar image" />
                                         <span style={{marginLeft: '6px'}}>
                                             <strong> {user.email} </strong>
                                         </span>
@@ -70,7 +70,7 @@ const User = () => {
                                 </>
                             ) : (
                                 <>
-                                        <img src={user.photoURL} class="ui avatar image" />
+                                        <img src={user.photoURL} className="ui avatar image" />
                                         <span style={{marginLeft: '6px'}}>
                                             <strong> {user.displayName} </strong>
                                         </span>

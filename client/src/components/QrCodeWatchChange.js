@@ -8,8 +8,8 @@ const QrCodeWatchChange = ({ id }) => {
     const [uid, setUid] = useState(id);
     const [filerender, setFileRender] = useState('');
     const [fileName, setFileName] = useState('');
-
     const [allData, setAllData] = useState({});
+
 
     useEffect(() => {
         database.ref(`${uid}`).once('value', function(snapshot) {
@@ -20,6 +20,8 @@ const QrCodeWatchChange = ({ id }) => {
             setFileName(allData.fileName);
         });
     });
+
+    
 
     return (
         <div>

@@ -162,7 +162,7 @@ const FileUpload = () => {
                     <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
                 
                     
-                    <div style={{ marginTop: '4px' }}  class="ui buttons">
+                    <div style={{ marginTop: '4px' }}  className="ui buttons">
                         <Link className="ui secondary button" to="/qrcodedownload" >
                             <i className="folder white qrcode icon"></i>
                             Accept Files

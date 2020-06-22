@@ -57,60 +57,60 @@ const Photos = () => {
                 {
                     loadingdata === 0 ? (
                         <>
-                            <div class="ui four cards">
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                            <div className="ui four cards">
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>
-                                <div class="ui card">
-                                    <div class="content">
-                                    <div class="ui placeholder">
-                                        <div class="rectangular image"></div>
+                                <div className="ui card">
+                                    <div className="content">
+                                    <div className="ui placeholder">
+                                        <div className="rectangular image"></div>
                                     </div>
                                     </div>
                                 </div>

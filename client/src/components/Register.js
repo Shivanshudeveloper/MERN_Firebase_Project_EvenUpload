@@ -57,7 +57,7 @@ const Register = () => {
             <div className="ui hidden divider"></div>
                 <center>
                     <h1 className={headeingFont}>
-                        <span class="ui small header"> Even <i className="cloud blue icon"></i> Upload</span>
+                        <span className="ui small header"> Even <i className="cloud blue icon"></i> Upload</span>
                     </h1>
                 </center>
                 <div style={{marginTop: '2px'}} className="ui text center aligned container">
