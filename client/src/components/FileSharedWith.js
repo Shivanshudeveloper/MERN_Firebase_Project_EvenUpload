@@ -25,7 +25,7 @@ const AllSharedWith = ({ sharedwith }) => {
         <Fragment>
             <div className="ui raised link card violet fluid">
                 <div className="content left aligned">
-                    <i className="user icon"></i> {shareTo}
+                    <i className="user icon"></i><strong> {shareTo} </strong>
                     <div className="description">Shared On {sharedOnDate + '/' + sharedOnMonth + '/' + sharedOnYear }</div>
                 </div>
             </div>
