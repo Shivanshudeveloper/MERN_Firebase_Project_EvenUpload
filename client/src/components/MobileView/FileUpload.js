@@ -11,6 +11,7 @@ import Progress from "../ProgressBar";
 import Messages from "../Messages";
 import File from "../File";
 import Menu from './Menu';
+import Paggination from '../Paggination';
 
 // Utils
 import no_files from '../../utils/no_files.png';
@@ -46,22 +47,24 @@ const FileUpload = () => {
     }, []);
 
     useEffect(() => {
-        database.ref(`files/${userId}`).once('value', function(snapshot) {
+        database.ref(`files/${userId}`).limitToLast(20).once('value', function(snapshot) {
             setAllData(snapshot.val());
             setLoadingData(1);
         });
-        // database.ref().on("value", (snapshot) => {
-        //     console.log(snapshot.val());
-        //     setAllData(snapshot.val());
-        // }, (err) => {
-        //     console.log(err);
-        // })
     });
     
 
     const onChange = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
+    }
+
+    // Refreshing the list of the user all files after uploading 
+    const refreshData = () => {
+        database.ref(`files/${userId}`).limitToLast(20).once('value', function(snapshot) {
+            setAllData(snapshot.val());
+            setLoadingData(1);
+        });
     }
 
     const onSubmit = async e => {
@@ -127,6 +130,8 @@ const FileUpload = () => {
                         setTimeout(() => setFilename('Choose File'), 2000);
                         setTimeout(() => setFile(''), 2000);
                         setTimeout(() => setMessage(''), 2000);
+                        // Refreshing the list of all files of user after uploading
+                        refreshData();
                     });
                 });
             }
@@ -145,6 +150,29 @@ const FileUpload = () => {
         setLoading(0);
         setUploadPercentage('Ready to Upload');
         setFilename('Choose File');
+    }
+
+    // For Paginate the Pages
+    const nextLoad = () => {
+        var keys = Object.keys(allData);
+        // var lastKeyOfData = keys[keys.length - 1];
+        var lastKeyOfData = keys[0];
+        setLoadingData(0);
+        database.ref(`files/${userId}`).endAt(null, `${lastKeyOfData}`).limitToLast(20).once('value', function(snapshot) {
+            setAllData(snapshot.val());
+            setLoadingData(1);
+        });
+    }
+
+    const previousLoad = () => {
+        var keys = Object.keys(allData);
+        var lastKeyOfData = keys[keys.length - 1];
+        // var lastKeyOfData = keys[0];
+        setLoadingData(0);
+        database.ref(`files/${userId}`).startAt(null, `${lastKeyOfData}`).limitToFirst(20).once('value', function(snapshot) {
+            setAllData(snapshot.val());
+            setLoadingData(1);
+        });
     }
 
     
@@ -222,17 +250,20 @@ const FileUpload = () => {
                         </div>
                     </div>
                 ) : (
-                    <div role="list" className="ui divided relaxed list">
-                        { allData ? (
-                            (Object.keys(allData).reverse()).map((data) => (
-                                <File key={data} data={`files/${userId}/${data}`} />
-                            ))
-                        ) : 
-                        <center>
-                            <img className="ui large image" src={no_files} />
-                        </center>
-                        }
-                    </div>
+                    <>
+                        <div role="list" className="ui raised segments">
+                            { allData ? (
+                                (Object.keys(allData).reverse()).map((data) => (
+                                    <File key={data} data={`files/${userId}/${data}`} />
+                                ))
+                            ) : 
+                            <center>
+                                <img className="ui large image" src={no_files} />
+                            </center>
+                            }
+                        </div>
+                        <Paggination nextLoad={nextLoad} previousLoad={previousLoad} />
+                    </>
                 )
             }
                 

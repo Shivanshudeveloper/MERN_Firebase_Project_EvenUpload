@@ -68,7 +68,6 @@ const FileUpload = () => {
             //     setLoadingData(1);
             // });
         });
-        
         // database.ref().on("value", (snapshot) => {
         //     console.log(snapshot.val());
         //     setAllData(snapshot.val());
