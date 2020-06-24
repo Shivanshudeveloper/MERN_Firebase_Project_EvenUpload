@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import {
     BrowserView
   } from 'react-device-detect';
-import firebase from "firebase/app";
 
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
@@ -239,9 +238,13 @@ const FileUpload = () => {
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>
+            
             <BrowserView>
                 <RecentsFiles userId={userId}  />
             </BrowserView>
+
+            
+
             <div className="ui divider"></div>
             { message ? <Messages msg={message} /> : null }
             <div style={{marginTop: '1%', marginBottom: '5%'}} className="ui left aligned container">
