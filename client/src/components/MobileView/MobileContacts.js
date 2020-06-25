@@ -53,7 +53,7 @@ const ContactList = ({ contact, saveFile }) => {
                         </button>
                     </div>
                     <div className="left floated author">
-                        <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}`} className="ui small green circular button" >
+                        <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}`} className="ui green circular button share square icon" >
                             <i className="share square icon"></i>
                         </Link>
                     </div>
