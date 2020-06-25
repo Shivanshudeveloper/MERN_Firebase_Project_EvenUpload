@@ -29,6 +29,10 @@ const shareSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    fileId: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

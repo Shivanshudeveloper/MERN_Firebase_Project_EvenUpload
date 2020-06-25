@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import {
     BrowserView,
@@ -51,6 +52,12 @@ const ContactList = ({ contact, saveFile }) => {
                             <i className="save icon"></i>
                         </button>
                     </div>
+                    <div className="left floated author">
+                        <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}`} className="ui small green button" >
+                            <i className="share square icon"></i>
+                        </Link>
+                    </div>
+
                     <div className="right floated author">
                         <img className="ui avatar image" src={contact.senders_photoURL} />
                     </div>

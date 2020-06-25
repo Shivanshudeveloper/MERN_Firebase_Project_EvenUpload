@@ -93,8 +93,6 @@ const Share = ({ location }) => {
 
     const share = (event) => {
         setSharing(true);
-        var count = 0;
-        var key;
         var fileName = '';
         if (filename.length > 40 ) {
             fileName = filename.substring(0, 40) + '....'
@@ -114,7 +112,8 @@ const Share = ({ location }) => {
             senders_photoURL: userphotoURL,
             senders_email: sendersEmail,
             message,
-            fileKey
+            fileKey,
+            fileId
         }
 
         axios.post(`${API_SERVICE}/api/v1/readwrite`, uploadData)

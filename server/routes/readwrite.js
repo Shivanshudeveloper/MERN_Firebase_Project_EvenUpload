@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 // @POST Request for Share Contact
 // INSERT 
 router.post('/', (req, res) => {
-    var { fileName, filename, to, from, url, senders_photoURL, senders_email, message, fileKey } = req.body;
+    var { fileName, filename, to, from, url, senders_photoURL, senders_email, message, fileKey, fileId } = req.body;
     
     let transporter, mailOption, mailText, emailArr;
 
@@ -52,8 +52,10 @@ router.post('/', (req, res) => {
             url,
             message,
             senders_photoURL,
-            senders_email
+            senders_email,
+            fileId
         });
+        
         newShare.save()
             .then(
                 res.status(200).json('Added'),
@@ -120,7 +122,7 @@ router.get('/contacts/:reciversEmail', (req, res) => {
 router.get('/contactslist/:sendersEmail', (req, res) => {
     const { sendersEmail } = req.params;
     res.setHeader('Content-Type', 'application/json');
-    ContactList_Model.find({ 'contact_of': sendersEmail }).sort({date: -1}).limit(5)
+    ContactList_Model.find({ 'contact_of': sendersEmail }).sort({date: -1}).limit(6)
         .then(contactlist => {
             res.status(200).json(contactlist)
         })

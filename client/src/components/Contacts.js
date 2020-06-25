@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import {
     BrowserView,
@@ -24,6 +25,7 @@ import { useToasts } from 'react-toast-notifications';
 const ContactList = ({ contact, saveFile }) => {
     var date = new Date(contact.date);
     date = date.toDateString();
+    
     return (
         <div>
             <div style={{marginTop: '10px'}} className="ui raised link fluid card">
@@ -53,6 +55,13 @@ const ContactList = ({ contact, saveFile }) => {
                                 <i className="save icon"></i>
                                 Save File
                             </button>
+                        </div>
+
+                        <div className="left floated author">
+                            <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}`} className="ui small green button" >
+                                <i className="share square icon"></i>
+                                Forward
+                            </Link>
                         </div>
                     </BrowserView>
 
