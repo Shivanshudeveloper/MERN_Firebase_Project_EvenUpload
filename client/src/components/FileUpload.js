@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {
     BrowserView
   } from 'react-device-detect';
+import Dropzone from 'react-dropzone';
 
 // Firebase
 import { auth, database, storage } from '../Firebase/index';
@@ -76,21 +77,21 @@ const FileUpload = () => {
     }, []);
     
 
-    const onChange = e => {
-        // setFile(e.target.files[0]);
-        // setFilename(e.target.files[0].name);
+    // const onChange = e => {
+    //     // setFile(e.target.files[0]);
+    //     // setFilename(e.target.files[0].name);
 
-        setFilename("DS");
+    //     setFilename("DS");
 
-        for (let i = 0; i < e.target.files.length; i++) {
-            const newFile = e.target.files[i];
-            console.log(newFile);
-            newFile["id"] = Math.random();
-            setFile(prevState => [...prevState, newFile]);
-        }
+    //     for (let i = 0; i < e.target.files.length; i++) {
+    //         const newFile = e.target.files[i];
+    //         console.log(newFile);
+    //         newFile["id"] = Math.random();
+    //         setFile(prevState => [...prevState, newFile]);
+    //     }
 
         
-    }
+    // }
 
     // Refreshing the list of the user all files after uploading 
     const refreshData = () => {
@@ -107,12 +108,11 @@ const FileUpload = () => {
         if (file.length > 0) {
             setbtnUpload('Uploading....');
             setLoading(1);
-            const promises = [];
             file.forEach(file => {
                 var uniquetwoKey = uuid4();
 
                 const uploadTask = storage.ref(`uploads/${uniquetwoKey}/${file.name}`).put(file);
-                promises.push(uploadTask);
+                
 
                 uploadTask.on('state_changed', (snapshot) => {
                     // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -146,8 +146,6 @@ const FileUpload = () => {
                         fileKey,
                     }
 
-                    console.log(filePath, fileKey);
-
                     database.ref(`files/${userId}`).push(uploadData, (error) => {
                         if (error) {
                             console.log(error);
@@ -166,9 +164,7 @@ const FileUpload = () => {
                     refreshData();
                 });
             })
-            // Promise.all(promises)
-            //     .then(() => alert('All files uploaded'))
-            //     .catch(err => console.log(err.code));
+            
 
         } else {
             e.preventDefault();
@@ -278,7 +274,10 @@ const FileUpload = () => {
         });
     }
 
-    
+    const handleDrop = (acceptedFiles) => {
+        setFile(acceptedFiles.map(file => file));
+        setFilename("DS");
+    }    
     
     
     return (
@@ -286,13 +285,22 @@ const FileUpload = () => {
             <div className="ui hidden divider"></div>
             <Menu />
             <div className="ui hidden divider"></div>
-
+            
+            <Dropzone onDrop={handleDrop}>
+                {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps({ className: "dropzone" })}>
+                        <input {...getInputProps()} />
+                        <div className="ui button">Drop your files, or click to select files</div>
+                    </div>
+                        )}
+            </Dropzone>
+            
             <form onSubmit={onSubmit}>
                 <div className="ui text container">
-                    <label htmlFor="file" className="ui toggle blue icon button">
+                    {/* <label htmlFor="file" className="ui toggle blue icon button">
                         {filename}
                     </label>
-                    <input multiple type="file" style={{display:'none'}} id="file" onChange={onChange} />
+                    <input multiple type="file" style={{display:'none'}} id="file" onChange={onChange} /> */}
                 </div>
                 {
                     filename !== 'Choose File' ? (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import { Link } from 'react-router-dom';
+import Dropzone from 'react-dropzone';
 
 // Firebase
 import { auth, database, storage } from '../../Firebase/index';
@@ -54,10 +55,10 @@ const FileUpload = () => {
     });
     
 
-    const onChange = e => {
-        setFile(e.target.files[0]);
-        setFilename(e.target.files[0].name);
-    }
+    // const onChange = e => {
+    //     setFile(e.target.files[0]);
+    //     setFilename(e.target.files[0].name);
+    // }
 
     // Refreshing the list of the user all files after uploading 
     const refreshData = () => {
@@ -68,81 +69,144 @@ const FileUpload = () => {
     }
 
     const onSubmit = async e => {
-        if (file) {
+        e.preventDefault();
+        // console.log(file.length);
+
+        if (file.length > 0) {
             setbtnUpload('Uploading....');
             setLoading(1);
-            e.preventDefault();
-            // Checking for the File Size Greater than 1GB
-            if (file.size >= 500288000) {
-                setMessage('File is too large to Share');
-                setTimeout(() => setMessage(''), 2000);
-            } 
-            // File Size Must be smaller than 1GB
-            else {
-                // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
-                const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
+            file.forEach(file => {
+                var uniquetwoKey = uuid4();
 
+                const uploadTask = storage.ref(`uploads/${uniquetwoKey}/${file.name}`).put(file);
 
                 uploadTask.on('state_changed', (snapshot) => {
-                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    setUploadPercentage(progress);
+                    // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    const progress =  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    // setUploadPercentage(progress);
+                    // if (snapshot.state === storage.TaskState.RUNNING) {
+                    //     setUploadPercentage(progress);
+                    // }
+                    
                 },
                 (error) => {
                     setMessage(error);
                 },
-                () => {
+                async () => {
                     // When the Storage gets Completed
-                    storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
-                        const fileName = `${file.name}`;
+                    const filePath = await uploadTask.snapshot.ref.getDownloadURL();
+                    const fileKey = `${uniquetwoKey}/${file.name}`;
+                    const fileName = `${file.name}`;
+                    // Generate the Date
+                    var date = new Date();
+                    var dd = String(date.getDate()).padStart(2, '0');
+                    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = date.getFullYear();
+                    date = dd + '/' + mm + '/' + yyyy;
 
-                        const fileKey = `${uniqueKey}/${file.name}`;
+                    // Saved in Database about the User
+                    const uploadData = {
+                        date,
+                        fileName,
+                        filePath,
+                        fileKey,
+                    }
 
-                        var date = new Date();
-                        var dd = String(date.getDate()).padStart(2, '0');
-                        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-                        var yyyy = date.getFullYear();
-                        date = dd + '/' + mm + '/' + yyyy;
-
-
-                        // Saved in Database about the User
-                        const uploadData = {
-                            date,
-                            fileName,
-                            filePath,
-                            fileKey,
+                    database.ref(`files/${userId}`).push(uploadData, (error) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Done");
                         }
-
-                        
-                        
-                        database.ref(`files/${userId}`).push(uploadData, (error) => {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log("Done");
-                            }
-                        });
-
-                        setMessage('Successfully Uploaded');
-
-                        setbtnUpload('Start the Upload');
-                        setLoading(0);
-                        setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
-                        setTimeout(() => setFilename('Choose File'), 2000);
-                        setTimeout(() => setFile(''), 2000);
-                        setTimeout(() => setMessage(''), 2000);
-                        // Refreshing the list of all files of user after uploading
-                        refreshData();
                     });
+
+                    setbtnUpload('Start the Upload');
+                    setLoading(0);
+                    setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
+                    setTimeout(() => setFilename('Choose File'), 2000);
+                    setTimeout(() => setFile(''), 2000);
+                    // Refreshing the list of all files of user after uploading
+                    refreshData();
                 });
-            }
+            })
             
+
         } else {
             e.preventDefault();
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
         
-    }
+        // if (file) {
+        //     e.preventDefault();
+        //     // Checking for the File Size Greater than 1GB
+        //     if (file.size >= 500288000) {
+        //         addToast(`File size is too large to upload`, { appearance: 'error', autoDismiss: true })
+        //     } 
+        //     // File Size Must be smaller than 1GB
+        //     else {
+        //         setbtnUpload('Uploading....');
+        //         setLoading(1);
+        //         // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
+        //         const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
+
+        //         uploadTask.on('state_changed', (snapshot) => {
+        //             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        //             setUploadPercentage(progress);
+        //         },
+        //         (error) => {
+        //             setMessage(error);
+        //         },
+        //         () => {
+        //             // When the Storage gets Completed
+        //             storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
+        //                 const fileName = `${file.name}`;
+
+        //                 const fileKey = `${uniqueKey}/${file.name}`;
+
+        //                 var date = new Date();
+        //                 var dd = String(date.getDate()).padStart(2, '0');
+        //                 var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        //                 var yyyy = date.getFullYear();
+        //                 date = dd + '/' + mm + '/' + yyyy;
+
+
+        //                 // Saved in Database about the User
+        //                 const uploadData = {
+        //                     date,
+        //                     fileName,
+        //                     filePath,
+        //                     fileKey,
+        //                 }
+
+                        
+                        
+        //                 database.ref(`files/${userId}`).push(uploadData, (error) => {
+        //                     if (error) {
+        //                         console.log(error);
+        //                     } else {
+        //                         console.log("Done");
+        //                     }
+        //                 });
+
+        //                 addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
+        //                 setbtnUpload('Start the Upload');
+        //                 setLoading(0);
+        //                 setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
+        //                 setTimeout(() => setFilename('Choose File'), 2000);
+        //                 setTimeout(() => setFile(''), 2000);
+        //                 // Refreshing the list of all files of user after uploading
+        //                 refreshData();
+        //             });
+        //         });
+        //     }
+            
+        // } else {
+        //     e.preventDefault();
+        //     setMessage('No File Selected Yet');
+        //     setTimeout(() => setMessage(''), 2000);
+        // }
+   }
 
     const cancelFileUpload = () => {
         setFile('');
@@ -175,19 +239,31 @@ const FileUpload = () => {
         });
     }
 
-    
+    const handleDrop = (acceptedFiles) => {
+        setFile(acceptedFiles.map(file => file));
+        setFilename("DS");
+    } 
 
 
     return (
         <Fragment>
             <Menu />
             <div className="ui hidden divider"></div>
+            <Dropzone onDrop={handleDrop}>
+                {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps({ className: "dropzone" })}>
+                        <input {...getInputProps()} />
+                        <div className="ui button">Drop your files, or click to select files</div>
+                    </div>
+                        )}
+            </Dropzone>
+
             <form onSubmit={onSubmit}>
                 <div className="ui text container">
-                    <label htmlFor="file" className="ui fluid toggle icon button">
+                    {/* <label htmlFor="file" className="ui fluid toggle icon button">
                         {filename}
                     </label>
-                    <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
+                    <input type="file" style={{display:'none'}} id="file" onChange={onChange} /> */}
                 
                     
                     <div style={{ marginTop: '4px' }}  className="ui buttons">

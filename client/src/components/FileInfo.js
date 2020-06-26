@@ -136,6 +136,9 @@ const FileInfo = ({ location }) => {
                         <div className="ui hidden divider"></div>
                     </MobileView>
                     <div className="ui two column stackable center aligned grid">
+                        <center>
+                            <i className="lock green icon"></i> End to End - Encrypted
+                        </center>
                         <div className="middle aligned row">
                         <div className="column">
                             {
