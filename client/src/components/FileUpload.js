@@ -27,11 +27,11 @@ const FileUpload = () => {
     // For Nitifying 
     const { addToast } = useToasts();
     
-    const uniqueKey = uuid4();
+    
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
 
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState([]);
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState('Ready to Upload');
@@ -77,8 +77,19 @@ const FileUpload = () => {
     
 
     const onChange = e => {
-        setFile(e.target.files[0]);
-        setFilename(e.target.files[0].name);
+        // setFile(e.target.files[0]);
+        // setFilename(e.target.files[0].name);
+
+        setFilename("DS");
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            const newFile = e.target.files[i];
+            console.log(newFile);
+            newFile["id"] = Math.random();
+            setFile(prevState => [...prevState, newFile]);
+        }
+
+        
     }
 
     // Refreshing the list of the user all files after uploading 
@@ -90,74 +101,150 @@ const FileUpload = () => {
     }
 
     const onSubmit = async e => {
-        if (file) {
-            e.preventDefault();
-            // Checking for the File Size Greater than 1GB
-            if (file.size >= 500288000) {
-                addToast(`File size is too large to upload`, { appearance: 'error', autoDismiss: true })
-            } 
-            // File Size Must be smaller than 1GB
-            else {
-                setbtnUpload('Uploading....');
-                setLoading(1);
-                // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
-                const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
+        e.preventDefault();
+        // console.log(file.length);
+
+        if (file.length > 0) {
+            setbtnUpload('Uploading....');
+            setLoading(1);
+            const promises = [];
+            file.forEach(file => {
+                var uniquetwoKey = uuid4();
+
+                const uploadTask = storage.ref(`uploads/${uniquetwoKey}/${file.name}`).put(file);
+                promises.push(uploadTask);
+
                 uploadTask.on('state_changed', (snapshot) => {
-                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    setUploadPercentage(progress);
+                    // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    const progress =  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    // setUploadPercentage(progress);
+                    // if (snapshot.state === storage.TaskState.RUNNING) {
+                    //     setUploadPercentage(progress);
+                    // }
+                    
                 },
                 (error) => {
                     setMessage(error);
                 },
-                () => {
+                async () => {
                     // When the Storage gets Completed
-                    storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
-                        const fileName = `${file.name}`;
+                    const filePath = await uploadTask.snapshot.ref.getDownloadURL();
+                    const fileKey = `${uniquetwoKey}/${file.name}`;
+                    const fileName = `${file.name}`;
+                    // Generate the Date
+                    var date = new Date();
+                    var dd = String(date.getDate()).padStart(2, '0');
+                    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = date.getFullYear();
+                    date = dd + '/' + mm + '/' + yyyy;
 
-                        const fileKey = `${uniqueKey}/${file.name}`;
+                    // Saved in Database about the User
+                    const uploadData = {
+                        date,
+                        fileName,
+                        filePath,
+                        fileKey,
+                    }
 
-                        var date = new Date();
-                        var dd = String(date.getDate()).padStart(2, '0');
-                        var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-                        var yyyy = date.getFullYear();
-                        date = dd + '/' + mm + '/' + yyyy;
+                    console.log(filePath, fileKey);
 
-
-                        // Saved in Database about the User
-                        const uploadData = {
-                            date,
-                            fileName,
-                            filePath,
-                            fileKey,
+                    database.ref(`files/${userId}`).push(uploadData, (error) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Done");
                         }
-
-                        
-                        
-                        database.ref(`files/${userId}`).push(uploadData, (error) => {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log("Done");
-                            }
-                        });
-
-                        addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
-                        setbtnUpload('Start the Upload');
-                        setLoading(0);
-                        setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
-                        setTimeout(() => setFilename('Choose File'), 2000);
-                        setTimeout(() => setFile(''), 2000);
-                        // Refreshing the list of all files of user after uploading
-                        refreshData();
                     });
+
+                    addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
+                    setbtnUpload('Start the Upload');
+                    setLoading(0);
+                    setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
+                    setTimeout(() => setFilename('Choose File'), 2000);
+                    setTimeout(() => setFile(''), 2000);
+                    // Refreshing the list of all files of user after uploading
+                    refreshData();
                 });
-            }
-            
+            })
+            // Promise.all(promises)
+            //     .then(() => alert('All files uploaded'))
+            //     .catch(err => console.log(err.code));
+
         } else {
             e.preventDefault();
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
+        
+        // if (file) {
+        //     e.preventDefault();
+        //     // Checking for the File Size Greater than 1GB
+        //     if (file.size >= 500288000) {
+        //         addToast(`File size is too large to upload`, { appearance: 'error', autoDismiss: true })
+        //     } 
+        //     // File Size Must be smaller than 1GB
+        //     else {
+        //         setbtnUpload('Uploading....');
+        //         setLoading(1);
+        //         // const uploadTask = storage.ref(`uploads/${uniqueKey}_${file.name}`).put(file);
+        //         const uploadTask = storage.ref(`uploads/${uniqueKey}/${file.name}`).put(file);
+
+        //         uploadTask.on('state_changed', (snapshot) => {
+        //             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        //             setUploadPercentage(progress);
+        //         },
+        //         (error) => {
+        //             setMessage(error);
+        //         },
+        //         () => {
+        //             // When the Storage gets Completed
+        //             storage.ref('uploads').child(`${uniqueKey}/${file.name}`).getDownloadURL().then(filePath => {
+        //                 const fileName = `${file.name}`;
+
+        //                 const fileKey = `${uniqueKey}/${file.name}`;
+
+        //                 var date = new Date();
+        //                 var dd = String(date.getDate()).padStart(2, '0');
+        //                 var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        //                 var yyyy = date.getFullYear();
+        //                 date = dd + '/' + mm + '/' + yyyy;
+
+
+        //                 // Saved in Database about the User
+        //                 const uploadData = {
+        //                     date,
+        //                     fileName,
+        //                     filePath,
+        //                     fileKey,
+        //                 }
+
+                        
+                        
+        //                 database.ref(`files/${userId}`).push(uploadData, (error) => {
+        //                     if (error) {
+        //                         console.log(error);
+        //                     } else {
+        //                         console.log("Done");
+        //                     }
+        //                 });
+
+        //                 addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
+        //                 setbtnUpload('Start the Upload');
+        //                 setLoading(0);
+        //                 setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
+        //                 setTimeout(() => setFilename('Choose File'), 2000);
+        //                 setTimeout(() => setFile(''), 2000);
+        //                 // Refreshing the list of all files of user after uploading
+        //                 refreshData();
+        //             });
+        //         });
+        //     }
+            
+        // } else {
+        //     e.preventDefault();
+        //     setMessage('No File Selected Yet');
+        //     setTimeout(() => setMessage(''), 2000);
+        // }
    }
 
     const cancelFileUpload = () => {
@@ -205,7 +292,7 @@ const FileUpload = () => {
                     <label htmlFor="file" className="ui toggle blue icon button">
                         {filename}
                     </label>
-                    <input type="file" style={{display:'none'}} id="file" onChange={onChange} />
+                    <input multiple type="file" style={{display:'none'}} id="file" onChange={onChange} />
                 </div>
                 {
                     filename !== 'Choose File' ? (

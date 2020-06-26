@@ -24,6 +24,36 @@ const storage = firebase.storage();
 const database = firebase.database();
 const auth = firebase.auth();
 
+// Retrieve Firebase Messaging object.
+// const messaging = firebase.messaging();
+// // Add the public key generated from the console here.
+// messaging.usePublicVapidKey("BI1X1xIQoxZ-UMRsXeUHWidzFRu9i9hJy6PdIHkSZLMEZjIDRxZBKZIRxaZI7wvmhSTVUYSK8G_F_YqcOGjdI84");
+
+
+// Get Instance ID token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+// messaging.getToken().then((currentToken) => {
+//     if (currentToken) {
+//       console.log(currentToken);
+//     } else {
+//       // Show permission request.
+//       console.log('No Instance ID token available. Request permission to generate one.');
+//     }
+// }).catch((err) => {
+//     console.log('An error occurred while retrieving token. ', err);
+// });
+
+// // Callback fired if Instance ID token is updated.
+// messaging.onTokenRefresh(() => {
+//     messaging.getToken().then((refreshedToken) => {
+//       console.log('Token refreshed.');
+//       // Indicate that the new Instance ID token has not yet been sent to the
+//       // ...
+//     }).catch((err) => {
+//       console.log('Unable to retrieve refreshed token ', err);
+//     });
+// });
+
 
 // Authentication for Google
 var googleProvider = new firebase.auth.GoogleAuthProvider();

@@ -60,6 +60,7 @@ const FileInfo = ({ location }) => {
         var publicSharingURL = `https://storage.googleapis.com/evencloud-26d32.appspot.com/uploads/${key}`;
         var dynamicLinkApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${DYNAMIC_LINK_KEY}`;
 
+
         // Make a Request to Firebase Dynamic Links for the URL
         axios.post(dynamicLinkApi, {
             longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
