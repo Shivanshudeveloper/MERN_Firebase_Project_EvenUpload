@@ -83,7 +83,7 @@ function App() {
           <Router>
             <Route path="/" exact component={AuthenticationPage} />
             <Route path="/register" exact component={Register} />
-            <Route path="/home" exact component={MobileEvenUpload} />
+            <Route path="/home" exact component={EvenUpload} />
             <Route path="/fileinfo" component={FileInfo} />
             <Route path="/scan" exact component={Scan} />
             <Route path="/photos" exact component={Photos} />
