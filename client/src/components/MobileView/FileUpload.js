@@ -307,8 +307,8 @@ const FileUpload = () => {
                     filename !== 'Choose File' ? (
                         <>
                             {/* <Progress percentage={uploadPercentage} /> */}
-                            <div className="ui raised segments">
                             <h4 className="ui header" style={{textAlign: 'left'}} >Uploading <span className="ui green header">{uploadPercentage} %</span> </h4>
+                            <div className="ui raised segments">
                                 <div className="ui right aligned segment">
                                     <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
                                         X
