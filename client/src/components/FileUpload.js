@@ -71,8 +71,8 @@ const FileUpload = () => {
 
     useEffect(() => {
         if (file.length > 0) {
-            // onSubmit();
-            console.log(file);
+            onSubmit();
+            // console.log(file);
         } else {
             console.log("N");
         }
@@ -333,7 +333,13 @@ const FileUpload = () => {
                     filename !== 'Choose File' ? (
                         <>
                             {/* <Progress percentage={uploadPercentage} /> */}
+                            <h1 className="ui header" style={{textAlign: 'left'}} >Uploading</h1>
                             <div className="ui raised segments">
+                                <div className="ui right aligned segment">
+                                    <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
+                                        Cancel
+                                    </button>
+                                </div>
                                 { uploadfileName() }
                             </div>
                             <center>
@@ -341,9 +347,6 @@ const FileUpload = () => {
                                     <i className="cloud upload icon"></i>
                                     {btnUpload}
                                 </button> */}
-                                <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
-                                    Cancel
-                                </button>
                             </center>
                         </>
                     ) : null

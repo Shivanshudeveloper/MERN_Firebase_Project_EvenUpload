@@ -17,6 +17,17 @@ import Paggination from '../Paggination';
 // Utils
 import no_files from '../../utils/no_files.png';
 
+
+const FileName = ({ f }) => {
+    return (
+        <>
+        <div className="ui left aligned segment">
+            <div style={{marginRight: '4px'}} className="ui active small inline loader"></div> {f.name}
+        </div>
+        </>
+    )
+}
+
 const FileUpload = () => {
     const uniqueKey = uuid4();
     // Getting the userid from JS session
@@ -48,6 +59,15 @@ const FileUpload = () => {
     }, []);
 
     useEffect(() => {
+        if (file.length > 0) {
+            onSubmit();
+            // console.log(file);
+        } else {
+            console.log("N");
+        }
+    }, [file])
+
+    useEffect(() => {
         database.ref(`files/${userId}`).limitToLast(20).once('value', function(snapshot) {
             setAllData(snapshot.val());
             setLoadingData(1);
@@ -68,8 +88,8 @@ const FileUpload = () => {
         });
     }
 
-    const onSubmit = async e => {
-        e.preventDefault();
+    const onSubmit = () => {
+        
         // console.log(file.length);
 
         if (file.length > 0) {
@@ -132,7 +152,6 @@ const FileUpload = () => {
             
 
         } else {
-            e.preventDefault();
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
@@ -241,9 +260,14 @@ const FileUpload = () => {
 
     const handleDrop = (acceptedFiles) => {
         setFile(acceptedFiles.map(file => file));
-        setFilename("DS");
+        setFilename("Files");
     } 
 
+    const uploadfileName = () => {
+        return file.map(f => {
+            return <FileName f={f} key={f} />
+        })
+    }
 
     return (
         <Fragment>
@@ -283,15 +307,20 @@ const FileUpload = () => {
                 {
                     filename !== 'Choose File' ? (
                         <>
-                            <Progress percentage={uploadPercentage} />
+                            {/* <Progress percentage={uploadPercentage} /> */}
+                            <div className="ui raised segments">
+                                <div className="ui right aligned segment">
+                                    <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
+                                        X
+                                    </button>
+                                </div>
+                                { uploadfileName() }
+                            </div>
                             <center>
-                                <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
+                                {/* <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
                                     <i className="cloud upload icon"></i>
                                     {btnUpload}
-                                </button>
-                                <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
-                                    X
-                                </button>
+                                </button> */}
                             </center>
                         </>
                     ) : null
