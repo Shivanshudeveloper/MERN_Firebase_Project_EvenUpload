@@ -72,7 +72,7 @@ const FileUpload = () => {
             setAllData(snapshot.val());
             setLoadingData(1);
         });
-    });
+    }, []);
     
 
     // const onChange = e => {
@@ -279,7 +279,7 @@ const FileUpload = () => {
                         <input {...getInputProps()} />
                         <div className="ui button">Drop your files, or click to select files</div>
                     </div>
-                        )}
+                )}
             </Dropzone>
 
             <form onSubmit={onSubmit}>
