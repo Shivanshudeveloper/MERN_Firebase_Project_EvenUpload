@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 // Firebase
 import { auth, database } from '../Firebase/index';
 
+
 // Utils
 import no_files from '../utils/no_files.png';
 
@@ -138,7 +139,7 @@ const Photos = () => {
                         </center>
                     ) : null
                 }
-                    
+                
                 </div>
             </div>
         </Fragment>

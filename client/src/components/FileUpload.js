@@ -24,6 +24,16 @@ import no_files from '../utils/no_files.png';
 // React Notification Toast
 import { useToasts } from 'react-toast-notifications';
 
+const FileName = ({ f }) => {
+    return (
+        <>
+        <div className="ui left aligned segment">
+            <div style={{marginRight: '4px'}} className="ui active small inline loader"></div> {f.name}
+        </div>
+        </>
+    )
+}
+
 const FileUpload = () => {
     // For Nitifying 
     const { addToast } = useToasts();
@@ -58,6 +68,15 @@ const FileUpload = () => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        if (file.length > 0) {
+            // onSubmit();
+            console.log(file);
+        } else {
+            console.log("N");
+        }
+    }, [file])
 
     useEffect(() => {
         database.ref(`files/${userId}`).limitToLast(20).once('value', function(snapshot) {
@@ -101,9 +120,8 @@ const FileUpload = () => {
         });
     }
 
-    const onSubmit = async e => {
-        e.preventDefault();
-        // console.log(file.length);
+    const onSubmit = () => {
+        // e.preventDefault();
 
         if (file.length > 0) {
             setbtnUpload('Uploading....');
@@ -159,7 +177,7 @@ const FileUpload = () => {
                     setLoading(0);
                     setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
                     setTimeout(() => setFilename('Choose File'), 2000);
-                    setTimeout(() => setFile(''), 2000);
+                    setTimeout(() => setFile([]), 1000);
                     // Refreshing the list of all files of user after uploading
                     refreshData();
                 });
@@ -167,7 +185,6 @@ const FileUpload = () => {
             
 
         } else {
-            e.preventDefault();
             setMessage('No File Selected Yet');
             setTimeout(() => setMessage(''), 2000);
         }
@@ -245,7 +262,7 @@ const FileUpload = () => {
 
     const cancelFileUpload = () => {
         setFilename('Choose File');
-        setFile('');
+        setFile([]);
         setbtnUpload('Start the Upload');
         setLoading(0);
         setUploadPercentage('Ready to Upload');
@@ -274,11 +291,21 @@ const FileUpload = () => {
         });
     }
 
-    const handleDrop = (acceptedFiles) => {
-        setFile(acceptedFiles.map(file => file));
-        setFilename("DS");
-    }    
     
+
+    const handleDrop = async (acceptedFiles) => {
+        setFile(acceptedFiles.map(file => file));
+        setFilename("Files");
+    }
+    
+    
+    const uploadfileName = () => {
+        return file.map(f => {
+            return <FileName f={f} key={f} />
+        })
+    }
+    
+
     
     return (
         <Fragment>
@@ -305,12 +332,15 @@ const FileUpload = () => {
                 {
                     filename !== 'Choose File' ? (
                         <>
-                            <Progress percentage={uploadPercentage} />
+                            {/* <Progress percentage={uploadPercentage} /> */}
+                            <div className="ui raised segments">
+                                { uploadfileName() }
+                            </div>
                             <center>
-                                <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
+                                {/* <button type="submit" className={loading === 0 ? 'ui green medium button' : 'ui loading green medium button' }>
                                     <i className="cloud upload icon"></i>
                                     {btnUpload}
-                                </button>
+                                </button> */}
                                 <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
                                     Cancel
                                 </button>
