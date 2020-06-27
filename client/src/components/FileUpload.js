@@ -45,7 +45,7 @@ const FileUpload = () => {
     const [file, setFile] = useState([]);
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
-    const [uploadPercentage, setUploadPercentage] = useState('Ready to Upload');
+    const [uploadPercentage, setUploadPercentage] = useState(0);
     const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
@@ -135,7 +135,7 @@ const FileUpload = () => {
                 uploadTask.on('state_changed', (snapshot) => {
                     // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                     const progress =  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    // setUploadPercentage(progress);
+                    setUploadPercentage(progress);
                     // if (snapshot.state === storage.TaskState.RUNNING) {
                     //     setUploadPercentage(progress);
                     // }
@@ -333,7 +333,7 @@ const FileUpload = () => {
                     filename !== 'Choose File' ? (
                         <>
                             {/* <Progress percentage={uploadPercentage} /> */}
-                            <h1 className="ui header" style={{textAlign: 'left'}} >Uploading</h1>
+                            <h1 className="ui header" style={{textAlign: 'left'}} >Uploading <span className="ui green header">{uploadPercentage} %</span> </h1>
                             <div className="ui raised segments">
                                 <div className="ui right aligned segment">
                                     <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
