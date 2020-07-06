@@ -7,17 +7,17 @@ import Messages from './Messages';
 
 // Utils
 import tempImageRegister from '../utils/temp_register.gif';
-import BackgroundImage from '../utils/background-website-01.jpg';
+import makeInInida_logo from '../utils/make_in_india.png';
 
-var sectionStyle = {
-    backgroundImage: `url('${BackgroundImage}')`,
-    backgroundSize:'cover',
-    backgroundPosition:'center center',
-    backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed',
-    background: 'cover',
-    width: '100%'
-};
+// var sectionStyle = {
+//     backgroundImage: `url('${BackgroundImage}')`,
+//     backgroundSize:'cover',
+//     backgroundPosition:'center center',
+//     backgroundRepeat: 'no-repeat',
+//     backgroundAttachment: 'fixed',
+//     background: 'cover',
+//     width: '100%'
+// };
 
 var headeingFont = {
     marginTop: '12px', 
@@ -53,8 +53,7 @@ const Register = () => {
 
     return (
         <Fragment>
-            <section style={ sectionStyle }>
-            <div className="ui hidden divider"></div>
+            <section>
                 <center>
                     <h1 className={headeingFont}>
                         <span className="ui small header"> Even <i className="cloud blue icon"></i> Upload</span>
@@ -103,6 +102,10 @@ const Register = () => {
                         </div>
                     </center>
                 </div>
+                <center>
+                    <img className="ui medium image" alt="EvenCloud Make In India" src={makeInInida_logo} />
+                </center>
+                <div className="ui hidden divider"></div>
             </section>
         </Fragment>
     )
