@@ -83,7 +83,7 @@ const User = () => {
                 </div>
                 <div className="column">
                     <button onClick={() => signOut()} className="ui circular google icon button">
-                        <i className="blue cog icon"></i>
+                        <i className="sign-out icon red"></i>
                     </button> 
                 </div>
             </div>
@@ -93,7 +93,7 @@ const User = () => {
             <div>
                 <div style={{float: 'left'}}>
                     <button onClick={() => signOut()} className="ui circular google icon button">
-                        <i className="blue cog icon"></i>
+                        <i className="sign-out icon red"></i>
                     </button> 
                 </div>
                 

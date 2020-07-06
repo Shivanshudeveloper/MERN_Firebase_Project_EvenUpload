@@ -105,7 +105,6 @@ const Share = ({ location }) => {
         // Saved in Database about the User
         const uploadData = {
             fileName,
-            filename,
             to: email,
             from: userId,
             url: filePath,

@@ -24,7 +24,10 @@ import Share from './components/Share';
 import Contacts from './components/Contacts';
 import AllSaveFiles from './components/AllSaveFiles';
 import SavedFiles from './components/SavedFiles';
-
+import FileTracking from './components/FileTracking';
+import Projects from './components/Projects';
+import ProjectFileTrack from './components/ProjectFileTrack';
+import Folder from './components/Folder';
 
 // @For Rendering Mobile
 import MobileScan from './components/MobileView/Scan';
@@ -94,6 +97,10 @@ function App() {
             <Route path="/savefiles" exact component={AllSaveFiles} />
             <Route path="/savedfiles" component={SavedFiles} />
             <Route path="/filesharedwith" component={FileSharedWith} />
+            <Route path="/filetrack" exact component={FileTracking} />
+            <Route path="/projects" component={Projects} />
+            <Route path="/projectfiletrack" component={ProjectFileTrack} />
+            <Route path="/folder" component={Folder} />
           </Router>
         </BrowserView>
 
@@ -112,6 +119,10 @@ function App() {
               <Route path="/savefiles" exact component={AllSaveFiles} />
               <Route path="/savedfiles" component={SavedFiles} />
               <Route path="/filesharedwith" component={FileSharedWith} />
+              <Route path="/filetrack" exact component={FileTracking} />
+              <Route path="/projects" component={Projects} />
+              <Route path="/projectfiletrack" component={ProjectFileTrack} />
+              <Route path="/folder" component={Folder} />
             </Router>
         </MobileView>
       </ThemeProvider>

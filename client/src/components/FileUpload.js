@@ -49,6 +49,7 @@ const FileUpload = () => {
     const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
+    const [folderName, setFolderName] = useState('');
 
     // Loading for uploading the file
     const [loading, setLoading] = useState(0);
@@ -72,7 +73,6 @@ const FileUpload = () => {
     useEffect(() => {
         if (file.length > 0) {
             onSubmit();
-            // console.log(file);
         } else {
             console.log("N");
         }
@@ -135,6 +135,7 @@ const FileUpload = () => {
                 uploadTask.on('state_changed', (snapshot) => {
                     // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                     const progress =  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    
                     setUploadPercentage(progress);
                     // if (snapshot.state === storage.TaskState.RUNNING) {
                     //     setUploadPercentage(progress);
@@ -291,7 +292,38 @@ const FileUpload = () => {
         });
     }
 
-    
+    const createNewFolder = () => {
+        if (folderName === '') {
+            addToast(`Folder name is missing`, { appearance: 'error', autoDismiss: true });
+        } else {
+            var uniquetwoKey = uuid4() + '_FOLDER_' + Date.now();
+            var date = new Date();
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = date.getFullYear();
+            date = dd + '/' + mm + '/' + yyyy;
+
+            // Saved in Database about the User
+            const uploadData = {
+                date,
+                fileName: folderName,
+                filePath: 'FOLDER',
+                fileKey: uniquetwoKey
+            }
+
+            database.ref(`files/${userId}`).push(uploadData, (error) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Done");
+                }
+            });
+
+            addToast(`Folder ${folderName} created`, { appearance: 'success', autoDismiss: true });
+            setFolderName('');
+            refreshData();
+        }
+    }
 
     const handleDrop = async (acceptedFiles) => {
         setFile(acceptedFiles.map(file => file));
@@ -333,7 +365,7 @@ const FileUpload = () => {
                     filename !== 'Choose File' ? (
                         <>
                             {/* <Progress percentage={uploadPercentage} /> */}
-                            <h1 className="ui header" style={{textAlign: 'left'}} >Uploading <span className="ui green header">{uploadPercentage} %</span> </h1>
+                            <h1 className="ui header" style={{textAlign: 'left'}} >Uploading <span className="ui green header "> {uploadPercentage} % </span> </h1>
                             <div className="ui raised segments">
                                 <div className="ui right aligned segment">
                                     <button type="button" onClick={() => cancelFileUpload()} className={'ui red medium button'}>
@@ -354,14 +386,43 @@ const FileUpload = () => {
             </form>
             
             
-            <Link style={{float: 'right'}} className="ui secondary button" to="/qrcodedownload" >
+            <Link to="/qrcodedownload" className="ui black button right floated">
                 <i className="folder white qrcode icon"></i>
-                Accept Files by QR Code
+                Show QR Code
             </Link>
             <Link className="ui violet button left floated" to="/savefiles" >
                 <i className="save icon"></i>
                 Saved Files
             </Link>
+
+            <button id="createFolderBtn" style={{marginLeft: '5px'}} className="ui icon button left floated">
+                <i className="folder blue icon"></i>
+            </button>
+
+            {/* Create Folder Model */}
+            <div id="createFolderModel" className="ui modal">
+                    <i className="close icon"></i>
+                    <div className="header">
+                        Create Folder
+                    </div>
+                    <div className="image content">
+                        <div className="description">
+                            <form className="ui form">
+                                <div className="field">
+                                    <label>Folder Name</label>
+                                    <input required type="text" value={folderName} onChange={(event) => setFolderName(event.target.value)} name="first-name" placeholder="New Folder" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div className="actions">
+                        <div onClick={() => createNewFolder()} className="ui positive right labeled icon button">
+                            Create
+                            <i className="checkmark icon"></i>
+                        </div>
+                    </div>
+                </div>
+            {/* Create Folder Model */}
 
             <div className="ui hidden divider"></div>
             <div className="ui hidden divider"></div>

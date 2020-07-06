@@ -20,10 +20,10 @@ const Menu = () => {
 
     return (
         <div className="ui text container">
-            <div className="ui four item stackable tabs menu">
+            <div className="ui five item stackable tabs menu">
                 <a onClick={() => window.location = "/home"} className="item">
                     <i className="home blue icon"></i>
-                    All Files
+                    Home
                 </a>
                 
                 <Link to="/inbox" className="item">
@@ -53,9 +53,13 @@ const Menu = () => {
                     Photos
                 </Link>
                 <Link to="/scan" className="item">
-                    <i className="folder black qrcode icon"></i>
-                    Scan & Download
+                    <i className="yellow expand icon"></i>
+                    Scan
                 </Link>
+                <a className="item" href="/filetrack" >
+                    <i className="pink folder icon"></i>
+                    File Management
+                </a>
             </div>
         </div>
     )

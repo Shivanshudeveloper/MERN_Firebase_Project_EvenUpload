@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // URI
 import { DYNAMIC_LINK_KEY } from '../config/URI';
 
-const FileTrim = ({ file_name }) => {
+const FileTrim = ({ file_name, filePath }) => {
     var fileExtension = file_name.split('.').pop();
     return (
         <div>
@@ -42,18 +42,23 @@ const FileTrim = ({ file_name }) => {
                         <div>
                             <i aria-hidden="true" className="file archive brown big icon aligned"></i>{file_name.substring(0, 40)}....
                         </div>
+                    ) : filePath === 'FOLDER' ? (
+                        <div>
+                            <i aria-hidden="true" className="folder big blue icon"></i>{file_name.substring(0, 40)}....
+                        </div>
                     ) : (
                         <div>
                             <i aria-hidden="true" className="file grey alternate big icon aligned"></i>{file_name.substring(0, 40)}....
                         </div>
                     )
-                )
+                    
+                    )
             }
         </div>
     )
 }
 
-const FileNotTrim = ({ file_name }) => {
+const FileNotTrim = ({ file_name, filePath }) => {
     var fileExtension = file_name.split('.').pop();
     return (
         <div>
@@ -87,6 +92,10 @@ const FileNotTrim = ({ file_name }) => {
                         <div>
                             <i aria-hidden="true" className="file archive brown big icon aligned"></i>{file_name}
                         </div>
+                    ) : filePath === 'FOLDER' ? (
+                        <div>
+                            <i aria-hidden="true" className="folder big blue icon"></i>{file_name}
+                        </div>
                     ) : (
                         <div>
                             <i aria-hidden="true" className="file grey alternate big icon aligned"></i>{file_name}
@@ -104,7 +113,7 @@ const File = ({ data }) => {
     const [file_name, setFileName] = useState('');
     const [file_path, setFilePath] = useState('');
     const [file_key, setFileKey] = useState('');
-    
+    const [filePath, setFilePathCheck] = useState('');
 
 
     useEffect(() => {
@@ -124,6 +133,7 @@ const File = ({ data }) => {
                 setFilePath(res.data.shortLink);
             })
             setFileName(fileData.fileName);
+            setFilePathCheck(fileData.filePath);
         });
     }, []);
 
@@ -136,25 +146,40 @@ const File = ({ data }) => {
     
     return (
         <Fragment>
-            <div className="ui segment">
-                <p>
-                    <Link style={{float: 'right'}} to={`/scanqrdownload/?path=${data}`}>
-                        <i style={{color: 'black'}} className="large qrcode icon"></i>
-                    </Link>
-                    <Link style={{float: 'right', marginRight: '8px'}} to={`/share?name=${file_name}&fileId=${data}&key=${file_key}`}>
-                            <i className="large blue share alternate icon"></i>
-                    </Link>
-                    <Link className="header text-font" to={`/fileinfo?name=${file_name}&fileId=${data}&key=${file_key}`}>
-                        { file_name.length > 40 ? (
-                            <FileTrim file_name={file_name} />
-                        ) : (
-                            <FileNotTrim file_name={file_name} />
-                        ) }
-                    </Link>
-
-                    
-                </p>
-            </div>
+        {
+            filePath === 'FOLDER' ? (
+                <div className="ui segment">
+                    <p>
+                        <a className="header text-font" href={`/folder?s=${file_key}&n=${file_name}`}>
+                            { file_name.length > 40 ? (
+                                <FileTrim file_name={file_name} filePath={filePath} />
+                            ) : (
+                                <FileNotTrim file_name={file_name} filePath={filePath} />
+                            ) }
+                        </a>
+                    </p>
+                </div>
+            ) : (
+                <div className="ui segment">
+                    <p>
+                        <Link style={{float: 'right'}} to={`/scanqrdownload/?path=${data}`}>
+                            <i style={{color: 'black'}} className="large qrcode icon"></i>
+                        </Link>
+                        <Link style={{float: 'right', marginRight: '8px'}} to={`/share?name=${file_name}&fileId=${data}&key=${file_key}`}>
+                                <i className="large blue share alternate icon"></i>
+                        </Link>
+                        <Link className="header text-font" to={`/fileinfo?name=${file_name}&fileId=${data}&key=${file_key}`}>
+                            { file_name.length > 40 ? (
+                                <FileTrim file_name={file_name} filePath={filePath} />
+                            ) : (
+                                <FileNotTrim file_name={file_name} filePath={filePath} />
+                            ) }
+                        </Link>
+                    </p>
+                </div>
+            )
+        }
+            
 
             
             
