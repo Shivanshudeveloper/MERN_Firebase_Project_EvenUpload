@@ -64,7 +64,10 @@ const FileTracking = () => {
         .then(response => {
             setProjects(response.data);
             setLoading(false);
+            // console.log(response.data);
         })
+        .catch(err => console.log(err))
+        console.log(userId);
     }, [])
 
     const createProject = () => {
@@ -205,7 +208,9 @@ const FileTracking = () => {
                                     <img className="ui big image" src={Empty_Inbox_Temp_Image} />
                                 </center>
                             ) : (
-                                showProjectList()
+                                <>
+                                {showProjectList()}
+                                </>
                             )
                         )
                         

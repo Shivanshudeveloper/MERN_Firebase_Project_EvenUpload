@@ -124,16 +124,15 @@ const Projects = ({ location }) => {
     }, [file]);
 
     useEffect(() => {
+
+        setProjectId(dE);
+
         axios.get(`${API_SERVICE}/api/v1/readwrite/projectfilelist/${dE}/${userId}`)
         .then(response => {
             setProject(response.data);
             setLoadingFiles(false);
         })
-    })
 
-    useEffect(() => {
-
-        setProjectId(dE);
         axios.get(`${API_SERVICE}/api/v1/readwrite/aboutproject/${dE}/${userId}`)
         .then(response => {
             setAboutProject(response.data.description);
