@@ -17,6 +17,9 @@ import Paggination from '../Paggination';
 // Utils
 import no_files from '../../utils/no_files.png';
 
+// React Notification Toast
+import { useToasts } from 'react-toast-notifications';
+
 
 const FileName = ({ f }) => {
     return (
@@ -29,24 +32,30 @@ const FileName = ({ f }) => {
 }
 
 const FileUpload = () => {
-    const uniqueKey = uuid4();
+    // For Nitifying 
+    const { addToast } = useToasts();
+    
+    
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
 
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState([]);
     const [filename, setFilename] = useState('Choose File');
     const [message, setMessage] = useState('');
-    const [uploadPercentage, setUploadPercentage] = useState('Ready to Upload');
+    const [uploadPercentage, setUploadPercentage] = useState(0);
     const [btnUpload, setbtnUpload] = useState('Start the Upload');
     const [allData, setAllData] = useState({});
     const [user, setUser] = useState({});
+    const [folderName, setFolderName] = useState('');
 
     // Loading for uploading the file
     const [loading, setLoading] = useState(0);
     // Loading for loading all the files from server
     const [loadingdata, setLoadingData] = useState(0);
-    
 
+    
+    
+    
 
     useEffect(() => {
         auth.onAuthStateChanged(function(user) {
@@ -61,7 +70,6 @@ const FileUpload = () => {
     useEffect(() => {
         if (file.length > 0) {
             onSubmit();
-            // console.log(file);
         } else {
             console.log("N");
         }
@@ -71,13 +79,34 @@ const FileUpload = () => {
         database.ref(`files/${userId}`).limitToLast(20).once('value', function(snapshot) {
             setAllData(snapshot.val());
             setLoadingData(1);
+            // database.ref(`files/${userId}`).startAt(null, '-MAAtTfLCzuOesDGp8Qu').once('value', function(snapshot) {
+            //     setAllData(snapshot.val());
+            //     setLoadingData(1);
+            // });
         });
+        // database.ref().on("value", (snapshot) => {
+        //     console.log(snapshot.val());
+        //     setAllData(snapshot.val());
+        // }, (err) => {
+        //     console.log(err);
+        // })
     }, []);
     
 
     // const onChange = e => {
-    //     setFile(e.target.files[0]);
-    //     setFilename(e.target.files[0].name);
+    //     // setFile(e.target.files[0]);
+    //     // setFilename(e.target.files[0].name);
+
+    //     setFilename("DS");
+
+    //     for (let i = 0; i < e.target.files.length; i++) {
+    //         const newFile = e.target.files[i];
+    //         console.log(newFile);
+    //         newFile["id"] = Math.random();
+    //         setFile(prevState => [...prevState, newFile]);
+    //     }
+
+        
     // }
 
     // Refreshing the list of the user all files after uploading 
@@ -89,8 +118,7 @@ const FileUpload = () => {
     }
 
     const onSubmit = () => {
-        
-        // console.log(file.length);
+        // e.preventDefault();
 
         if (file.length > 0) {
             setbtnUpload('Uploading....');
@@ -99,11 +127,13 @@ const FileUpload = () => {
                 var uniquetwoKey = uuid4();
 
                 const uploadTask = storage.ref(`uploads/${uniquetwoKey}/${file.name}`).put(file);
+                
 
                 uploadTask.on('state_changed', (snapshot) => {
                     // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                     const progress =  Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    // setUploadPercentage(progress);
+                    
+                    setUploadPercentage(progress);
                     // if (snapshot.state === storage.TaskState.RUNNING) {
                     //     setUploadPercentage(progress);
                     // }
@@ -140,11 +170,12 @@ const FileUpload = () => {
                         }
                     });
 
+                    addToast(`${fileName} File Successfully Uploaded`, { appearance: 'success', autoDismiss: true })
                     setbtnUpload('Start the Upload');
                     setLoading(0);
                     setTimeout(() => setUploadPercentage('Ready to Upload'), 2000);
                     setTimeout(() => setFilename('Choose File'), 2000);
-                    setTimeout(() => setFile(''), 2000);
+                    setTimeout(() => setFile([]), 1000);
                     // Refreshing the list of all files of user after uploading
                     refreshData();
                 });
@@ -228,11 +259,11 @@ const FileUpload = () => {
    }
 
     const cancelFileUpload = () => {
-        setFile('');
+        setFilename('Choose File');
+        setFile([]);
         setbtnUpload('Start the Upload');
         setLoading(0);
         setUploadPercentage('Ready to Upload');
-        setFilename('Choose File');
     }
 
     // For Paginate the Pages
@@ -258,17 +289,53 @@ const FileUpload = () => {
         });
     }
 
-    const handleDrop = (acceptedFiles) => {
+    const createNewFolder = () => {
+        if (folderName === '') {
+            addToast(`Folder name is missing`, { appearance: 'error', autoDismiss: true });
+        } else {
+            var uniquetwoKey = uuid4() + '_FOLDER_' + Date.now();
+            var date = new Date();
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = date.getFullYear();
+            date = dd + '/' + mm + '/' + yyyy;
+
+            // Saved in Database about the User
+            const uploadData = {
+                date,
+                fileName: folderName,
+                filePath: 'FOLDER',
+                fileKey: uniquetwoKey
+            }
+
+            database.ref(`files/${userId}`).push(uploadData, (error) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Done");
+                }
+            });
+
+            addToast(`Folder ${folderName} created`, { appearance: 'success', autoDismiss: true });
+            setFolderName('');
+            refreshData();
+        }
+    }
+
+    const handleDrop = async (acceptedFiles) => {
         setFile(acceptedFiles.map(file => file));
         setFilename("Files");
-    } 
-
+    }
+    
+    
     const uploadfileName = () => {
         return file.map(f => {
             return <FileName f={f} key={f} />
         })
     }
+    
 
+    
     return (
         <Fragment>
             <Menu />
@@ -282,6 +349,37 @@ const FileUpload = () => {
                 )}
             </Dropzone>
 
+            {/* Create Folder Model */}
+            <div id="createFolderModel" className="ui modal">
+                        <i className="close icon"></i>
+                        <div className="header">
+                            Create Folder
+                        </div>
+                        <div className="image content">
+                            <div className="description">
+                                <form className="ui form">
+                                    <div className="field">
+                                        <label>Folder Name</label>
+                                        <input required type="text" value={folderName} onChange={(event) => setFolderName(event.target.value)} name="first-name" placeholder="New Folder" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="actions">
+                            <div onClick={() => createNewFolder()} className="ui positive right labeled icon button">
+                                Create
+                                <i className="checkmark icon"></i>
+                            </div>
+                        </div>
+                    </div>
+            {/* Create Folder Model */}
+            <div style={{ marginTop: '4px' }} className="ui container text">
+                <button id="createFolderBtn" className="ui icon button violet fluid">
+                    <i className="folder icon"></i>
+                    New Folder
+                </button>
+            </div>
+            
             <form onSubmit={onSubmit}>
                 <div className="ui text container">
                     {/* <label htmlFor="file" className="ui fluid toggle icon button">
@@ -290,17 +388,15 @@ const FileUpload = () => {
                     <input type="file" style={{display:'none'}} id="file" onChange={onChange} /> */}
                 
                     
-                    <div style={{ marginTop: '4px' }}  className="ui buttons">
-                        <Link className="ui secondary button" to="/qrcodedownload" >
-                            <i className="folder white qrcode icon"></i>
-                            Accept Files
-                        </Link>
-                        <Link className="ui violet button" to="/savefiles" >
-                            <i className="save icon"></i>
-                            Saved Files
-                        </Link>
-                    </div>
+                    
                 </div>
+
+                
+
+            
+
+
+                
 
 
                 

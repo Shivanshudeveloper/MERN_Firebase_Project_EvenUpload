@@ -41,6 +41,7 @@ const User = () => {
         auth.signOut().then(function() {
             setUser({});
             sessionStorage.setItem("userId", "");
+            sessionStorage.setItem("userEmail", "");
             window.location.href = "/";
         }).catch(function(error) {
             console.log(error);
@@ -91,11 +92,11 @@ const User = () => {
 
         <MobileView>
             <div>
-                <div style={{float: 'left'}}>
+                {/* <div style={{float: 'left'}}>
                     <button onClick={() => signOut()} className="ui circular google icon button">
                         <i className="sign-out icon red"></i>
                     </button> 
-                </div>
+                </div> */}
                 
 
                 <div style={{float: 'right'}}>

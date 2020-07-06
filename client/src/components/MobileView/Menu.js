@@ -5,12 +5,16 @@ import axios from 'axios';
 // API Service
 import { API_SERVICE } from '../../config/URI';
 
+// Firebase
+import { auth } from '../../Firebase/index';
+
 const Menu = () => {
 
     // Getting the userid from JS session
     let sendersEmail = sessionStorage.getItem("userEmail"); 
 
     const [inboxCount, setInboxCount] = useState([]);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/inbox/${sendersEmail}`)
@@ -18,6 +22,17 @@ const Menu = () => {
             setInboxCount(response.data)
         })
     }, [])
+
+    const signOut = () => {
+        auth.signOut().then(function() {
+            setUser({});
+            sessionStorage.setItem("userId", "");
+            sessionStorage.setItem("userEmail", "");
+            window.location.href = "/";
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
 
 
     return (
@@ -75,13 +90,28 @@ const Menu = () => {
                     EvenCloud
                 </a>
                 <a className="item">
+                    <a className="item" href="/filetrack" >
+                        File Management
+                    </a>
+                </a>
+                <a className="item">
                     <Link to="/photos" className="item">
                         Photos
                     </Link>
                 </a>
                 <a className="item">
-                    <a className="item" href="/filetrack" >
-                        File Management
+                    <Link to="/savefiles" className="item" >
+                        All Saved Files
+                    </Link>
+                </a>
+                <a className="item">
+                    <Link to="/qrcodedownload" className="item" >
+                        Show QR Code
+                    </Link>
+                </a>
+                <a className="item">
+                    <a onClick={() => signOut()} className="item" >
+                        Logout
                     </a>
                 </a>
             </div>
