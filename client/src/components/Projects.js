@@ -29,7 +29,7 @@ const FileName = ({ f }) => {
     return (
         <>
             <div className="ui left aligned segment">
-                
+                <div style={{marginRight: '4px'}} className="ui active small inline loader"></div> {f.name}
             </div>
         </>
     )
