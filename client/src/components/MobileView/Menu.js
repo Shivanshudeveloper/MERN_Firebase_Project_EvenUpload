@@ -46,7 +46,7 @@ const Menu = () => {
                     </a>
                 </div>
                 <div className="four wide column">
-                    <Link to="/inbox" className="item">
+                    <a href="/inbox" className="item">
                         {
                             inboxCount && inboxCount.length ? (
                                     <>
@@ -61,7 +61,7 @@ const Menu = () => {
                         <i className="large inbox red icon"></i>
                         <br />
                         Inbox
-                    </Link>
+                    </a>
                 </div>
                 {/* <div className="four wide column">
                     <Link to="/contacts" className="item">
@@ -71,11 +71,11 @@ const Menu = () => {
                     </Link>
                 </div> */}
                 <div className="four wide column">
-                    <Link to="/scan" className="item">
+                    <a href="/scan" className="item">
                         <i className="large black expand icon"></i>
                         <br />
                         Scan
-                    </Link>
+                    </a>
                 </div>
                 <div id="sidebarBtn" className="four wide column">
                     <a href="#!" className="item">
