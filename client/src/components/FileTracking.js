@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 import axios from 'axios';
 import CryptoJS from 'crypto';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import {
     BrowserView,
@@ -33,13 +35,17 @@ const ProjectList = ({ project }) => {
         var eE = mykey.update(project.refId, 'utf8', 'hex');
         eE += mykey.final('hex');
     }
+    // Moment Format
+    dayjs.extend(relativeTime);
+    var history = dayjs().from(dayjs(project.date));
+    history = history.substr(history.indexOf(" ") + 1) + " ago";
 
     return (
         <>
             <div className="ui left aligned attached segment">
                 <p>
                     <a href={`/projects?pid=${eE}&n=${project.projectName}`}>
-                        <i className="folder icon"></i> { project.projectName } <span style={{float: 'right'}}>{ project.createdAt }</span>
+                        <i className="folder icon"></i> { project.projectName } <span style={{float: 'right'}}>{ history }</span>
                     </a>
                 </p>
             </div>

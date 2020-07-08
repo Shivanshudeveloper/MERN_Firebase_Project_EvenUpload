@@ -102,7 +102,7 @@ const ProjectFileTrack = ({ location }) => {
             
             {
                 loadingFiles ? (
-                    <div className="ui center aligned container">
+                    <div className="ui center aligned container text">
                         <div className="ui fluid placeholder">
                             <div className="paragraph">
                                 <div className="line"></div>

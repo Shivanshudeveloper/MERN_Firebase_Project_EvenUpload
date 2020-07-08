@@ -382,11 +382,21 @@ const Projects = ({ location }) => {
                     }
                 </form>
 
-                <div className="ui hidden divider"></div>
-                <button id="shareProjectModelBtn" className="ui green button right floated right labeled icon">
-                    <i className="right arrow icon"></i>
-                    Share Project File
-                </button>
+                <BrowserView>
+                    <div className="ui hidden divider"></div>
+                    <button id="shareProjectModelBtn" className="ui green button right floated right labeled icon">
+                        <i className="right arrow icon"></i>
+                        Share Project File
+                    </button>
+                </BrowserView>
+                <MobileView>
+                    <div className="ui hidden divider"></div>
+                    <button id="shareProjectModelBtn" className="ui circular icon button green right floated">
+                        <i className="right arrow icon"></i>
+                    </button>
+                </MobileView>
+
+                
 
                 {/* Note Model */}
                 <div id="addNoteModel" className="ui modal">
@@ -407,18 +417,19 @@ const Projects = ({ location }) => {
                             </form>
                         </div>
                     </div>
-                    <div className="actions">
-                        <div onClick={() => addNote()} className="ui positive right labeled icon button">
-                            Add Note
-                            <i className="checkmark icon"></i>
-                        </div>
-                    </div>
+                    
                 </div>
                 {/* Note Model */}
-
-                <button id="addNoteBtn" className="ui icon button left floated yellow">
-                    <i className="sticky note icon"></i> Add a Note
-                </button>
+                <BrowserView>
+                    <button id="addNoteBtn" className="ui icon button left floated yellow">
+                        <i className="sticky note icon"></i> Add a Note
+                    </button>
+                </BrowserView>
+                <MobileView>
+                    <button id="addNoteBtn" className="ui circular icon button left floated yellow">
+                        <i className="sticky note icon"></i>
+                    </button>
+                </MobileView>
 
 
             {/* Share Project Model */}
