@@ -9,7 +9,7 @@ const Menu = () => {
     // Getting the userid from JS session
     let sendersEmail = sessionStorage.getItem("userEmail"); 
 
-    const [inboxCount, setInboxCount] = useState([]);
+    let [inboxCount, setInboxCount] = useState([]);
 
     useEffect(() => {
         axios.get(`${API_SERVICE}/api/v1/readwrite/inbox/${sendersEmail}`)
