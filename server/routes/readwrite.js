@@ -646,4 +646,16 @@ router.get('/showNotes/:projectId', (req, res) => {
     .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
+// Database CRUD Operations
+// @GET Request to get all the Project Shared With
+// GET
+router.get('/projectsharedwith/:projectId', (req, res) => {
+    const { projectId } = req.params;
+    ShareWith_Model.find({'fileId': projectId}).sort({date: -1})
+    .then(data => {
+        res.status(200).json(data)
+    })
+    .catch(err => res.status(400).json(`Error: ${err}`))
+});
+
 module.exports = router;

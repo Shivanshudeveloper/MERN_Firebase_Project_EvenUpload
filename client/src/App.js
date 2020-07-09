@@ -28,6 +28,7 @@ import FileTracking from './components/FileTracking';
 import Projects from './components/Projects';
 import ProjectFileTrack from './components/ProjectFileTrack';
 import Folder from './components/Folder';
+import ProjectSharedWith from './components/ProjectSharedWith.js';
 
 // @For Rendering Mobile
 import MobileScan from './components/MobileView/Scan';
@@ -101,6 +102,7 @@ function App() {
             <Route path="/projects" component={Projects} />
             <Route path="/projectfiletrack" component={ProjectFileTrack} />
             <Route path="/folder" component={Folder} />
+            <Route path="/projectsharedwith" component={ProjectSharedWith} />
           </Router>
         </BrowserView>
 
@@ -123,6 +125,7 @@ function App() {
               <Route path="/projects" component={Projects} />
               <Route path="/projectfiletrack" component={ProjectFileTrack} />
               <Route path="/folder" component={Folder} />
+              <Route path="/projectsharedwith" component={ProjectSharedWith} />
             </Router>
         </MobileView>
       </ThemeProvider>

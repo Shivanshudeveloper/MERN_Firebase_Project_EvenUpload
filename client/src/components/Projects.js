@@ -429,6 +429,9 @@ const Projects = ({ location }) => {
                     <button id="addNoteBtn" className="ui icon button left floated yellow">
                         <i className="sticky note icon"></i> Add a Note
                     </button>
+                    <a href={`/projectsharedwith?pid=${projectId}`} className="ui icon button left floated red">
+                        <i className="users note icon"></i> Project Shared With
+                    </a>
                 </BrowserView>
                 <MobileView>
                     <button id="addNoteBtn" className="ui circular icon button left floated yellow">
