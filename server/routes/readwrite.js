@@ -173,7 +173,6 @@ router.post('/', (req, res) => {
             longDynamicLink: `https://evenupload.page.link/?link=${publicSharingURL}`
         }).then((response) => {
             url = response.data.shortLink
-            
             mailText = `<h4>New File is shared by ${senders_email}.</h4><br/>
             ${message}
             <h4>Download File: <a href=${url}>Download</a></h4>
@@ -194,6 +193,7 @@ router.post('/', (req, res) => {
                 message,
                 senders_photoURL,
                 senders_email,
+                fileKey,
                 fileId
             });
             

@@ -131,7 +131,7 @@ const ContactList = ({ contact, saveFile, fileProjectAccepted, folderAccepted })
                                 </div>
 
                                 <div className="left floated author">
-                                    <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}`} className="ui small green button" >
+                                    <Link to={`/share?name=${contact.fileName}&fileId=${contact.fileId}&key=${contact.fileKey}`} className="ui small green button" >
                                         <i className="share square icon"></i>
                                         Forward
                                     </Link>
@@ -165,7 +165,7 @@ const Contacts = () => {
             setContacts(response.data);
             setLoading(false);
         })
-    })
+    }, [])
 
     useEffect(() => {
         axios.put(`${API_SERVICE}/api/v1/readwrite/resetinbox/${sendersEmail}`)
