@@ -45,7 +45,7 @@ const ProjectList = ({ project }) => {
             <div className="ui left aligned attached segment">
                 <p>
                     <a href={`/projects?pid=${eE}&n=${project.projectName}`}>
-                        <i className="folder icon"></i> { project.projectName } <span style={{float: 'right'}}>{ history }</span>
+                        <i className="folder icon"></i> { project.projectName } <span style={{float: 'right'}}>{ project.createdAt }</span>
                     </a>
                 </p>
             </div>

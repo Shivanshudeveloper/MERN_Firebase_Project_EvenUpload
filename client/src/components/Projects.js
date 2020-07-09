@@ -66,14 +66,14 @@ const ProjectFileList = ({ file, projectId, markFile }) => {
         <>
             <div className="ui left aligned attached segment">
                 <Link to={`/projectfiletrack?f=${eE}&p=${eE2}&d=${eEd}`}>
-                     { file.fileName }<span className="ui red tiny header" style={{float: 'right'}}> { file.uploadedAt }  </span>
+                    { file.fileName }<span className="ui red tiny header" style={{float: 'right'}}> { file.uploadedAt }  </span>
                 </Link>
                 
                 <a style={{float: 'right', marginRight: '20px'}} target="_blank" href={file.filePath}><i className="download icon"></i></a>
             </div>
             <div className="ui bottom attached info message">
                 <div style={{textAlign: 'left'}}>
-                    <img class="ui avatar image" src={file.userphotoURL} />  {file.comments}
+                    <img className="ui avatar image" src={file.userphotoURL} />  {file.comments}
                 </div>
             </div>
         </>
@@ -384,9 +384,9 @@ const Projects = ({ location }) => {
 
                 <BrowserView>
                     <div className="ui hidden divider"></div>
-                    <button id="shareProjectModelBtn" className="ui green button right floated right labeled icon">
+                    <button id="shareProjectModelBtn" className="ui blue button right floated right labeled icon">
                         <i className="right arrow icon"></i>
-                        Share Project File
+                        Forward Project File
                     </button>
                 </BrowserView>
                 <MobileView>
@@ -417,7 +417,12 @@ const Projects = ({ location }) => {
                             </form>
                         </div>
                     </div>
-                    
+                    <div className="actions">
+                        <div onClick={() => addNote()} className="ui positive right labeled icon button">
+                            Add Note
+                            <i className="checkmark icon"></i>
+                        </div>
+                    </div>
                 </div>
                 {/* Note Model */}
                 <BrowserView>
@@ -430,7 +435,8 @@ const Projects = ({ location }) => {
                         <i className="sticky note icon"></i>
                     </button>
                 </MobileView>
-
+                
+                
 
             {/* Share Project Model */}
             <div id="shareProjectModel" className="ui modal">
@@ -464,6 +470,10 @@ const Projects = ({ location }) => {
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
+                        <div style={{'textAlign': 'left'}} className="ui green inverted segment">
+                            <h4>Notes</h4>
+                            {showNotes()}
+                        </div>  
                         <div className="ui raised segments">
                                 <div className="ui segment blue inverted">
                                     <span style={{float: 'right'}}> <i className="history icon"></i> History </span>
@@ -507,12 +517,9 @@ const Projects = ({ location }) => {
                                     )
                                 }
 
+                                
 
-
-                    <div style={{'textAlign': 'left'}} className="ui segment">
-                        <h4>Notes</h4>
-                        {showNotes()}
-                    </div>    
+                      
 
                     <div style={{'textAlign': 'left'}} className="ui segment">
                         {
