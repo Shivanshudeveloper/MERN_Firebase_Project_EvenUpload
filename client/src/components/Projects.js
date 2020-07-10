@@ -38,12 +38,14 @@ const FileName = ({ f }) => {
 const AllNotesList = ({ notes }) => {
     return (
         <>
+        <div className="ui segment">
             <div style={{marginBottom: '10px'}} className="ui left aligned">
                 <img class="ui avatar image" src={notes.userphotoURL} /> {notes.userDisplayName}
                 <p style={{marginLeft: '34px', marginTop: '4px'}}>
                     {notes.note}
                 </p>
             </div>
+        </div>
         </>
     )
 }
@@ -61,21 +63,30 @@ const ProjectFileList = ({ file, projectId, markFile }) => {
     var mykeyd = CryptoJS.createCipher('aes-128-cbc', SECRET_KEY);
     var eEd = mykeyd.update(file.filePath, 'utf8', 'hex');
     eEd += mykeyd.final('hex');
+
+    var fileName = file.fileName;
+    var fileComment = file.comments;
+    if (fileName.length > 32) {
+        fileName = fileName.substring(0, 32) + '....';
+    }
+
+    if (fileComment.length > 84) {
+        fileComment = fileComment.substring(0, 84) + '....';
+    }
     
     return (
         <>
-            <div className="ui left aligned attached segment">
-                <Link to={`/projectfiletrack?f=${eE}&p=${eE2}&d=${eEd}`}>
-                    { file.fileName }<span className="ui red tiny header" style={{float: 'right'}}> { file.uploadedAt }  </span>
-                </Link>
-                
-                <a style={{float: 'right', marginRight: '20px'}} target="_blank" href={file.filePath}><i className="download icon"></i></a>
-            </div>
-            <div className="ui bottom attached info message">
-                <div style={{textAlign: 'left'}}>
-                    <img className="ui avatar image" src={file.userphotoURL} />  {file.comments}
-                </div>
-            </div>
+            <tr>
+                <td className="four wide">
+                    <Link to={`/projectfiletrack?f=${eE}&p=${eE2}&d=${eEd}`}>
+                        <i className="file outline icon"></i> { fileName }
+                    </Link>
+                </td>
+                <td>
+                    <img className="ui avatar image" src={file.userphotoURL} />  {fileComment}
+                </td>
+                <td className="right aligned one wide">{ file.uploadedAt }</td>
+            </tr>
         </>
     )
 }
@@ -432,6 +443,10 @@ const Projects = ({ location }) => {
                     <a href={`/projectsharedwith?pid=${projectId}`} className="ui icon button left floated red">
                         <i className="users note icon"></i> Project Shared With
                     </a>
+                    <button id="aboutProjectModelBtn" className="ui icon button left floated">
+                        <i className="info icon blue"></i>
+                    </button>
+
                 </BrowserView>
                 <MobileView>
                     <button id="addNoteBtn" className="ui circular icon button left floated yellow">
@@ -473,16 +488,6 @@ const Projects = ({ location }) => {
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
-                        <div style={{'textAlign': 'left'}} className="ui green inverted segment">
-                            <h4>Notes</h4>
-                            {showNotes()}
-                        </div>  
-                        <div className="ui raised segments">
-                                <div className="ui segment blue inverted">
-                                    <span style={{float: 'right'}}> <i className="history icon"></i> History </span>
-                                    <p style={{'textAlign': 'left'}}>{projectName}</p> 
-                                </div>
-                        </div>
                                 {
                                     loadingfiles ? (
                                         <>
@@ -511,38 +516,61 @@ const Projects = ({ location }) => {
                                         </>
                                     ) : (
                                     <>
-                                    {showProjectFileList()}
-                                        <div className="ui bottom attached warning message">
-                                            <i className="warning icon"></i>
-                                            You've reached the end of this file!
-                                        </div>
+                                    <table className="ui celled striped table">
+                                    <thead>
+                                        <tr>
+                                        <th colspan="3">
+                                            {projectName}
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                            {showProjectFileList()}
+                                        </tbody>
+                                    </table>
                                     </>
                                     )
                                 }
 
                                 
+                        <div style={{'textAlign': 'left'}} className="ui segments">
+                            <div className="ui inverted segment green">
+                                <h4>Notes</h4>
+                            </div>
+                            {showNotes()}
+                        </div>
 
+                    {/* About Project File Model */}
+                        <div id="aboutProjectModel" className="ui modal">
+                            <i className="close icon"></i>
+                            <div className="header">
+                                About Project File
+                            </div>
+                            <div className="image content">
+                                <div className="description">
+                                {
+                                    aboutProject !== '' ? (
+                                        <>
+                                            <h4 className="ui header">Created On: {createdOnProject}</h4>
+                                            <h4 className="ui header">About</h4>
+                                            <p>
+                                                {aboutProject}
+                                            </p>
+                                            <h4 className="ui header">Owner: {ownerProject}</h4>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h4 className="ui header">Created On: {createdOnProject}</h4>
+                                            <h4 className="ui header">Owner: {ownerProject}</h4>
+                                        </>
+                                    )
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    {/* About Project File Model */}    
                       
 
-                    <div style={{'textAlign': 'left'}} className="ui segment">
-                        {
-                            aboutProject !== '' ? (
-                                <>
-                                    <h4 className="ui header">Created On: {createdOnProject}</h4>
-                                    <h4 className="ui header">About</h4>
-                                    <p>
-                                        {aboutProject}
-                                    </p>
-                                    <h4 className="ui header">Owner: {ownerProject}</h4>
-                                </>
-                            ) : (
-                                <>
-                                    <h4 className="ui header">Created On: {createdOnProject}</h4>
-                                    <h4 className="ui header">Owner: {ownerProject}</h4>
-                                </>
-                            )
-                        }
-                    </div>
                     
                     <div className="ui hidden divider"></div>
                     <div className="ui hidden divider"></div>

@@ -65,6 +65,13 @@ $(() => {
         ;
     });
 
+    // Add Note
+    $("#aboutProjectModelBtn").click(() => {
+        $('#aboutProjectModel')
+        .modal('show')
+        ;
+    });
+
     $('#sidebarBtn').click(() => {
         $('.ui.sidebar')
         .sidebar('toggle')

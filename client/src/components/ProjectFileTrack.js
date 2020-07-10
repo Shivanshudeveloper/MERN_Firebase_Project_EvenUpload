@@ -128,7 +128,10 @@ const ProjectFileTrack = ({ location }) => {
                     </div>
                 ) : (
                     <div className="ui text aligned container">
-                        <a href={fileDownload} target="_blank" className="ui primary fluid button">Download Latest Version</a>
+                        <a href={fileDownload} target="_blank" className="ui primary fluid button large">
+                            <i className="cloud download icon"></i>
+                            Download Latest Version
+                        </a>
                         {showFileTrackList()}
                     </div>
                 )
