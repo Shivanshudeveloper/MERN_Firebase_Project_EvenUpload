@@ -546,8 +546,7 @@ const Projects = ({ location }) => {
                             <div className="header">
                                 About Project File
                             </div>
-                            <div className="image content">
-                                <div className="description">
+                            <div style={{margin: '25px'}} className="description">
                                 {
                                     aboutProject !== '' ? (
                                         <>
@@ -565,7 +564,6 @@ const Projects = ({ location }) => {
                                         </>
                                     )
                                 }
-                                </div>
                             </div>
                         </div>
                     {/* About Project File Model */}    
