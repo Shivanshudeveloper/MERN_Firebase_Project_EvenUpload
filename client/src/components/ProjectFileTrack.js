@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import CryptoJS from 'crypto';
 import axios from 'axios';
@@ -27,7 +28,7 @@ const FileTrackList = ({ file }) => {
                 <div className="meta">
                     {file.uploadedAt}
                 </div>
-                <div className="description">
+                <div style={{ wordWrap: 'break-word' }} className="description">
                     {file.comments}
                 </div>
                 </div>
@@ -49,6 +50,8 @@ const ProjectFileTrack = ({ location }) => {
     const [fileDownload, setFileDownload] = useState('');
     const [files, setFiles] = useState([]);
     const [loadingFiles, setLoadingFiles] = useState(true);
+
+    let history = useHistory();
 
     useEffect(() => {
         const { f, p, d } = queryString.parse(location.search);
@@ -128,6 +131,11 @@ const ProjectFileTrack = ({ location }) => {
                     </div>
                 ) : (
                     <div className="ui text aligned container">
+                        <button onClick={() => history.goBack()} className="ui icon button">
+                            <i className="arrow alternate circle left outline icon"></i>
+                        </button>
+                        <div className="ui hidden divider"></div>
+
                         <a href={fileDownload} target="_blank" className="ui primary fluid button large">
                             <i className="cloud download icon"></i>
                             Download Latest Version
