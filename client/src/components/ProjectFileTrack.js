@@ -131,9 +131,7 @@ const ProjectFileTrack = ({ location }) => {
                     </div>
                 ) : (
                     <div className="ui text aligned container">
-                        <button onClick={() => history.goBack()} className="ui icon button">
-                            <i className="arrow alternate circle left outline icon"></i>
-                        </button>
+                        
                         <div className="ui hidden divider"></div>
 
                         <a href={fileDownload} target="_blank" className="ui primary fluid button large">

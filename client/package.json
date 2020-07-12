@@ -27,6 +27,7 @@
     "react-share": "^4.1.0",
     "react-toast-notifications": "^2.4.0",
     "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "styled-components": "^5.1.1",
     "tiny-shortener": "^2.2.3",
     "tinyurl": "^1.1.5",

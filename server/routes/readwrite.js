@@ -651,7 +651,7 @@ router.get('/showNotes/:projectId', (req, res) => {
 // GET
 router.get('/projectsharedwith/:projectId', (req, res) => {
     const { projectId } = req.params;
-    ShareWith_Model.find({'fileId': projectId}).sort({date: -1})
+    ShareWith_Model.find({'fileId': projectId})
     .then(data => {
         res.status(200).json(data)
     })

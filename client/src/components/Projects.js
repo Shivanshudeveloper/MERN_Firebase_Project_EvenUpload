@@ -5,7 +5,7 @@ import { v4 as uuid4 } from 'uuid';
 import CryptoJS from 'crypto';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import { Button, Modal } from 'semantic-ui-react';
 import {
     BrowserView,
     MobileView
@@ -34,6 +34,103 @@ const FileName = ({ f }) => {
         </>
     )
 }
+
+const AboutProjectModalWindow = ({ aboutProject, createdOnProject, ownerProject }) => {
+    return (
+    <Modal trigger={<button className="ui icon button left floated">
+                        <i className="info icon blue"></i>
+                    </button>} 
+                    >
+      <Modal.Header>About Project</Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+        {
+            aboutProject !== '' ? (
+                <>
+                <h4 className="ui header">Created On: {createdOnProject}</h4>
+                <h4 className="ui header">About</h4>
+                <p>
+                    {aboutProject}
+                </p>
+                <h4 className="ui header">Owner: {ownerProject}</h4>
+                </>
+                ) : (
+                <>
+                <h4 className="ui header">Created On: {createdOnProject}</h4>
+                <h4 className="ui header">Owner: {ownerProject}</h4>
+                </>
+                )
+        }
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+    )
+  }
+
+
+  const ForwardProjectModalWindow = ({ setShareToEmail, setshareDescription, share, showModal, setshowModal }) => {
+    return (
+    <Modal open={showModal} trigger={<button onClick={() => setshowModal(true)} className="ui blue button right floated right labeled icon">
+                        <i className="right arrow icon"></i>
+                        Forward Project File
+                    </button>}>
+      <i onClick={() => setshowModal(false)} className="close icon"></i>
+      <Modal.Header>Share Project</Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+            <form className="ui form">
+                <div className="field">
+                    <label>Email Address</label>
+                    <input required type="text" onChange={(event) => setShareToEmail(event.target.value)} name="first-name" placeholder="Comma Seperated Emails" />
+                </div>
+                <div className="field">
+                    <label>Description <small>(Opstional)</small></label>
+                    <textarea onChange={(event) => setshareDescription(event.target.value)} rows="4"></textarea>
+                </div>
+            </form>
+            
+        </Modal.Description>
+      </Modal.Content>
+        <Modal.Actions>
+            <button onClick={() => share()} className="ui positive right labeled icon button">
+                Share
+                <i className="checkmark icon"></i>
+            </button>
+        </Modal.Actions>
+    </Modal>
+    )
+  }
+
+
+  const AddNoteModalWindow = ({ userphotoURL, userDisplayName, setNote, showModalNote, setshowModalNote, addNote }) => {
+    return (
+    <Modal open={showModalNote} trigger={<button onClick={() => setshowModalNote(true)} className="ui icon button left floated green">
+                                        <i className="sticky note icon"></i> Add a Note
+                                    </button>}>
+      <i onClick={() => setshowModalNote(false)} className="close icon"></i>
+      <Modal.Header>Note</Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+            <form className="ui form">
+                <div className="field">
+                    <img class="ui avatar image" src={userphotoURL} /> {userDisplayName}
+                    </div>
+                <div className="field">
+                    <label>Note</label>
+                    <textarea onChange={(event) => setNote(event.target.value)} rows="4"></textarea>
+                </div>
+            </form>
+        </Modal.Description>
+      </Modal.Content>
+        <Modal.Actions>
+            <div onClick={() => addNote()} className="ui positive right labeled icon button">
+                Add Note
+                <i className="checkmark icon"></i>
+            </div>
+        </Modal.Actions>
+    </Modal>
+    )
+  }
 
 const AllNotesList = ({ notes }) => {
     return (
@@ -116,6 +213,8 @@ const Projects = ({ location }) => {
     const [note, setNote] = useState('');
     const [allNotes, setAllNotes] = useState([]);
 
+    let [showModal, setshowModal] = useState(false);
+    let [showModalNote, setshowModalNote] = useState(false);
 
     let [shareToEmail, setShareToEmail] = useState('');
     const [shareDescription, setshareDescription] = useState('');
@@ -253,7 +352,6 @@ const Projects = ({ location }) => {
     // -----------------------------------------------------------------------------------------------------------
     // Sharing Project
     const share = () => {
-
         shareToEmail = shareToEmail.split(' ').join('');
         // Saved in Database about the User
         const uploadData = {
@@ -267,7 +365,7 @@ const Projects = ({ location }) => {
             fileKey: 'NIL',
             fileId: projectId
         }
-
+        setshowModal(false);
         axios.post(`${API_SERVICE}/api/v1/readwrite`, uploadData)
             .then((res) => {
                 if (res.status === 200) {
@@ -311,6 +409,7 @@ const Projects = ({ location }) => {
             userDisplayName,
             userphotoURL
         }
+        setshowModalNote(false);
         axios.post(`${API_SERVICE}/api/v1/readwrite/addnote`, uploadData)
         .then((res) => {
             if (res.status === 200) {
@@ -334,11 +433,12 @@ const Projects = ({ location }) => {
     }
 
     
-
+    
 
     return (
         <Fragment>
             <div className="ui center aligned container">
+                
                 <User />
                 <div className="ui hidden divider"></div>
                 <div className="ui hidden divider"></div>
@@ -395,10 +495,7 @@ const Projects = ({ location }) => {
 
                 <BrowserView>
                     <div className="ui hidden divider"></div>
-                    <button id="shareProjectModelBtn" className="ui blue button right floated right labeled icon">
-                        <i className="right arrow icon"></i>
-                        Forward Project File
-                    </button>
+                    <ForwardProjectModalWindow setShareToEmail={setShareToEmail} setshareDescription={setshareDescription} share={share} showModal={showModal} setshowModal={setshowModal} />
                 </BrowserView>
                 <MobileView>
                     <div className="ui hidden divider"></div>
@@ -437,15 +534,13 @@ const Projects = ({ location }) => {
                 </div>
                 {/* Note Model */}
                 <BrowserView>
-                    <button id="addNoteBtn" className="ui icon button left floated yellow">
-                        <i className="sticky note icon"></i> Add a Note
-                    </button>
-                    <a href={`/projectsharedwith?pid=${projectId}`} className="ui icon button left floated red">
-                        <i className="users note icon"></i> Project Shared With
+                    <AddNoteModalWindow userphotoURL={userphotoURL} userDisplayName={userDisplayName} addNote={addNote} setNote={setNote} showModalNote={showModalNote} setshowModalNote={setshowModalNote} />
+                    <a href={`/projectsharedwith?pid=${projectId}`} className="ui icon button left floated orange">
+                        <i className="users note icon"></i> Track Project File
                     </a>
-                    <button id="aboutProjectModelBtn" className="ui icon button left floated">
-                        <i className="info icon blue"></i>
-                    </button>
+                    {/* About Project File Model */}
+                    <AboutProjectModalWindow aboutProject={aboutProject} createdOnProject={createdOnProject} ownerProject={ownerProject} />
+                    {/* About Project File Model */}    
 
                 </BrowserView>
                 <MobileView>
@@ -540,33 +635,7 @@ const Projects = ({ location }) => {
                             {showNotes()}
                         </div>
 
-                    {/* About Project File Model */}
-                        <div id="aboutProjectModel" className="ui modal">
-                            <i className="close icon"></i>
-                            <div className="header">
-                                About Project File
-                            </div>
-                            <div style={{margin: '25px'}} className="description">
-                                {
-                                    aboutProject !== '' ? (
-                                        <>
-                                            <h4 className="ui header">Created On: {createdOnProject}</h4>
-                                            <h4 className="ui header">About</h4>
-                                            <p>
-                                                {aboutProject}
-                                            </p>
-                                            <h4 className="ui header">Owner: {ownerProject}</h4>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <h4 className="ui header">Created On: {createdOnProject}</h4>
-                                            <h4 className="ui header">Owner: {ownerProject}</h4>
-                                        </>
-                                    )
-                                }
-                            </div>
-                        </div>
-                    {/* About Project File Model */}    
+                    
                       
 
                     

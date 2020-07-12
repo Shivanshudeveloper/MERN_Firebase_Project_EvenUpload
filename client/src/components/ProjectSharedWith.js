@@ -21,15 +21,15 @@ const ProjectSharedWithContact = ({ sharedwith }) => {
     date = date.toDateString();
     return (
         <>
-            <div className="ui raised segment">
-                <div className="ui header">
-                    <i className="ui user icon blue"></i> {sharedwith.to}
+            <Fragment>
+                <div className="ui raised link card violet fluid">
+                    <div className="content left aligned">
+                        <i className="user icon"></i><strong> {sharedwith.to} </strong>
+                        <div className="description">Shared On {date}</div>
+                    </div>
                 </div>
-                <span>
-                    {date}
-                </span>
-            </div>
-            <i className="arrow alternate green circle down icon"></i>
+                <i className="arrow alternate green circle down icon"></i>
+            </Fragment>
         </>
     )
 }
