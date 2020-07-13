@@ -158,7 +158,7 @@ const FileInfo = ({ location }) => {
                                 {
                                     qrcode ? (
                                     <>
-                                    <div className="ui icon header">
+                                    <div style={{ wordWrap: 'break-word' }} className="ui icon header">
                                         { filename.split('_').pop().length > 40 ? (
                                             <>
                                             <FileTrim filename={filename} /> 

@@ -167,7 +167,7 @@ const Share = ({ location }) => {
                 
                 <div className="ui fluid card">
                     <div className="content">
-                        <div className="header">{filename}</div>
+                        <div style={{ wordWrap: 'break-word' }} className="header">{filename}</div>
                             <div style={{marginTop: '10px'}} className="meta">Uploaded On: {uploaded}</div>
                         </div>
                 </div>
