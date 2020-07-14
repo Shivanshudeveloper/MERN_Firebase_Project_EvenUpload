@@ -5,19 +5,29 @@ import {
     MobileView
   } from 'react-device-detect';
 import axios from 'axios';
+// React Notification Toast
+import { useToasts } from 'react-toast-notifications';
 
 // Firebase
 import { auth, database } from '../Firebase/index';
 // Components
 import User from './User';
 import Menu from './Menu';
-import Messages from "./Messages";
 
 // @From Mobile
 import MobileMenu from './MobileView/Menu';
 
 // API Service
 import { API_SERVICE } from '../config/URI';
+
+let recentContactListStyle = {
+    maxHeight: '500px', 
+    overflowX: 'scroll', 
+    overflowX: 'hidden', 
+    padding: '2px 18px 2px 18px',
+    scrollbarColor: 'black',
+    scrollbarWidth: 'thin'
+}
 
 
 const RecentContactList = ({ recentcontact, setEmail, email }) => {
@@ -28,10 +38,8 @@ const RecentContactList = ({ recentcontact, setEmail, email }) => {
     }
     return (
         <>
-            <div onClick={() => setEmail(finalEmailAddress)} className="ui raised link card green">
-                <div className="content">
-                    <div className="ui tiny header">{recentcontact.contact}</div>
-                </div>
+            <div onClick={() => setEmail(finalEmailAddress)} style={{cursor: 'pointer'}} className="ui segment pink">
+                <i className="user circle big icon"></i> <span className="ui header"> {recentcontact.contact} </span>
             </div>
         </>
     )
@@ -39,6 +47,9 @@ const RecentContactList = ({ recentcontact, setEmail, email }) => {
 
 
 const Share = ({ location }) => {
+    // Adding the Toaster for React Notification so no need of Custom Messanging
+    const { addToast } = useToasts();
+
     // Getting the userid from JS session
     let userId = sessionStorage.getItem("userId"); 
     let sendersEmail = sessionStorage.getItem("userEmail"); 
@@ -121,7 +132,7 @@ const Share = ({ location }) => {
                 if (res.status === 200) {
                     setLoading(true);
                     setSharing(false);
-                    setTimeout(() => setLoading(false), 2000);
+                    addToast(`Successfully Shared`, { appearance: 'success', autoDismiss: true })
                 }
             })
             .catch(err => console.log(err))
@@ -137,7 +148,7 @@ const Share = ({ location }) => {
         })
     }
     
-
+    
     return (
         <Fragment>
             <div className="ui center aligned container">
@@ -156,23 +167,19 @@ const Share = ({ location }) => {
 
                 <div className="ui hidden divider"></div>
 
-
-                {
-                    loading ? (
-                        <Messages msg={'Successfully Shared'} />
-                    ) : null
-                }
-                <div className="ui hidden divider"></div>
-
-                
-                <div className="ui fluid card">
-                    <div className="content">
-                        <div style={{ wordWrap: 'break-word' }} className="header">{filename}</div>
-                            <div style={{marginTop: '10px'}} className="meta">Uploaded On: {uploaded}</div>
-                        </div>
+                <div className="ui form">
+                    <div className="field">
+                        <label>Email Address</label>
+                        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email Address" />
+                    </div>
                 </div>
-                <div className="ui hidden divider"></div>
-
+                <div style={{marginTop: '4px'}} className="ui form">
+                    <div className="field">
+                        <label>Message <small>(Optional)</small></label> 
+                        <textarea onChange={(event) => setMessage(event.target.value)} rows="2">{message}</textarea>
+                    </div>
+                </div>
+                
                 {
                     recentLoading ? (
                         <>
@@ -213,14 +220,22 @@ const Share = ({ location }) => {
                     ) : (
                         contactlist && contactlist.length ? (
                             <>
-                                <div className="ui large header">Recents</div>
-                                <div className="ui two stackable cards">
-                                    {showRecentContacts()}
+                                <div className="ui segments">
+                                    <div className="ui secondary segment">
+                                        <div className="ui header">Select from Recents <BrowserView style={{float: 'right'}}>{filename}</BrowserView> </div> 
+                                    </div>
+                                    <div style={recentContactListStyle}>
+                                        {showRecentContacts()}
+                                    </div>
                                 </div>
                             </>
                         ) : null
                     )
                 }
+                <button style={{marginTop: '6px'}} onClick={() => share()} className={!sharing ? "ui green fluid icon big button" : "ui loading fluid big icon button"}>
+                    <i className="share icon"></i>
+                    Share
+                </button>
 
                 
 
@@ -228,30 +243,7 @@ const Share = ({ location }) => {
                 
 
                 <div className="ui hidden divider"></div>
-                <div className="ui form">
-                    <div className="field">
-                        <label>Email Address</label>
-                        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email Address" />
-                    </div>
-                </div>
-                <div style={{marginTop: '4px'}} className="ui form">
-                    <div className="field">
-                        <label>Message <small>(Optional)</small></label> 
-                        <textarea onChange={(event) => setMessage(event.target.value)} rows="2">{message}</textarea>
-                    </div>
-                </div>
-                <BrowserView>
-                    <button style={{marginTop: '6px'}} onClick={() => share()} className={!sharing ? "ui green icon button" : "ui loading green icon button"}>
-                        <i className="share icon"></i>
-                        Share
-                    </button>
-                </BrowserView>
-                <MobileView>
-                    <button style={{marginTop: '6px'}} onClick={() => share()} className={!sharing ? "ui green fluid icon button" : "ui loading fluid green icon button"}>
-                        <i className="share icon"></i>
-                        Share
-                    </button>
-                </MobileView>
+                
                 
             </div>
             <div className="ui hidden divider"></div>

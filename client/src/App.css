@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo&family=Roboto:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 p {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 h1 ,h2, h3, h4, h5, h6 {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .avartar {
@@ -14,5 +14,5 @@ h1 ,h2, h3, h4, h5, h6 {
 }
 
 .text-font {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
 }

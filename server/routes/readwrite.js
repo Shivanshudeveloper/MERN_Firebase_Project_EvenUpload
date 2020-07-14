@@ -266,7 +266,7 @@ router.get('/contacts/:reciversEmail', (req, res) => {
 router.get('/contactslist/:sendersEmail', (req, res) => {
     const { sendersEmail } = req.params;
     res.setHeader('Content-Type', 'application/json');
-    ContactList_Model.find({ 'contact_of': sendersEmail }).sort({date: -1}).limit(6)
+    ContactList_Model.find({ 'contact_of': sendersEmail }).sort({date: -1})
         .then(contactlist => {
             res.status(200).json(contactlist)
         })
