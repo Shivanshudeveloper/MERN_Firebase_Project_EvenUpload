@@ -57,12 +57,16 @@ function App() {
     }
   }
 
+  const redirectPage = () => {
+    window.location.href = "https://fileadventure.ml";
+  }
 
   return (
     <Fragment>
       <ToastProvider>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      
+
+      {redirectPage()}
       
       <div className="ui container">
         <div style={{marginTop: '10px'}} className="ui toggle checkbox">
